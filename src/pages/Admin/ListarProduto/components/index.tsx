@@ -41,7 +41,7 @@ export function ListProduct() {
             </button>
             
             <br/>
-            <Table data={data} />
+            <Table />
             <div className="buttonsLabel">
             <button className="buttonsLeft" type={'submit'}>
                 {/* <FiChevronsLeft></FiChevronsLeft> */}
