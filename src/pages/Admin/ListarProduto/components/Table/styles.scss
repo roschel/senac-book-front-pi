@@ -1,0 +1,73 @@
+.container {
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    border-radius: 0.313rem;
+    padding: 10rem 12rem;
+    margin: 0 auto;
+}
+
+.titulo {
+    width: 85%;
+    margin-top: 0;
+    margin-left: 5%;
+}
+
+.editora {
+    display: flex;
+    width: 30%;
+    margin-left: 16.9rem;
+    text-align: center;
+    margin-top: -1.16rem;
+}
+
+.categoria {
+    width: 30%;
+    margin-left: 5%;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.search {
+    font-size: medium;
+    height: 0.7rem;
+}
+
+.button {
+    width: 25%;
+    display: flex;
+    margin-left: 31.4rem;
+    margin-top: -2.65rem;
+}
+
+.table {
+    text-align: center;
+    border: 0.1rem solid #000000;
+    margin: 0 auto;
+    margin-top: 0rem;
+}
+
+.buttonsLabel {
+    margin-top: 2rem;
+    margin-left: 17.5rem;
+}
+
+.buttonsLeft {
+    margin-left: -2rem;
+}
+
+.buttonLeft {
+    margin-left: 0.5rem;
+}
+
+.labelPags {
+    margin-left: 1rem;
+}
+
+.buttonsRight {
+    margin-left: 1rem;
+}
+
+.buttonRight {
+    margin-left: 0.5rem;
+}
