@@ -21,6 +21,12 @@ a{
   text-decoration: none;
 }
 
+ul {
+  list-style-type: none;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
 #root {
   max-width: 960px;
   margin: 0 auto;
