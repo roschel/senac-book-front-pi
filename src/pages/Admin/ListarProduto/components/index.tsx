@@ -1,5 +1,5 @@
 import { AiOutlineSearch } from 'react-icons/ai';
-// import './../components/style.scss';
+import './../components/style.scss';
 import React from 'react';
 import DataTable from 'react-data-table-component';
 import { colunas, listagemProduto, paginationOptions } from './Table';
