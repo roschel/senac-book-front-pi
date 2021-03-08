@@ -6,15 +6,15 @@ import './styles.scss'
 type FormState = {
 	title: string;
 	description: string;
-	quantity: number;
+	quantity: string;
 	status: string;
-	rating: number;
-	price: number;
+	rating: string;
+	price: string;
 	author: string;
 	publisher: string;
-	pages: number;
+	pages: string;
 	size: string;
-	year: number;
+	year: string;
 	edition: string;
 }
 
@@ -24,15 +24,15 @@ const Form = () => {
 	const [formData, setFormData] = useState<FormState>({
 		title: '',
 		description: '',
-		quantity: 0,
+		quantity: '',
 		status: 'false',
-		rating: 0,
-		price: 0,
+		rating: '',
+		price: '',
 		author: '',
 		publisher: '',
-		pages: 0,
+		pages: '',
 		size: '',
-		year: 0,
+		year: '',
 		edition: ''
 	});
 
@@ -54,15 +54,15 @@ const Form = () => {
 				setFormData({
 					title: '',
 					description: '',
-					quantity: 0,
+					quantity: '',
 					status: 'false',
-					rating: 0,
-					price: 0,
+					rating: '',
+					price: '',
 					author: '',
 					publisher: '',
-					pages: 0,
+					pages: '',
 					size: '',
-					year: 0,
+					year: '',
 					edition: ''
 				});
 			})
