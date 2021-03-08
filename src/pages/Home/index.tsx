@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import ProductFilters, { FilterForm } from '../../core/components/ProductFilters';
 import { ProductsResponse } from '../../core/components/types/Product';
 import makeRequest from '../../services/api';
 import ProductCard from './components/ProductCard';
@@ -8,26 +9,26 @@ import './styles.scss'
 
 const Home: React.FC = () => {
   const [productsResponse, setProductResponse] = useState<ProductsResponse>();
-  const [isLoading, setIsLoading] = useState(false);
   const [activePage, setActivePage] = useState(0);
 
-
-  useEffect(() => {
-
+  const getProducts = useCallback((filter?: FilterForm)=>{
     const params = {
-      page: activePage,
-      linesPerPage: 12
+        page: activePage,
+        linesPerPage: 10,
+        title: filter?.name
     }
+    
+    makeRequest.get("/products", {params})
+    .then(response=>setProductResponse(response.data))
+}, [activePage])
 
-    //iniciar o loader antes de fazer a requisição
-    setIsLoading(true);
-    makeRequest.get('/products')
-      .then(response => setProductResponse(response.data))
-
-  }, [activePage]);
+useEffect(()=>{
+    getProducts()
+}, [getProducts])
 
   return (
     <div className="home-conatiner">
+      <ProductFilters onSearch={filter => getProducts(filter)}/>
       <div className="catalogo-livros">
         {productsResponse?.content.map(book => (
           <Link to={`/products/${book.id}`} key={book.id}>

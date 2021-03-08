@@ -5,7 +5,8 @@ import makeRequest from '../../../../../services/api';
 import { ProductsResponse } from '../../../../../core/components/types/Product';
 import Card from '../Card';
 import Pagination from '../../../../../core/components/Pagination';
-import Search from '../../../../../core/components/Search';
+import ProductFilters, { FilterForm } from '../../../../../core/components/ProductFilters';
+
 
 const List: React.FC = () => {
     const [productResponse, setProductsResponse] = useState<ProductsResponse>();
@@ -17,10 +18,11 @@ const List: React.FC = () => {
         history.push('/admin/products/create')
     }
 
-    const getProducts = useCallback(()=>{
+    const getProducts = useCallback((filter?:FilterForm)=>{
         const params = {
             page: activePage,
-            linesPerPage: 10
+            linesPerPage: 10,
+            title: filter?.name
         }
         
         makeRequest.get("/products", {params})
@@ -36,9 +38,7 @@ const List: React.FC = () => {
             <button className="btn btn-primary btn-lg" onClick={handleCreate}>
                 ADICIONAR
             </button>
-            <div>
-                <Search />
-            </div>
+            <ProductFilters onSearch={filter => getProducts(filter)}/>
             <div>
                 {productResponse?.content.map(product=>(
                     <Card product={product}/>

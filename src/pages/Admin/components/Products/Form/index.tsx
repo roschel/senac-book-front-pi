@@ -2,8 +2,10 @@ import makeRequest from '../../../../../services/api'
 import React, { useEffect, useState } from 'react'
 import BaseForm from '../../BaseForm'
 import './styles.scss'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { useHistory, useParams } from 'react-router'
+import Select from 'react-select';
+import { Category } from '../../../../../core/components/types/Product'
 
 type FormState = {
 	title: string;
@@ -19,6 +21,7 @@ type FormState = {
 	size: string;
 	year: string;
 	edition: string;
+	categories: Category[];
 }
 
 type ParamsType = {
@@ -28,95 +31,104 @@ type ParamsType = {
 type FormEvent = React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
 
 const Form = () => {
-	const { register, handleSubmit, setValue } = useForm<FormState>();
+	const { register, handleSubmit, setValue, control } = useForm<FormState>();
 	const history = useHistory();
-	const {productId} = useParams<ParamsType>();
+	const { productId } = useParams<ParamsType>();
+	const [categories, setCategories] = useState<Category[]>([]);
 	const isEditing = productId !== 'create'
+	const formTitle = isEditing ? 'EDITAR PRODUTO' : 'CADASTRAR PRODUTO';
 
 	useEffect(() => {
 		if (isEditing) {
 			makeRequest.get(`/products/${productId}`)
-			.then(response => {
-				setValue('title', response.data.title);
-				setValue('description', response.data.description);
-				setValue('quantity', response.data.quantity);
-				setValue('status', response.data.status);
-				setValue('rating', response.data.rating);
-				setValue('price', response.data.price);
-				setValue('author', response.data.author);
-				setValue('publisher', response.data.publisher);
-				setValue('pages', response.data.pages);
-				setValue('size', response.data.size);
-				setValue('year', response.data.year);
-				setValue('edition', response.data.edition);
-			})
+				.then(response => {
+					setValue('title', response.data.title);
+					setValue('description', response.data.description);
+					setValue('quantity', response.data.quantity);
+					setValue('status', response.data.status);
+					setValue('rating', response.data.rating);
+					setValue('price', response.data.price);
+					setValue('author', response.data.author);
+					setValue('publisher', response.data.publisher);
+					setValue('pages', response.data.pages);
+					setValue('size', response.data.size);
+					setValue('year', response.data.year);
+					setValue('edition', response.data.edition);
+				})
 		}
 
-	},[productId, isEditing, setValue])
+	}, [productId, isEditing, setValue])
 
-	const [formData, setFormData] = useState<FormState>({
-		title: '',
-		description: '',
-		category: 1,
-		quantity: '',
-		status: 'false',
-		rating: '',
-		price: '',
-		author: '',
-		publisher: '',
-		pages: '',
-		size: '',
-		year: '',
-		edition: ''
-	});
+	useEffect(() => {
+		makeRequest({ url: '/categories' })
+			.then(response => setCategories(response.data.content))
+			.catch(() => {
+				alert("Ocorreu um problema ao carregar as categories")
+			})
+	}, []);
 
-	const handleOnChange = (event: FormEvent) => {
-		const name = event.target.name;
-		const value = event.target.value;
-		setFormData(data => ({ ...data, [name]: value }));
-	};
+	// const [formData, setFormData] = useState<FormState>({
+	// 	title: '',
+	// 	description: '',
+	// 	quantity: '',
+	// 	status: 'false',
+	// 	rating: '',
+	// 	price: '',
+	// 	author: '',
+	// 	publisher: '',
+	// 	pages: '',
+	// 	size: '',
+	// 	year: '',
+	// 	edition: ''
+	// });
 
-	const onSubmit = () => {
+	// const handleOnChange = (event: FormEvent) => {
+	// 	const name = event.target.name;
+	// 	const value = event.target.value;
+	// 	setFormData(data => ({ ...data, [name]: value }));
+	// };
+
+	const onSubmit = (formData: FormState) => {
 
 		const payLoad = {
 			...formData,
-			categories: [{id: formData.category}]
+			categories: [{ id: formData.category }]
 		}
 
 		if (isEditing) {
 			makeRequest.put(`/products/${productId}`, payLoad)
-			.then(() => {
-				alert('Produto editado com sucesso')
-			})
-			.catch(() => {
-				alert('Produto não editado')
-			})
+				.then(() => {
+					alert('Produto editado com sucesso')
+				})
+				.catch(() => {
+					alert('Produto não editado')
+				})
 		} else {
 			makeRequest.post(`/products`, payLoad)
-			.then(() => {
-				alert('Produto adicionado com sucesso')
-			})
-			.catch(() => {
-				alert('Produto não adicionado')
-			})
+				.then(() => {
+					alert('Produto adicionado com sucesso')
+				})
+				.catch(() => {
+					alert('Produto não adicionado')
+				})
 		}
 	}
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
-			<BaseForm title="cadastrar um produto">
+			<BaseForm title={formTitle}>
 				<div className="row">
 					<div className="col-6">
 						<input
-							value={formData.title}
+							// value={formData.title}
 							ref={register()}
 							type="text"
 							className="form-control mb-5"
-							onChange={handleOnChange}
+							// onChange={handleOnChange}
 							name="title"
 							placeholder="Nome do livro"
 						/>
-						
+
 						{/* <select
 							className="form-control mb-5"
 							onChange={handleOnChange}
@@ -130,106 +142,120 @@ const Form = () => {
 							<option value="4">Eletrônicos</option>
 						</select> */}
 
+						<Controller
+							as={Select}
+							defaultValue=""
+							name="categories"
+							rules={{ required: true }}
+							control={control}
+							options={categories}
+							getOptionLabel={(option: Category) => option.name}
+							getOptionValue={(option: Category) => option.id.toString()}
+							classNamePrefix="category-select"
+							placeholder="Categoria"
+							isMulti
+						/>
+
 						<input
-							value={formData.quantity}
+							// value={formData.quantity}
 							ref={register()}
 							type="number"
-							className="form-control mb-5"
-							onChange={handleOnChange}
+							className="form-control mb-5 mt-5"
+							// onChange={handleOnChange}
 							name="quantity"
 							placeholder="Quantidade"
 							min="0"
 						/>
 
 						<input
-							value={formData.price}
+							// value={formData.price}
 							ref={register()}
 							type="number"
 							className="form-control mb-5"
-							onChange={handleOnChange}
+							// onChange={handleOnChange}
 							name="price"
 							placeholder="Preço"
 							min="0"
 						/>
 
 						<input
-							value={formData.rating}
+							// value={formData.rating}
 							ref={register()}
 							type="number"
 							className="form-control mb-5"
-							onChange={handleOnChange}
+							// onChange={handleOnChange}
 							name="rating"
 							placeholder="Classificação"
 							min="0"
 						/>
 
 						<input
-							value={formData.author}
+							// value={formData.author}
 							ref={register()}
 							type="text"
 							className="form-control mb-5"
-							onChange={handleOnChange}
+							// onChange={handleOnChange}
 							name="author"
 							placeholder="Autor"
 						/>
 
 						<input
-							value={formData.publisher}
+							// value={formData.publisher}
 							ref={register()}
 							type="text"
 							className="form-control mb-5"
-							onChange={handleOnChange}
+							// onChange={handleOnChange}
 							name="publisher"
 							placeholder="Editora"
 						/>
 						<input
-							value={formData.edition}
+							// value={formData.edition}
 							ref={register()}
 							type="text"
 							className="form-control mb-5"
-							onChange={handleOnChange}
+							// onChange={handleOnChange}
 							name="edition"
 							placeholder="Edição"
 						/>
 
 						<input
-							value={formData.year}
+							// value={formData.year}
 							ref={register()}
 							type="number"
 							className="form-control mb-5"
-							onChange={handleOnChange}
+							// onChange={handleOnChange}
 							name="year"
 							placeholder="Ano"
 							min="0"
 						/>
 
 						<input
-							value={formData.pages}
+							// value={formData.pages}
 							ref={register()}
 							type="number"
 							className="form-control mb-5"
-							onChange={handleOnChange}
+							// onChange={handleOnChange}
 							name="pages"
 							placeholder="Páginas"
 							min="0"
 						/>
 
 						<input
-							value={formData.size}
+							// value={formData.size}
 							ref={register()}
 							type="text"
 							className="form-control mb-5"
-							onChange={handleOnChange}
+							// onChange={handleOnChange}
 							name="size"
 							placeholder="Tamanho (20 x 20 x 20 cm)"
 						/>
 
 						<input
-							value={formData.status}
+							// value={formData.status}
 							ref={register()}
 							type="checkbox"
 							className="form-check-input"
-							onChange={handleOnChange}
+							// onChange={handleOnChange}
 							name="status"
 						/>
 						<label className="form-check-label">Status</label>
@@ -242,8 +268,8 @@ const Form = () => {
 							name="description"
 							cols={30}
 							rows={10}
-							onChange={handleOnChange}
-							value={formData.description}
+							// onChange={handleOnChange}
+							// value={formData.description}
 							placeholder="Descrição"
 						></textarea>
 
