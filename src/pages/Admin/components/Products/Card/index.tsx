@@ -31,6 +31,7 @@ const Card = ({ product }: Props) => {
                         <label className="product-card-author-label">Autor:</label>
                         <label>{product.author}</label>
                     </div>
+                    Id: {product.id}
                 </div>
                 <div className="col-3">
                     <Link

@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import makeRequest from '../../../../../services/api';
 import { ProductsResponse } from '../../../../../core/components/types/Product';
 import Card from '../Card';
+import Pagination from '../../../../../core/components/Pagination';
 
 const List: React.FC = () => {
     const [productResponse, setProductsResponse] = useState<ProductsResponse>();
@@ -17,7 +18,7 @@ const List: React.FC = () => {
 
     const getProducts = useCallback(()=>{
         const params = {
-            page: 12,
+            page: activePage,
             linesPerPage: 10
         }
         
@@ -39,6 +40,13 @@ const List: React.FC = () => {
                     <Card product={product}/>
                 ))}
             </div>
+            {productResponse && (
+                <Pagination
+                    totalPages={productResponse.totalPages}
+                    activePage={activePage}
+                    onChange={page => setActivePage(page)}
+                />
+            )}
         </div>
     )
 }

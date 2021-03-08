@@ -8,6 +8,7 @@ import { useHistory, useParams } from 'react-router'
 type FormState = {
 	title: string;
 	description: string;
+	category: number;
 	quantity: string;
 	status: string;
 	rating: string;
@@ -50,11 +51,13 @@ const Form = () => {
 				setValue('edition', response.data.edition);
 			})
 		}
+
 	},[productId, isEditing, setValue])
 
 	const [formData, setFormData] = useState<FormState>({
 		title: '',
 		description: '',
+		category: 1,
 		quantity: '',
 		status: 'false',
 		rating: '',
@@ -74,9 +77,12 @@ const Form = () => {
 	};
 
 	const onSubmit = () => {
+
 		const payLoad = {
-			...formData
+			...formData,
+			categories: [{id: formData.category}]
 		}
+
 		if (isEditing) {
 			makeRequest.put(`/products/${productId}`, payLoad)
 			.then(() => {
