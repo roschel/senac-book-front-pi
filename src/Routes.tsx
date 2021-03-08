@@ -6,8 +6,8 @@ import Home from './pages/Home';
 import Navbar from './core/components/Navbar';
 import Admin from './pages/Admin';
 
-import ListarProduto from './pages/Admin/ListarProduto';
 import CadastrarProduto from './pages/Admin/CadastrarProduto';
+import List from './pages/Admin/components/Products/List';
 
 
 const Routes = () => (
@@ -25,7 +25,7 @@ const Routes = () => (
 				<Admin />
 			</Route>
 			<Route path="/Admin/products">
-				<ListarProduto />
+				<List />
 			</Route>
 			<Route path="/Admin/cadastrar">
 				<CadastrarProduto />

@@ -5,6 +5,7 @@ import makeRequest from '../../../../../services/api';
 import { ProductsResponse } from '../../../../../core/components/types/Product';
 import Card from '../Card';
 import Pagination from '../../../../../core/components/Pagination';
+import Search from '../../../../../core/components/Search';
 
 const List: React.FC = () => {
     const [productResponse, setProductsResponse] = useState<ProductsResponse>();
@@ -35,6 +36,9 @@ const List: React.FC = () => {
             <button className="btn btn-primary btn-lg" onClick={handleCreate}>
                 ADICIONAR
             </button>
+            <div>
+                <Search />
+            </div>
             <div>
                 {productResponse?.content.map(product=>(
                     <Card product={product}/>
