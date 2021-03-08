@@ -1,4 +1,4 @@
-import './../../Admin/ListarProduto/styles.scss';
+// import './../../Admin/ListarProduto/styles.scss';
 import {ListProduct} from './components/index';
 
 export default function ListarProduto() {
