@@ -2,9 +2,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import './styles.scss'
 import { useHistory } from 'react-router-dom'
 import makeRequest from '../../../../../services/api';
+import { ProductsResponse } from '../../../../../core/components/types/Product';
+import Card from '../Card';
 
-const List = () => {
-    const [productResponse, setProductsResponse] = useState(0);
+const List: React.FC = () => {
+    const [productResponse, setProductsResponse] = useState<ProductsResponse>();
     const [activePage, setActivePage] = useState(0);
     
     const history = useHistory();
@@ -33,7 +35,9 @@ const List = () => {
                 ADICIONAR
             </button>
             <div>
-                
+                {productResponse?.content.map(product=>(
+                    <Card product={product}/>
+                ))}
             </div>
         </div>
     )
