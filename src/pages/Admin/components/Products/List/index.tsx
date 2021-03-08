@@ -17,8 +17,8 @@ const List: React.FC = () => {
 
     const getProducts = useCallback(()=>{
         const params = {
-            page: activePage,
-            linesPerPage: 5
+            page: 12,
+            linesPerPage: 10
         }
         
         makeRequest.get("/products", {params})
