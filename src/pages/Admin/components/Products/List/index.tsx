@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './styles.scss'
 import { useHistory } from 'react-router-dom'
 import makeRequest from '../../../../../services/api';
@@ -23,6 +23,10 @@ const List = () => {
         .then(response=>setProductsResponse(response.data))
     }, [activePage])
     
+    useEffect(()=>{
+        getProducts()
+    }, [getProducts])
+
     return (
         <div className="admin-products-list">
             <button className="btn btn-primary btn-lg" onClick={handleCreate}>
