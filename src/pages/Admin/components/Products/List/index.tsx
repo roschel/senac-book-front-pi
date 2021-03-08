@@ -7,6 +7,7 @@ import Card from '../Card';
 import Pagination from '../../../../../core/components/Pagination';
 import ProductFilters, { FilterForm } from '../../../../../core/components/ProductFilters';
 
+
 const List: React.FC = () => {
     const [productResponse, setProductsResponse] = useState<ProductsResponse>();
     const [activePage, setActivePage] = useState(0);
