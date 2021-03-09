@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import BaseForm from '../../BaseForm'
 import './styles.scss'
 import { useForm, Controller } from 'react-hook-form'
-import { useHistory, useParams } from 'react-router'
+import { useParams } from 'react-router'
 import Select from 'react-select';
 import { Category } from '../../../../../core/components/types/Product'
 
@@ -28,11 +28,8 @@ type ParamsType = {
 	productId: string
 }
 
-type FormEvent = React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-
 const Form = () => {
 	const { register, handleSubmit, setValue, control } = useForm<FormState>();
-	const history = useHistory();
 	const { productId } = useParams<ParamsType>();
 	const [categories, setCategories] = useState<Category[]>([]);
 	const isEditing = productId !== 'create'
@@ -54,13 +51,14 @@ const Form = () => {
 					setValue('size', response.data.size);
 					setValue('year', response.data.year);
 					setValue('edition', response.data.edition);
+					setValue('categories', response.data.categories);
 				})
 		}
 
 	}, [productId, isEditing, setValue])
 
 	useEffect(() => {
-		makeRequest.get('/categories' )
+		makeRequest.get('/categories')
 			.then(response => setCategories(response.data.content))
 			.catch(() => {
 				alert("Ocorreu um problema ao carregar as categories")
@@ -137,6 +135,7 @@ const Form = () => {
 							name="price"
 							placeholder="Preço"
 							min="0"
+							step=".01"
 						/>
 
 						<input
@@ -146,6 +145,7 @@ const Form = () => {
 							name="rating"
 							placeholder="Classificação"
 							min="0"
+							step=".01"
 						/>
 
 						<input
@@ -217,7 +217,7 @@ const Form = () => {
 						></textarea>
 
 						{/* <input
-							type="text"
+							type="file"
 							ref={register()}
 							className="form-control mb-3"
 							name="imageUrl"

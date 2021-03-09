@@ -12,7 +12,7 @@ type Props = {
 }
 
 const ProductFilters = ({onSearch}: Props) => {
-  const [name, setName]= useState('');
+  const [, setName]= useState('');
 
   useEffect(() =>{
     makeRequest.get('/products')
