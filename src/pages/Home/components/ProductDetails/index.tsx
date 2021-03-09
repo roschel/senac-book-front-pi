@@ -9,13 +9,17 @@ type ParamsType = {
 	productId: string;
 }
 
-const ProductDetails = () => {
+export const ProductDetails = () => {
 	const { productId } = useParams<ParamsType>();
 	const [product, setProduct] = useState<Product>();
+	const [disabledButton, setDisabledButton] = useState(true);
 
 	useEffect(() => {
 		makeRequest.get(`/products/${productId}`)
-			.then(response => setProduct(response.data))
+			.then(response => {
+				setDisabledButton(response.data.status);
+				setProduct(response.data);
+			})
 	}, [productId]);
 
 	return (
@@ -57,9 +61,17 @@ const ProductDetails = () => {
 							}
 						</div>
 
-						<button className="btn btn-primary">
-							COMPRAR
-						</button>
+						{product?.status === true ? (
+							<button className="btn btn-primary">
+								COMPRAR
+							</button>
+						) : (
+							<button
+								className="btn btn-primary"
+								disabled={!disabledButton}>
+								INDISPONÍVEL
+							</button>
+						)}
 
 					</div>
 				</div>

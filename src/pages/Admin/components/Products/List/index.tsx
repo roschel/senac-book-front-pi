@@ -49,17 +49,20 @@ const List: React.FC = () => {
 
     return (
         <div className="admin-products-list">
-            <button className="btn btn-primary btn-lg" onClick={handleCreate}>
-                ADICIONAR
-            </button>
-            <ProductFilters onSearch={filter => getProducts(filter)} />
+            <div className="d-flex mb-2">
+                <ProductFilters onSearch={filter => getProducts(filter)} />
+                <button className="btn btn-primary btn-lg" onClick={handleCreate}>
+                    ADICIONAR
+                </button>
+            </div>
+
             <div>
                 {productResponse?.content.map(product => (
-                        product.status === true ? (
-                            <Card product={product} onDisabled={onDisabled} buttonTitle={'INATIVAR'} />
-                        ) : (
-                            <Card product={product} onDisabled={onDisabled} buttonTitle={'ATIVAR'} />
-                        )
+                    product.status === true ? (
+                        <Card product={product} onDisabled={onDisabled} buttonTitle={'INATIVAR'} />
+                    ) : (
+                        <Card product={product} onDisabled={onDisabled} buttonTitle={'ATIVAR'} />
+                    )
                 ))}
             </div>
             {productResponse && (
