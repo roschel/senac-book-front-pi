@@ -34,6 +34,7 @@ const Form = () => {
 	const [categories, setCategories] = useState<Category[]>([]);
 	const isEditing = productId !== 'create'
 	const formTitle = isEditing ? 'EDITAR PRODUTO' : 'CADASTRAR PRODUTO';
+	const [disabled, setDisabled] = useState(true);
 
 	useEffect(() => {
 		if (isEditing) {
@@ -52,6 +53,7 @@ const Form = () => {
 					setValue('year', response.data.year);
 					setValue('edition', response.data.edition);
 					setValue('categories', response.data.categories);
+					setDisabled(response.data.status);
 				})
 		}
 
@@ -103,6 +105,7 @@ const Form = () => {
 							className="form-control mb-5"
 							name="title"
 							placeholder="Nome do livro"
+							disabled={!disabled}
 						/>
 
 						<Controller
@@ -117,6 +120,7 @@ const Form = () => {
 							classNamePrefix="category-select"
 							placeholder="Categoria"
 							isMulti
+							isDisabled={!disabled}
 						/>
 
 						<input
@@ -126,6 +130,7 @@ const Form = () => {
 							name="quantity"
 							placeholder="Quantidade"
 							min="0"
+							disabled={!disabled}
 						/>
 
 						<input
@@ -136,6 +141,7 @@ const Form = () => {
 							placeholder="Preço"
 							min="0"
 							step=".01"
+							disabled={!disabled}
 						/>
 
 						<input
@@ -146,6 +152,7 @@ const Form = () => {
 							placeholder="Classificação"
 							min="0"
 							step=".01"
+							disabled={!disabled}
 						/>
 
 						<input
@@ -154,6 +161,7 @@ const Form = () => {
 							className="form-control mb-5"
 							name="author"
 							placeholder="Autor"
+							disabled={!disabled}
 						/>
 
 						<input
@@ -162,6 +170,7 @@ const Form = () => {
 							className="form-control mb-5"
 							name="publisher"
 							placeholder="Editora"
+							disabled={!disabled}
 						/>
 						<input
 							ref={register()}
@@ -169,6 +178,7 @@ const Form = () => {
 							className="form-control mb-5"
 							name="edition"
 							placeholder="Edição"
+							disabled={!disabled}
 						/>
 
 						<input
@@ -178,6 +188,7 @@ const Form = () => {
 							name="year"
 							placeholder="Ano"
 							min="0"
+							disabled={!disabled}
 						/>
 
 						<input
@@ -187,6 +198,7 @@ const Form = () => {
 							name="pages"
 							placeholder="Páginas"
 							min="0"
+							disabled={!disabled}
 						/>
 
 						<input
@@ -195,6 +207,7 @@ const Form = () => {
 							className="form-control mb-5"
 							name="size"
 							placeholder="Tamanho (20 x 20 x 20 cm)"
+							disabled={!disabled}
 						/>
 
 						<input
@@ -202,6 +215,7 @@ const Form = () => {
 							type="checkbox"
 							className="form-check-input"
 							name="status"
+							disabled={!disabled}
 						/>
 						<label className="form-check-label">Status</label>
 					</div>
@@ -214,6 +228,7 @@ const Form = () => {
 							cols={30}
 							rows={10}
 							placeholder="Descrição"
+							disabled={!disabled}
 						></textarea>
 
 						{/* <input
