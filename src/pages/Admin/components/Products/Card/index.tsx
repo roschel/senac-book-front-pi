@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Product } from '../../../../../core/components/types/Product';
 import './styles.scss';
 
@@ -10,6 +10,12 @@ type Props = {
 }
 
 const Card = ({ product, onDisabled, buttonTitle }: Props) => {
+
+    const history = useHistory();
+    const handleOnClick = (productId: number) => {
+        history.push(`/products/${productId}`)
+    }
+
     return (
         <div className="card-base product-card-admin">
             <div className="row">
@@ -35,7 +41,7 @@ const Card = ({ product, onDisabled, buttonTitle }: Props) => {
                     </div>
                     Id: {product.id}
                 </div>
-                <div className="col-3">
+                <div className="col-3 mt-2">
                     <Link
                         to={`/admin/products/${product.id}`}
                         type="button"
@@ -43,13 +49,25 @@ const Card = ({ product, onDisabled, buttonTitle }: Props) => {
                     >
                         EDITAR
                     </Link>
+
                     <button
                         type="button"
-                        className="btn btn-outline-secondary"
+                        className="btn btn-outline-danger ml-2"
                         onClick={() => onDisabled(product.id)}
                     >
                         {buttonTitle}
                     </button>
+
+                    <div>
+                        <button
+                            type="button"
+                            className="btn btn-outline-info mt-2"
+                            onClick={() => handleOnClick(product.id)}
+                        >
+                            VISUALIZAR
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>
