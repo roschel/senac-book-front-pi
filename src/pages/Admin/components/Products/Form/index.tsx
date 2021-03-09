@@ -60,40 +60,20 @@ const Form = () => {
 	}, [productId, isEditing, setValue])
 
 	useEffect(() => {
-		makeRequest({ url: '/categories' })
+		makeRequest.get('/categories' )
 			.then(response => setCategories(response.data.content))
 			.catch(() => {
 				alert("Ocorreu um problema ao carregar as categories")
 			})
 	}, []);
 
-	// const [formData, setFormData] = useState<FormState>({
-	// 	title: '',
-	// 	description: '',
-	// 	quantity: '',
-	// 	status: 'false',
-	// 	rating: '',
-	// 	price: '',
-	// 	author: '',
-	// 	publisher: '',
-	// 	pages: '',
-	// 	size: '',
-	// 	year: '',
-	// 	edition: ''
-	// });
-
-	// const handleOnChange = (event: FormEvent) => {
-	// 	const name = event.target.name;
-	// 	const value = event.target.value;
-	// 	setFormData(data => ({ ...data, [name]: value }));
-	// };
-
 	const onSubmit = (formData: FormState) => {
 
 		const payLoad = {
 			...formData,
-			categories: [{ id: formData.category }]
 		}
+
+		console.log(payLoad)
 
 		if (isEditing) {
 			makeRequest.put(`/products/${productId}`, payLoad)
@@ -120,27 +100,12 @@ const Form = () => {
 				<div className="row">
 					<div className="col-6">
 						<input
-							// value={formData.title}
 							ref={register()}
 							type="text"
 							className="form-control mb-5"
-							// onChange={handleOnChange}
 							name="title"
 							placeholder="Nome do livro"
 						/>
-
-						{/* <select
-							className="form-control mb-5"
-							onChange={handleOnChange}
-							name="category"
-							placeholder="Categorias"
-							value={formData.category}
-						>
-							<option value="1">Categorias</option>
-							<option value="2">Livros</option>
-							<option value="3">Computadores</option>
-							<option value="4">Eletrônicos</option>
-						</select> */}
 
 						<Controller
 							as={Select}
@@ -150,112 +115,92 @@ const Form = () => {
 							control={control}
 							options={categories}
 							getOptionLabel={(option: Category) => option.name}
-							getOptionValue={(option: Category) => option.id.toString()}
+							getOptionValue={(option: Category) => String(option.id)}
 							classNamePrefix="category-select"
 							placeholder="Categoria"
 							isMulti
 						/>
 
 						<input
-							// value={formData.quantity}
 							ref={register()}
 							type="number"
 							className="form-control mb-5 mt-5"
-							// onChange={handleOnChange}
 							name="quantity"
 							placeholder="Quantidade"
 							min="0"
 						/>
 
 						<input
-							// value={formData.price}
 							ref={register()}
 							type="number"
 							className="form-control mb-5"
-							// onChange={handleOnChange}
 							name="price"
 							placeholder="Preço"
 							min="0"
 						/>
 
 						<input
-							// value={formData.rating}
 							ref={register()}
 							type="number"
 							className="form-control mb-5"
-							// onChange={handleOnChange}
 							name="rating"
 							placeholder="Classificação"
 							min="0"
 						/>
 
 						<input
-							// value={formData.author}
 							ref={register()}
 							type="text"
 							className="form-control mb-5"
-							// onChange={handleOnChange}
 							name="author"
 							placeholder="Autor"
 						/>
 
 						<input
-							// value={formData.publisher}
 							ref={register()}
 							type="text"
 							className="form-control mb-5"
-							// onChange={handleOnChange}
 							name="publisher"
 							placeholder="Editora"
 						/>
 						<input
-							// value={formData.edition}
 							ref={register()}
 							type="text"
 							className="form-control mb-5"
-							// onChange={handleOnChange}
 							name="edition"
 							placeholder="Edição"
 						/>
 
 						<input
-							// value={formData.year}
 							ref={register()}
 							type="number"
 							className="form-control mb-5"
-							// onChange={handleOnChange}
 							name="year"
 							placeholder="Ano"
 							min="0"
 						/>
 
 						<input
-							// value={formData.pages}
 							ref={register()}
 							type="number"
 							className="form-control mb-5"
-							// onChange={handleOnChange}
 							name="pages"
 							placeholder="Páginas"
 							min="0"
 						/>
 
 						<input
-							// value={formData.size}
 							ref={register()}
 							type="text"
 							className="form-control mb-5"
-							// onChange={handleOnChange}
 							name="size"
 							placeholder="Tamanho (20 x 20 x 20 cm)"
 						/>
 
 						<input
-							// value={formData.status}
 							ref={register()}
 							type="checkbox"
 							className="form-check-input"
-							// onChange={handleOnChange}
 							name="status"
 						/>
 						<label className="form-check-label">Status</label>
@@ -268,8 +213,6 @@ const Form = () => {
 							name="description"
 							cols={30}
 							rows={10}
-							// onChange={handleOnChange}
-							// value={formData.description}
 							placeholder="Descrição"
 						></textarea>
 
