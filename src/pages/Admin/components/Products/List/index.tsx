@@ -11,37 +11,55 @@ import ProductFilters, { FilterForm } from '../../../../../core/components/Produ
 const List: React.FC = () => {
     const [productResponse, setProductsResponse] = useState<ProductsResponse>();
     const [activePage, setActivePage] = useState(0);
-    
+
     const history = useHistory();
 
     const handleCreate = () => {
         history.push('/admin/products/create')
     }
 
-    const getProducts = useCallback((filter?:FilterForm)=>{
+    const getProducts = useCallback((filter?: FilterForm) => {
         const params = {
             page: activePage,
             linesPerPage: 10,
             title: filter?.name
         }
-        
-        makeRequest.get("/products", {params})
-        .then(response=>setProductsResponse(response.data))
+
+        makeRequest.get("/products", { params })
+            .then(response => setProductsResponse(response.data))
     }, [activePage])
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         getProducts()
     }, [getProducts])
+
+    const onDisabled = (productId: number) => {
+        const confirma = window.confirm("Deseja alterar o status do produto?")
+        if (confirma) {
+            makeRequest.delete(`/products/${productId}`)
+                .then(response => {
+                    alert(`${response.data}`)
+                    getProducts()
+                })
+                .catch(() => {
+                    alert(`Erro ao inativar o produto`)
+                })
+        }
+    }
 
     return (
         <div className="admin-products-list">
             <button className="btn btn-primary btn-lg" onClick={handleCreate}>
                 ADICIONAR
             </button>
-            <ProductFilters onSearch={filter => getProducts(filter)}/>
+            <ProductFilters onSearch={filter => getProducts(filter)} />
             <div>
-                {productResponse?.content.map(product=>(
-                    <Card product={product}/>
+                {productResponse?.content.map(product => (
+                        product.status === true ? (
+                            <Card product={product} onDisabled={onDisabled} buttonTitle={'INATIVAR'} />
+                        ) : (
+                            <Card product={product} onDisabled={onDisabled} buttonTitle={'ATIVAR'} />
+                        )
                 ))}
             </div>
             {productResponse && (
@@ -54,5 +72,4 @@ const List: React.FC = () => {
         </div>
     )
 }
-
 export default List;

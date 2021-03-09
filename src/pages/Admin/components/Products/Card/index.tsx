@@ -4,10 +4,12 @@ import { Product } from '../../../../../core/components/types/Product';
 import './styles.scss';
 
 type Props = {
-    product: Product
+    product: Product;
+    onDisabled: (productId: number) => void;
+    buttonTitle: string;
 }
 
-const Card = ({ product }: Props) => {
+const Card = ({ product, onDisabled, buttonTitle }: Props) => {
     return (
         <div className="card-base product-card-admin">
             <div className="row">
@@ -41,6 +43,13 @@ const Card = ({ product }: Props) => {
                     >
                         EDITAR
                     </Link>
+                    <button
+                        type="button"
+                        className="btn btn-outline-secondary"
+                        onClick={() => onDisabled(product.id)}
+                    >
+                        {buttonTitle}
+                    </button>
                 </div>
             </div>
         </div>
