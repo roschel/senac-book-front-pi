@@ -2,6 +2,9 @@ import React from 'react';
 import { ReactComponent as ArrowIcon } from '../../assets/images/arrow.svg'
 import './styles.scss'
 import { generateList } from '../utils/list';
+import { FiChevronsLeft, FiChevronsRight } from "react-icons/fi";
+
+
 
 type Props = {
     totalPages: number;
@@ -16,6 +19,11 @@ const Pagination = ({ totalPages, activePage, onChange }: Props) => {
 
     return (
         <div className="pagination-container">
+            <FiChevronsLeft
+                className={`pagination-initial ${previousClass}`}
+                onClick={() => onChange(0)}
+                size={40}
+            />
             <ArrowIcon
                 className={`pagination-previous ${previousClass}`}
                 onClick={() => onChange(activePage - 1)}
@@ -33,6 +41,11 @@ const Pagination = ({ totalPages, activePage, onChange }: Props) => {
             <ArrowIcon
                 className={`pagination-next ${nextClass}`}
                 onClick={() => onChange(activePage + 1)}
+            />
+            <FiChevronsRight
+                className={`pagination-next ${nextClass}`}
+                onClick={() => onChange(totalPages - 1)}
+                size={40}
             />
         </div>
     );
