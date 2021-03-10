@@ -7,6 +7,9 @@ import { useParams } from 'react-router'
 import Select from 'react-select';
 import { Category } from '../../../../../core/components/types/Product'
 
+import Upload from '../Upload'
+import { title } from 'node:process'
+
 type FormState = {
 	title: string;
 	description: string;
@@ -22,6 +25,7 @@ type FormState = {
 	year: string;
 	edition: string;
 	categories: Category[];
+	image: File;
 }
 
 type ParamsType = {
@@ -35,6 +39,12 @@ const Form = () => {
 	const isEditing = productId !== 'create'
 	const formTitle = isEditing ? 'EDITAR PRODUTO' : 'CADASTRAR PRODUTO';
 	const [disabled, setDisabled] = useState(true);
+	const [selectedFile, setSelectedFile] = useState<File>();
+
+	const dataImg = new FormData();
+	if(selectedFile) {
+		dataImg.append('image', selectedFile);
+	}
 
 	useEffect(() => {
 		if (isEditing) {
@@ -230,6 +240,10 @@ const Form = () => {
 							placeholder="Descrição"
 							disabled={!disabled}
 						></textarea>
+
+						<div>
+							<Upload onFileUploaded={setSelectedFile} />
+						</div>
 
 						{/* <input
 							type="file"
