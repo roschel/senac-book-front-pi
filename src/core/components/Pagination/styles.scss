@@ -1,11 +1,11 @@
-.pagination-container{
+.pagination-container {
     display: flex;
     justify-content: center;
     margin-top: 35px;
     align-items: center;
 }
 
-.pagination-item{
+.pagination-item {
     height: 40px;
     width: 40px;
     border-radius: 50%;
@@ -19,31 +19,34 @@
     justify-content: center;
     cursor: pointer;
     margin-right: 10px;
-
-    &.active{
+    &.active {
         background-color: #407BFF;
     }
 }
 
-.pagination-previous{
+.pagination-previous {
     transform: rotate(-180deg);
     margin-right: 25px;
     color: #e1e1e1;
     cursor: pointer;
 }
 
-.pagination-next{
+.pagination-next {
     margin-left: 15px;
     color: #407BFF;
     cursor: pointer;
 }
 
-.page-active{
+.page-active {
     cursor: pointer;
     color: #407BFF;
 }
 
-.page-inactive{
+.page-inactive {
     color: #e1e1e1;
     pointer-events: none;
+}
+
+.pagination-initial {
+    margin-right: 20px;
 }
