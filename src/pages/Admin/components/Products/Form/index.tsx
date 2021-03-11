@@ -79,29 +79,29 @@ const Form = () => {
 
 		const payLoad = {
 			...formData,
-			images: {id:dataImg}
+			// images: {id:dataImg}
 		}
 
 		console.log(payLoad)
 		console.log(selectedFile)
 
-		// if (isEditing) {
-		// 	makeRequest.put(`/products/${productId}`, payLoad)
-		// 		.then(() => {
-		// 			alert('Produto editado com sucesso')
-		// 		})
-		// 		.catch(() => {
-		// 			alert('Produto não editado')
-		// 		})
-		// } else {
-		// 	makeRequest.post(`/products`, payLoad)
-		// 		.then(() => {
-		// 			alert('Produto adicionado com sucesso')
-		// 		})
-		// 		.catch(() => {
-		// 			alert('Produto não adicionado')
-		// 		})
-		// }
+		if (isEditing) {
+			makeRequest.put(`/products/${productId}`, payLoad)
+				.then(() => {
+					alert('Produto editado com sucesso')
+				})
+				.catch(() => {
+					alert('Produto não editado')
+				})
+		} else {
+			makeRequest.post(`/products`, payLoad)
+				.then(() => {
+					alert('Produto adicionado com sucesso')
+				})
+				.catch(() => {
+					alert('Produto não adicionado')
+				})
+		}
 	}
 
 	return (
