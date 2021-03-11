@@ -1,10 +1,14 @@
 import React from 'react';
 import './styles.scss'
-
+import StarsRating from '../../../../core/components/StarsRating'
 import { Product } from '../../../../core/components/types/Product'
 
 type Props = {
 	product: Product;
+}
+
+type Rating = {
+    rating: number;
 }
 
 const ProductCard = ({ product }: Props) => (
@@ -17,13 +21,18 @@ const ProductCard = ({ product }: Props) => (
 			<h6 className="product-name">
 				{product.title}
 			</h6>
-			
+
 			<div className="product-price mb-2">
 				R$ {product.price}
 			</div>
 
 			<div className="product-quantity mb-2">
 				Quantidade disponível: {product.quantity}
+			</div>
+			<div>
+				<StarsRating
+					rating={product.rating}
+				/>
 			</div>
 
 			<div className="product-status">

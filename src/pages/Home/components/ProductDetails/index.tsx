@@ -5,6 +5,7 @@ import { ReactComponent as ArrowIcon } from '../../../../core/assets/images/arro
 import makeRequest from '../../../../services/api';
 import { Product } from '../../../../core/components/types/Product'
 import Carousel from '../../../../core/components/Carousel'
+import StarsRating from '../../../../core/components/StarsRating';
 
 type ParamsType = {
 	productId: string;
@@ -14,6 +15,7 @@ export const ProductDetails = () => {
 	const { productId } = useParams<ParamsType>();
 	const [product, setProduct] = useState<Product>();
 	const [disabledButton, setDisabledButton] = useState(true);
+	const [value, setValue] = useState(1);
 
 	useEffect(() => {
 		makeRequest.get(`/products/${productId}`)
@@ -43,7 +45,9 @@ export const ProductDetails = () => {
 								{product?.title}
 							</h1>
 							<div className="product-details-rating">
-								Estrelas: {product?.rating}
+								<StarsRating
+									rating={5}
+								/>
 							</div>
 							<div className="product-details-price mt-3">
 								R$ {product?.price}
