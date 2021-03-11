@@ -8,7 +8,6 @@ import Select from 'react-select';
 import { Category } from '../../../../../core/components/types/Product'
 
 import Upload from '../Upload'
-import { title } from 'node:process'
 
 type FormState = {
 	title: string;
@@ -25,7 +24,6 @@ type FormState = {
 	year: string;
 	edition: string;
 	categories: Category[];
-	image: File;
 }
 
 type ParamsType = {
@@ -42,7 +40,7 @@ const Form = () => {
 	const [selectedFile, setSelectedFile] = useState<File>();
 
 	const dataImg = new FormData();
-	if(selectedFile) {
+	if (selectedFile) {
 		dataImg.append('image', selectedFile);
 	}
 
@@ -81,27 +79,29 @@ const Form = () => {
 
 		const payLoad = {
 			...formData,
+			images: {id:dataImg}
 		}
 
 		console.log(payLoad)
+		console.log(selectedFile)
 
-		if (isEditing) {
-			makeRequest.put(`/products/${productId}`, payLoad)
-				.then(() => {
-					alert('Produto editado com sucesso')
-				})
-				.catch(() => {
-					alert('Produto não editado')
-				})
-		} else {
-			makeRequest.post(`/products`, payLoad)
-				.then(() => {
-					alert('Produto adicionado com sucesso')
-				})
-				.catch(() => {
-					alert('Produto não adicionado')
-				})
-		}
+		// if (isEditing) {
+		// 	makeRequest.put(`/products/${productId}`, payLoad)
+		// 		.then(() => {
+		// 			alert('Produto editado com sucesso')
+		// 		})
+		// 		.catch(() => {
+		// 			alert('Produto não editado')
+		// 		})
+		// } else {
+		// 	makeRequest.post(`/products`, payLoad)
+		// 		.then(() => {
+		// 			alert('Produto adicionado com sucesso')
+		// 		})
+		// 		.catch(() => {
+		// 			alert('Produto não adicionado')
+		// 		})
+		// }
 	}
 
 	return (
@@ -242,7 +242,9 @@ const Form = () => {
 						></textarea>
 
 						<div>
-							<Upload onFileUploaded={setSelectedFile} />
+							<Upload
+								onFileUploaded={setSelectedFile}
+							/>
 						</div>
 
 						{/* <input
