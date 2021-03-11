@@ -4,6 +4,7 @@ import './styles.scss'
 import { ReactComponent as ArrowIcon } from '../../../../core/assets/images/arrow.svg'
 import makeRequest from '../../../../services/api';
 import { Product } from '../../../../core/components/types/Product'
+import Carousel from '../../../../core/components/Carousel'
 
 type ParamsType = {
 	productId: string;
@@ -32,11 +33,12 @@ export const ProductDetails = () => {
 				<div className="row">
 					{
 						<div className="col-6 pr-5">
-							<div className="product-details-card text-center">
+							<Carousel />
+							{/* <div className="product-details-card text-center">
 								{product?.images.map(image => (
 									image.principal && <img src={image.imgUrl} alt={image.imgUrl} className="product-details-image" />
 								))}
-							</div>
+							</div> */}
 							<h1 className="product-details-name">
 								{product?.title}
 							</h1>
