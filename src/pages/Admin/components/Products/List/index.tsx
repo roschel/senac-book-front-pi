@@ -70,7 +70,9 @@ const List: React.FC = () => {
                     totalPages={productResponse.totalPages}
                     activePage={activePage}
                     onChange={page => setActivePage(page)}
+                    
                 />
+                
             )}
         </div>
     )
