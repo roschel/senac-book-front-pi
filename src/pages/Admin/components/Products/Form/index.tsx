@@ -7,6 +7,8 @@ import { useParams } from 'react-router'
 import Select from 'react-select';
 import { Category } from '../../../../../core/components/types/Product'
 
+import Upload from '../Upload'
+
 type FormState = {
 	title: string;
 	description: string;
@@ -35,6 +37,12 @@ const Form = () => {
 	const isEditing = productId !== 'create'
 	const formTitle = isEditing ? 'EDITAR PRODUTO' : 'CADASTRAR PRODUTO';
 	const [disabled, setDisabled] = useState(true);
+	const [selectedFile, setSelectedFile] = useState<File>();
+
+	const dataImg = new FormData();
+	if (selectedFile) {
+		dataImg.append('image', selectedFile);
+	}
 
 	useEffect(() => {
 		if (isEditing) {
@@ -71,27 +79,29 @@ const Form = () => {
 
 		const payLoad = {
 			...formData,
+			images: {id:dataImg}
 		}
 
 		console.log(payLoad)
+		console.log(selectedFile)
 
-		if (isEditing) {
-			makeRequest.put(`/products/${productId}`, payLoad)
-				.then(() => {
-					alert('Produto editado com sucesso')
-				})
-				.catch(() => {
-					alert('Produto não editado')
-				})
-		} else {
-			makeRequest.post(`/products`, payLoad)
-				.then(() => {
-					alert('Produto adicionado com sucesso')
-				})
-				.catch(() => {
-					alert('Produto não adicionado')
-				})
-		}
+		// if (isEditing) {
+		// 	makeRequest.put(`/products/${productId}`, payLoad)
+		// 		.then(() => {
+		// 			alert('Produto editado com sucesso')
+		// 		})
+		// 		.catch(() => {
+		// 			alert('Produto não editado')
+		// 		})
+		// } else {
+		// 	makeRequest.post(`/products`, payLoad)
+		// 		.then(() => {
+		// 			alert('Produto adicionado com sucesso')
+		// 		})
+		// 		.catch(() => {
+		// 			alert('Produto não adicionado')
+		// 		})
+		// }
 	}
 
 	return (
@@ -230,6 +240,12 @@ const Form = () => {
 							placeholder="Descrição"
 							disabled={!disabled}
 						></textarea>
+
+						<div>
+							<Upload
+								onFileUploaded={setSelectedFile}
+							/>
+						</div>
 
 						{/* <input
 							type="file"
