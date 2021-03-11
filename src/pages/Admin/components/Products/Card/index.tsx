@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Product } from '../../../../../core/components/types/Product';
 import './styles.scss';
+import StarsRating from '../../../../../core/components/StarsRating/index';
 
 type Props = {
     product: Product;
@@ -39,7 +40,11 @@ const Card = ({ product, onDisabled, buttonTitle }: Props) => {
                         <label className="product-card-author-label">Autor:</label>
                         <label>{product.author}</label>
                     </div>
-                    Id: {product.id}
+                    <div>
+                        <StarsRating
+                        rating={product.rating}
+                        />
+                    </div>
                 </div>
                 <div className="col-3 mt-2">
                     <Link

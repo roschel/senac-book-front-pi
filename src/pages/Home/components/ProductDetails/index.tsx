@@ -4,6 +4,7 @@ import './styles.scss'
 import { ReactComponent as ArrowIcon } from '../../../../core/assets/images/arrow.svg'
 import makeRequest from '../../../../services/api';
 import { Product } from '../../../../core/components/types/Product'
+import StarsRating from '../../../../core/components/StarsRating/index';
 
 type ParamsType = {
 	productId: string;
