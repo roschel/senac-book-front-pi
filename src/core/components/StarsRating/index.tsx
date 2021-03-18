@@ -5,22 +5,17 @@ import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types'
 
 type Rating = {
-    rating: number;
+    rating: number | undefined;
 }
 
-export default function SimpleRating({rating}: Rating) {
-    const [value, setValue] = useState(1);
-    console.log(rating)
-    useEffect(() => {
-        setValue(rating)
-    }, [])
+export default function SimpleRating(rating: Rating) {
     return (
         <div>
             <Box component="fieldset" mb={3} borderColor="transparent">
                 <Typography component="legend">Avaliação</Typography>
                 <Rating
                     name="simple-controlled"
-                    value={value}
+                    value={rating.rating ? rating.rating : 0}
                     precision={0.1}
                 />
             </Box>

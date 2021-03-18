@@ -46,7 +46,7 @@ export const ProductDetails = () => {
 							</h1>
 							<div className="product-details-rating">
 								<StarsRating
-									rating={5}
+									rating={product?.rating}
 								/>
 							</div>
 							<div className="product-details-price mt-3">
