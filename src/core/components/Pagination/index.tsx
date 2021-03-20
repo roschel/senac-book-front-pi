@@ -4,6 +4,7 @@ import './styles.scss'
 import { generateList } from '../utils/list';
 import { FiChevronsLeft, FiChevronsRight } from "react-icons/fi";
 
+import ReactPaginate from 'react-paginate';
 
 
 type Props = {
@@ -13,39 +14,30 @@ type Props = {
 }
 
 const Pagination = ({ totalPages, activePage, onChange }: Props) => {
-    const items = generateList(totalPages);
-    const previousClass = totalPages > 0 && activePage > 0 ? 'page-active' : 'page-inactive'
-    const nextClass = (activePage+1) < totalPages ? 'page-active' : 'page-inactive'
+    
+    const renderIcon = (type: 'previous' | 'next') => (
+        <ArrowIcon
+            className={`pagination-${type}`}
+        />
+    )
 
     return (
         <div className="pagination-container">
-            <FiChevronsLeft
-                className={`pagination-initial ${previousClass}`}
-                onClick={() => onChange(0)}
-                size={40}
-            />
-            <ArrowIcon
-                className={`pagination-previous ${previousClass}`}
-                onClick={() => onChange(activePage - 1)}
-            />
-            {items.map(item => (
-                <div
-                    className={`pagination-item ${item === activePage ? 'active' : ''}`}
-                    key={item}
-                    onClick={() => onChange(item)}
-                >
-                    {item + 1}
-                </div>
-            ))}
 
-            <ArrowIcon
-                className={`pagination-next ${nextClass}`}
-                onClick={() => onChange(activePage + 1)}
-            />
-            <FiChevronsRight
-                className={`pagination-next ${nextClass}`}
-                onClick={() => onChange(totalPages - 1)}
-                size={40}
+            <ReactPaginate
+                pageCount={totalPages}
+                pageRangeDisplayed={3}
+                marginPagesDisplayed={1}
+                onPageChange={selectItem => onChange(selectItem.selected)}
+                containerClassName="pagination"
+                previousLabel={renderIcon("previous")}
+                nextLabel={renderIcon("next")}
+                pageLinkClassName="pagination-item"
+                breakClassName="pagination-item"
+                activeLinkClassName="active"
+                previousClassName={`page-active`}
+                nextClassName={`page-active`}
+                disabledClassName="page-inactive"
             />
         </div>
     );
