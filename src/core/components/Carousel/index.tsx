@@ -1,27 +1,33 @@
-import React, { Component, useState } from 'react';
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import React from 'react';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel'
-import imgTeste2 from '../../assets/images/slide2.jpg'
-import { Product } from '../types/Product';
+import { Image } from '../types/Product';
 
-type Props = {
-    product: Product;
+type ImagesProps = {
+	images: Image[] | undefined;
 }
 
-const DemoCarousel = ({ product }: Props) => {
-    
-    const x = product?.images.map(image => image.imgUrl)
-    
-    return (
-        <Carousel>
-            <div>
-                <img src={x.toString()} alt=""/>
-            </div>
-            <div>
-                <img src={imgTeste2} alt=""/>
-            </div>
-        </Carousel>
-    )
+const DemoCarousel = ({ images }: ImagesProps) => {
+
+	return (
+		<Carousel
+			centerMode={true}
+			autoPlay={true}
+			interval={3000}
+			infiniteLoop={true}
+			centerSlidePercentage={100}
+			stopOnHover={true}
+		>
+			{
+				images &&
+				images.map(image => (
+					<div>
+						<img src={image.imgUrl} alt={image.imgUrl} />
+					</div>
+				))
+			}
+		</Carousel>
+	)
 }
 
 export default DemoCarousel;

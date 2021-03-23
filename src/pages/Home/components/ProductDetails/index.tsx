@@ -36,12 +36,11 @@ export const ProductDetails = () => {
 					{
 						<div className="col-6 pr-5">
 							<div className="product-details-card text-center">
-								<DemoCarousel 
-									product={product}
+								<DemoCarousel
+									images={product?.images}
+									key={product?.id}
 								/>
-								{/* {product?.images.map(image => (
-									image.principal && <img src={image.imgUrl} alt={image.imgUrl} className="product-details-image" />
-								))} */}
+
 							</div>
 							<h1 className="product-details-name">
 								{product?.title}
@@ -49,6 +48,7 @@ export const ProductDetails = () => {
 							<div className="product-details-rating">
 								<StarsRating
 									rating={product?.rating}
+									key={product?.id}
 								/>
 							</div>
 							<div className="product-details-price mt-3">
