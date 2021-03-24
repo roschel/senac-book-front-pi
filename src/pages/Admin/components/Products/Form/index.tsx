@@ -37,12 +37,12 @@ const Form = () => {
 	const isEditing = productId !== 'create'
 	const formTitle = isEditing ? 'EDITAR PRODUTO' : 'CADASTRAR PRODUTO';
 	const [disabled, setDisabled] = useState(true);
-	const [selectedFile, setSelectedFile] = useState<File>();
+	const [urlImage, setUrlImage] = useState('');
 
-	const dataImg = new FormData();
-	if (selectedFile) {
-		dataImg.append('image', selectedFile);
-	}
+	// const dataImg = new FormData();
+	// if (selectedFile) {
+	// 	dataImg.append('image', selectedFile);
+	// }
 
 	useEffect(() => {
 		if (isEditing) {
@@ -83,7 +83,7 @@ const Form = () => {
 		}
 
 		console.log(payLoad)
-		console.log(selectedFile)
+		console.log(setUrlImage)
 
 		if (isEditing) {
 			makeRequest.put(`/products/${productId}`, payLoad)
@@ -103,6 +103,10 @@ const Form = () => {
 				})
 		}
 	}
+
+	const onUploadSuccess = (imgUrl: string) => {
+		setUrlImage(imgUrl);
+}
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
@@ -243,7 +247,8 @@ const Form = () => {
 
 						<div>
 							<Upload
-								onFileUploaded={setSelectedFile}
+								 onUploadSuccess={onUploadSuccess} 
+								 productImageUrl={urlImage}
 							/>
 						</div>
 

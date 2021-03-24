@@ -4,79 +4,92 @@ import './styles.scss'
 import { FiUpload } from 'react-icons/fi'
 import makeRequest from '../../../../../services/api'
 
-interface Props {
-  onFileUploaded: (file: File) => void;
+type Props = {
+  onUploadSuccess: (imgUrl: string) => void;
+  productImageUrl: string;
 }
 
-type AwsProps = {
-  uri: string;
-  principal: string
-}
-
-const Upload: React.FC<Props> = ({ onFileUploaded }) => {
-  const [selectedFileUrl, setSelectedFileUrl] = useState<AwsProps[]>();
-  const [arrayDeImagens, setArrayDeimagens] = useState<AwsProps[]>();
+const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [urlImage, setUrlImage] = useState([]);
+  const imgUrl = urlImage || productImageUrl;
 
 
-  const uploadImage = (file: File) => {
-    const payload = new FormData();
-    payload.append('file', file);
-    payload.append('principal', "true")
+  const onUploadProgress = (progressEvent: ProgressEvent) => {
+    const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
 
-    console.log("PAYLOOOOOOOOOOOOAD", payload)
-
-    makeRequest.post('/images/image', payload)
-      .then(response => {
-        console.log(response.data)
-        setSelectedFileUrl(response.data)
-      })
-      .catch(() => { alert('deu ruim') })
+    setUploadProgress(progress);
   }
 
-  const onDrop = useCallback(acceptedFiles => {
-    console.log(acceptedFiles)
-    const file = acceptedFiles;
+  const uploadImage = (selectedImage: File) => {
+    const payload = new FormData();
+    payload.append('file', selectedImage);
 
-    if (file) {
-      console.log('entrei no if')
-      file.map((arquivo: File) => (
-        uploadImage(arquivo)
-      ))
+    makeRequest({
+      url: '/images/image',
+      method: 'POST',
+      data: payload,
+      onUploadProgress
+    })
+      .then(response => {
+        setUrlImage(response.data.uri);
+        onUploadSuccess(response.data.uri);
+      })
+      .catch(error => {
+        alert('ERRROOOOOOOOOOO')
+      })
+      .finally(() => setUploadProgress(0));
+  }
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedImage = event.target.files;
+    console.log('o que tem aqui?', selectedImage)
+
+    if (selectedImage) {
+      Array.from(selectedImage).forEach(image => { 
+        uploadImage(image)
+      });
     }
-    else {
-      console.log('nem entrei no if')
-    }
+  }
 
-
-    // onFileUploaded(file);
-  }, [onFileUploaded])
-
-  const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*' })
 
   return (
-    <>
-      <div className="dropzone" {...getRootProps()}>
-        <input {...getInputProps()} name="file" accept='image/*' />
-        <p>
-          <FiUpload />
-                Imagens do Produto
-            </p>
-        <br />
+    <div className="row">
+      <div className="col-6">
+        <div className="upload-button-container">
+          <input type="file" accept="image/png, image/jpg" id="upload" onChange={handleChange} multiple/>
+          <label htmlFor="upload" className="">ADICIONAR IMAGEM</label>
+        </div>
+        <small className="upload-text-helper text-primary">
+          A imagem deve ser  JPG ou PNG e não deve ultrapassar <strong>5 MB</strong>.
+              </small>
+      </div>
+      <div className="col-6 upload-placeholder">
+        
+        {
+          (imgUrl && uploadProgress === 0) && (
+            imgUrl.map(url => (
+              <img 
+                src={url}
+                alt={url}
+                className="upload-image"
+              />
+            ))
+          )
+
+
+          // (imgUrl && uploadProgress === 0) && (
+          //   <img
+          //     src={imgUrl}
+          //     alt={imgUrl}
+          //     className="uploaded-image" />
+          // )
+        }
 
       </div>
-      {selectedFileUrl && selectedFileUrl.map(foto =>(
-        <div className="row">
-          <div className="col-9">
-            <img src={foto.uri} alt="Imagem do produto" />
-          </div>
-          <div className="col-3">
-            <input type="radio" name="prinicpal" id="principal" value={foto.principal}/>
-            <label htmlFor="principal" className="ml-2">Capa</label>
-          </div>
-        </div>
-      ))}
-    </>
-  )
+
+    </div>
+  );
 }
 
-export default Upload;
+export default ImageUpload;
