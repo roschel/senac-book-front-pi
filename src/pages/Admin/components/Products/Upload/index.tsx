@@ -3,16 +3,23 @@ import { useDropzone } from 'react-dropzone'
 import './styles.scss'
 import { FiUpload } from 'react-icons/fi'
 import makeRequest from '../../../../../services/api'
+import { Image } from '../../../../../core/components/types/Product'
 
 type Props = {
-  onUploadSuccess: (imgUrl: string) => void;
-  productImageUrl: string;
+  onUploadSuccess: (imgUrl: Image[]) => void;
+  productImageUrl: Image[] | undefined;
+}
+
+type ImageProps = {
+  images: Image
 }
 
 const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [urlImage, setUrlImage] = useState([]);
-  const imgUrl = urlImage || productImageUrl;
+  const [urlImage, setUrlImage] = useState<ImageProps[]>();
+  const imgUrl: string[] = []
+  const retornandoUrl: ImageProps[] = []
+  const [urls, setUrls] = useState([''])
 
 
   const onUploadProgress = (progressEvent: ProgressEvent) => {
@@ -32,8 +39,11 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
       onUploadProgress
     })
       .then(response => {
-        setUrlImage(response.data.uri);
-        onUploadSuccess(response.data.uri);
+        // setUrlImage(response.data.uri);
+        console.log('response', response)
+        retornandoUrl.push(response.data)
+        onUploadSuccess(response.data);
+        imgUrl.push(response.data.imgUrl)
       })
       .catch(error => {
         alert('ERRROOOOOOOOOOO')
@@ -46,10 +56,13 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
     console.log('o que tem aqui?', selectedImage)
 
     if (selectedImage) {
-      Array.from(selectedImage).forEach(image => { 
+      Array.from(selectedImage).forEach(image => {
         uploadImage(image)
       });
     }
+    setUrlImage(retornandoUrl)
+    setUrls(imgUrl)
+    console.log("imgUrl3432", imgUrl)
   }
 
 
@@ -57,7 +70,7 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
     <div className="row">
       <div className="col-6">
         <div className="upload-button-container">
-          <input type="file" accept="image/png, image/jpg" id="upload" onChange={handleChange} multiple/>
+          <input type="file" accept="image/png, image/jpg" id="upload" onChange={handleChange} multiple />
           <label htmlFor="upload" className="">ADICIONAR IMAGEM</label>
         </div>
         <small className="upload-text-helper text-primary">
@@ -65,25 +78,19 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
               </small>
       </div>
       <div className="col-6 upload-placeholder">
-        
         {
-          (imgUrl && uploadProgress === 0) && (
-            imgUrl.map(url => (
-              <img 
-                src={url}
-                alt={url}
-                className="upload-image"
-              />
+          (urls && uploadProgress === 0) && (
+            urls.map(image => (
+              <div>
+                <img
+                  src={image}
+                  alt={image}
+                  className="uploaded-image"
+                />
+              </div>
+
             ))
           )
-
-
-          // (imgUrl && uploadProgress === 0) && (
-          //   <img
-          //     src={imgUrl}
-          //     alt={imgUrl}
-          //     className="uploaded-image" />
-          // )
         }
 
       </div>
