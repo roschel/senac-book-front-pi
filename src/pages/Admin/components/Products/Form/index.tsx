@@ -5,7 +5,7 @@ import './styles.scss'
 import { useForm, Controller } from 'react-hook-form'
 import { useParams } from 'react-router'
 import Select from 'react-select';
-import { Category } from '../../../../../core/components/types/Product'
+import { Category, Image } from '../../../../../core/components/types/Product'
 
 import Upload from '../Upload'
 
@@ -37,12 +37,12 @@ const Form = () => {
 	const isEditing = productId !== 'create'
 	const formTitle = isEditing ? 'EDITAR PRODUTO' : 'CADASTRAR PRODUTO';
 	const [disabled, setDisabled] = useState(true);
-	const [selectedFile, setSelectedFile] = useState<File>();
+	const [urlImage, setUrlImage] = useState<Image[]>();
 
-	const dataImg = new FormData();
-	if (selectedFile) {
-		dataImg.append('image', selectedFile);
-	}
+	// const dataImg = new FormData();
+	// if (selectedFile) {
+	// 	dataImg.append('image', selectedFile);
+	// }
 
 	useEffect(() => {
 		if (isEditing) {
@@ -62,6 +62,7 @@ const Form = () => {
 					setValue('edition', response.data.edition);
 					setValue('categories', response.data.categories);
 					setDisabled(response.data.status);
+					setUrlImage(response.data.images)
 				})
 		}
 
@@ -76,15 +77,17 @@ const Form = () => {
 	}, []);
 
 	const onSubmit = (formData: FormState) => {
+		const imgObjects = urlImage;
 
 		const payLoad = {
 			...formData,
-			// images: {id:dataImg}
+			images: imgObjects //[{id:1, imgUrl: http, principal:true}]
 		}
 
-		console.log(payLoad)
-		console.log(selectedFile)
-
+		console.log('payLoad',payLoad)
+		debugger
+		console.log(setUrlImage)
+		debugger
 		if (isEditing) {
 			makeRequest.put(`/products/${productId}`, payLoad)
 				.then(() => {
@@ -95,7 +98,8 @@ const Form = () => {
 				})
 		} else {
 			makeRequest.post(`/products`, payLoad)
-				.then(() => {
+				.then((response) => {
+					console.log(response)
 					alert('Produto adicionado com sucesso')
 				})
 				.catch(() => {
@@ -103,6 +107,11 @@ const Form = () => {
 				})
 		}
 	}
+
+	const onUploadSuccess = (imgUrl: Image[]) => {
+		console.log('imgUrl', imgUrl)
+		setUrlImage(imgUrl);
+}
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
@@ -243,7 +252,8 @@ const Form = () => {
 
 						<div>
 							<Upload
-								onFileUploaded={setSelectedFile}
+								 onUploadSuccess={onUploadSuccess} 
+								 productImageUrl={urlImage}
 							/>
 						</div>
 

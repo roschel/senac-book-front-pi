@@ -15,7 +15,6 @@ const Home: React.FC = () => {
   const getProducts = useCallback((filter?: FilterForm) => {
     const params = {
       page: activePage,
-      linesPerPage: 10,
       title: filter?.name
     }
 
