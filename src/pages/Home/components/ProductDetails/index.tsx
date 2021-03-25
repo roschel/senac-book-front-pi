@@ -34,7 +34,7 @@ export const ProductDetails = () => {
 				</Link>
 				<div className="row">
 					{
-						<div className="col-6 pr-5">
+						<div className="col-5 pr-3">
 							<div className="product-details-card text-center">
 								<DemoCarousel
 									images={product?.images}
@@ -57,7 +57,7 @@ export const ProductDetails = () => {
 						</div>
 					}
 
-					<div className="col-6">
+					<div className="col-7">
 						<div className="product-details-card">
 							{
 								<>
