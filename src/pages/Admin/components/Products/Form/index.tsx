@@ -251,7 +251,7 @@ const Form = () => {
 						<div>
 							<Upload
 								 onUploadSuccess={onUploadSuccess} 
-								//  productImageUrl={urlImage}
+								 productImageUrl={urlImage}
 							/>
 						</div>
 
