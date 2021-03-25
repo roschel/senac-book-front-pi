@@ -112,7 +112,7 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
                 />
               </div>
               <div className="col-6">
-                <input type="radio" id="principal" name="principal" onClick={handleClick} value={image.principal.toString()}/>
+                <input type="radio" id="principal" name="principal" onClick={handleClick} checked={image.principal}/>
                 <label htmlFor="principal">Capa</label>
               </div>
             </div>
