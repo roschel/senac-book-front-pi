@@ -76,15 +76,16 @@ const Form = () => {
 	}, []);
 
 	const onSubmit = (formData: FormState) => {
+		const imgObjects = urlImage;
 
 		const payLoad = {
 			...formData,
-			// images: {id:dataImg}
+			images: imgObjects
 		}
 
-		console.log(payLoad)
+		console.log('payLoad',payLoad)
 		console.log(setUrlImage)
-
+		debugger
 		if (isEditing) {
 			makeRequest.put(`/products/${productId}`, payLoad)
 				.then(() => {
@@ -250,7 +251,7 @@ const Form = () => {
 						<div>
 							<Upload
 								 onUploadSuccess={onUploadSuccess} 
-								 productImageUrl={urlImage}
+								//  productImageUrl={urlImage}
 							/>
 						</div>
 
