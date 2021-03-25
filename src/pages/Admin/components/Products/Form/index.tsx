@@ -62,6 +62,7 @@ const Form = () => {
 					setValue('edition', response.data.edition);
 					setValue('categories', response.data.categories);
 					setDisabled(response.data.status);
+					setUrlImage(response.data.images)
 				})
 		}
 
@@ -84,6 +85,7 @@ const Form = () => {
 		}
 
 		console.log('payLoad',payLoad)
+		debugger
 		console.log(setUrlImage)
 		debugger
 		if (isEditing) {

@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useCallback, useState } from 'react'
+import React, { MouseEventHandler, useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import './styles.scss'
 import { FiUpload } from 'react-icons/fi'
@@ -20,6 +20,17 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
   const imgUrl: string[] = []
   const retornandoUrl: Image[] = []
   const [urls, setUrls] = useState([''])
+
+  useEffect(()=>{
+    console.log('antes do if')
+    if (productImageUrl){
+      console.log('dentro do if')
+      console.log('productImageUrl', productImageUrl)
+      setUrlImage(productImageUrl)
+    }
+  },[productImageUrl])
+
+  
 
 
   const onUploadProgress = (progressEvent: ProgressEvent) => {
@@ -65,41 +76,56 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
     onUploadSuccess(retornandoUrl)
     console.log("imgUrl3432", imgUrl)
   }
+  
+  const handleClick = (event: React.InputHTMLAttributes<HTMLInputElement>) => {
+    console.log(event)
+  }
 
 
   return (
+    <>
     <div className="row">
       <div className="col-6">
         <div className="upload-button-container">
           <input type="file" accept="image/png, image/jpg" id="upload" onChange={handleChange} multiple />
           <label htmlFor="upload" className="">ADICIONAR IMAGEM</label>
         </div>
-        <div className="upload-placeholder">
-          {
-            (urls && uploadProgress === 0) && (
-              urls.map(image => (
-                <div>
-                  <img
-                    src={image}
-                    alt={image}
-                    className="uploaded-image"
-                  />
-                </div>
-
-              ))
-            )
-          }
-
-        </div>
-
       </div>
       <div className="col-6 upload-placeholder">
         <small className="upload-text-helper text-primary">
           A imagem deve ser  JPG ou PNG e não deve ultrapassar <strong>5 MB</strong>.
-              </small>
+        </small>
       </div>
 
     </div>
+    <div className="upload-placeholder">
+    {
+      (urlImage && uploadProgress === 0) && (
+        urlImage.map(image => (
+          <>
+            <div className="row">
+              <div className="col-6">
+                <img
+                  src={image.imgUrl}
+                  alt={image.imgUrl}
+                  className="uploaded-image"
+                />
+              </div>
+              <div className="col-6">
+                <input type="radio" id="principal" name="principal" onClick={handleClick} value={image.principal.toString()}/>
+                <label htmlFor="principal">Capa</label>
+              </div>
+            </div>
+
+          </>
+
+        ))
+      )
+    }
+
+  </div>
+  </>
+
   );
 }
 
