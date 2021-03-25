@@ -81,7 +81,7 @@ const Form = () => {
 
 		const payLoad = {
 			...formData,
-			images: imgObjects
+			images: imgObjects //[{id:1, imgUrl: http, principal:true}]
 		}
 
 		console.log('payLoad',payLoad)

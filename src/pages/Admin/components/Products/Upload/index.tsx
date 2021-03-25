@@ -77,8 +77,12 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
     console.log("imgUrl3432", imgUrl)
   }
   
-  const handleClick = (event: React.InputHTMLAttributes<HTMLInputElement>) => {
-    console.log(event)
+  const handleClick = (image:Image) => {
+    urlImage?.map(object => {
+      if (object.id === image.id){
+        object.principal = true
+      }
+    })
   }
 
 
@@ -112,7 +116,7 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
                 />
               </div>
               <div className="col-6">
-                <input type="radio" id="principal" name="principal" onClick={handleClick} checked={image.principal}/>
+                <input type="radio" id="principal" name="principal" onClick={() => handleClick(image)} checked={image.principal}/>
                 <label htmlFor="principal">Capa</label>
               </div>
             </div>
