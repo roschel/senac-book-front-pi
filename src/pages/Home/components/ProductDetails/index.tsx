@@ -15,7 +15,6 @@ export const ProductDetails = () => {
 	const { productId } = useParams<ParamsType>();
 	const [product, setProduct] = useState<Product>();
 	const [disabledButton, setDisabledButton] = useState(true);
-	const [value, setValue] = useState(1);
 
 	useEffect(() => {
 		makeRequest.get(`/products/${productId}`)

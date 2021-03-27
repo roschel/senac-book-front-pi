@@ -85,7 +85,6 @@ const Form = () => {
 		}
 
 		console.log('payLoad',payLoad)
-		debugger
 		console.log(setUrlImage)
 		debugger
 		if (isEditing) {
@@ -115,7 +114,7 @@ const Form = () => {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
-			<BaseForm title={formTitle}>
+			<BaseForm title={formTitle} buttonTitle={formTitle}>
 				<div className="row">
 					<div className="col-6">
 						<input
