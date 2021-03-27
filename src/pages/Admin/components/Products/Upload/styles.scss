@@ -1,86 +1,84 @@
 .dropzone {
-    height: 100%;
-    background: #dce0de;
+  height: 100%;
+  background: #dce0de;
+  border-radius: 10px;
+
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // margin-top: 48px;
+  // outline: 0;
+}
+
+.dropzone img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dropzone p {
+  width: calc(100% - 60px);
+  height: calc(100% - 60px);
+  border-radius: 10px;
+  border: 1px dashed #79ab7f;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+}
+
+.dropzone p svg {
+  color: #79ab7f;
+  width: 24px;
+  height: 24px;
+  margin-bottom: 8px;
+}
+
+.upload-button-container {
+  label {
+    background: #9e9e9e;
     border-radius: 10px;
-  
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    // margin-top: 48px;
-    // outline: 0;
-  }
-  
-  .dropzone img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .dropzone p {
-    width: calc(100% - 60px);
-    height: calc(100% - 60px);
-    border-radius: 10px;
-    border: 1px dashed #79ab7f;
-  
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: #333;
-  }
-  
-  .dropzone p svg {
-    color: #79ab7f;
-    width: 24px;
-    height: 24px;
-    margin-bottom: 8px;
-  }
+    color: #fff;
+    line-height: 19px;
+    text-align: center;
+    letter-spacing: -0.015em;
+    padding: 10px 30px;
 
-
-  .upload-button-container {
-
-    label {
-        background: #9E9E9E;
-        border-radius: 10px;
-        color: #FFF;
-        line-height: 19px;
-        text-align: center;
-        letter-spacing: -0.015em;
-        padding: 10px 30px;
-
-        &:hover {
-            cursor: pointer;
-            transform: scale(1.03);
-        }
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.03);
     }
+  }
 }
 
 .upload-text-helper {
-    font-size: 14px;
-    line-height: 19px;
-    letter-spacing: -0.015em;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: -0.015em;
 }
 
 .upload-placeholder {
-    
-    .upload-progress-container {
-        position: absolute;
-        bottom: 10px;
-        left: 28px;
-        height: 10px;
-        background: #e1e1e1;
-        width: 175px;
-        border-radius: 100px;
-    }
 
-    .upload-progress {
-        background: #407BFF;
-        border-radius: 10px;
-        height: 10px;
-    }
+  .upload-progress-container {
+    position: absolute;
+    bottom: 10px;
+    left: 28px;
+    height: 10px;
+    background: #e1e1e1;
+    width: 175px;
+    border-radius: 100px;
+  }
 
-    .uploaded-image {
-        width: 200px;
-        height: 200px;
-    }
+  .upload-progress {
+    background: #407bff;
+    border-radius: 10px;
+    height: 10px;
+  }
+
+  .uploaded-image {
+    width: 120px;
+    height: 160px;
+  }
 }

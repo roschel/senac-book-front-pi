@@ -1,8 +1,6 @@
 import React from 'react';
 import { ReactComponent as ArrowIcon } from '../../assets/images/arrow.svg'
 import './styles.scss'
-import { generateList } from '../utils/list';
-import { FiChevronsLeft, FiChevronsRight } from "react-icons/fi";
 
 import ReactPaginate from 'react-paginate';
 

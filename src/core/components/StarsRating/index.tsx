@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import PropTypes from 'prop-types'
 
-type Rating = {
+type RatingStars = {
     rating: number | undefined;
 }
 
-export default function SimpleRating(rating: Rating) {
+export default function SimpleRating(rating: RatingStars) {
     return (
         <div>
             <Box component="fieldset" mb={3} borderColor="transparent">

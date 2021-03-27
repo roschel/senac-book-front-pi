@@ -24,6 +24,7 @@ export type ProductsResponse = {
     id: number;
     imgUrl: string;
     principal: boolean
+    status: boolean
   }
   
   export type Category = {

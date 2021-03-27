@@ -7,10 +7,6 @@ type Props = {
 	product: Product;
 }
 
-type Rating = {
-    rating: number;
-}
-
 const ProductCard = ({ product }: Props) => (
 	<div className="card-base border-radius-10 product-card">
 		{product.images.map(image => (
