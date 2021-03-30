@@ -1,4 +1,3 @@
-import Search from '../../core/components/Search';
 import Form from './components/Form';
 import './styles.scss';
 
