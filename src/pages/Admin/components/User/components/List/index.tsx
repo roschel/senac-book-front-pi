@@ -4,7 +4,7 @@ import ProductFilters, { FilterForm } from '../../../../../../core/components/Se
 import makeRequest from '../../../../../../services/api';
 
 const List = () => {
-  const [productResponse, setProductsResponse] = useState();
+  const [userResponse, setUserResponse] = useState();
   const [activePage, setActivePage] = useState(0);
 
   const getUsers = useCallback((filter?: FilterForm) => {
@@ -15,12 +15,26 @@ const List = () => {
     }
 
     makeRequest.get("/users", { params })
-      .then(response => setProductsResponse(response.data))
+      .then(response => setUserResponse(response.data))
   }, [activePage])
 
   useEffect(() => {
     getUsers()
   }, [getUsers])
+
+  const onDisabled = (userId: number) => {
+    const confirmacao = window.confirm("Deseja alterar o status do usuário?")
+    if (confirmacao) {
+        makeRequest.delete(`/products/${userId}`)
+            .then(response => {
+                alert(`${response.data}`)
+                getUsers()
+            })
+            .catch(() => {
+                alert(`Erro ao inativar o usuário`)
+            })
+    }
+}
 
   return (
     <div>
