@@ -47,8 +47,8 @@ const List: React.FC = () => {
   }
 
   return (
-    <div>
-      <div>
+    <div className="admin-products-list">
+      <div className="d-flex mb-2">
         <Search
           onSearch={filter => getUsers(filter)}
           placeholder="usuário"
