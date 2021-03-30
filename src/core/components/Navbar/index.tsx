@@ -21,11 +21,6 @@ const Navbar = () => (
                         Login
                     </NavLink>
                 </li>
-                <li>
-                    <NavLink to="/user">
-                        User
-                    </NavLink>
-                </li>
             </ul>
         </div>
     </nav>
