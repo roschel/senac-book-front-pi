@@ -16,7 +16,6 @@ const Card = ({ user, onDisabled, buttonTitle }: Props) => {
     history.push(`/users/${userId}`)
   }
 
-  const Card = () => {
     return (
       <div className="card-base user-card-admin">
         <div className="row">
@@ -62,7 +61,7 @@ const Card = ({ user, onDisabled, buttonTitle }: Props) => {
       </div>
 
     )
-  }
+  
 }
 
 export default Card;
