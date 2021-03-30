@@ -59,9 +59,9 @@ const List: React.FC = () => {
             <div>
                 {productResponse?.content.map(product => (
                     product.status === true ? (
-                        <Card product={product} onDisabled={onDisabled} buttonTitle={'INATIVAR'} />
+                        <Card product={product} onDisabled={onDisabled} buttonTitle={'INATIVAR'} key={product.id}/>
                     ) : (
-                        <Card product={product} onDisabled={onDisabled} buttonTitle={'ATIVAR'} />
+                        <Card product={product} onDisabled={onDisabled} buttonTitle={'ATIVAR'} key={product.id}/>
                     )
                 ))}
             </div>
