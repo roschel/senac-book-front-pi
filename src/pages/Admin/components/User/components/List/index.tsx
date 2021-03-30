@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import ProductFilters, { FilterForm } from '../../../../../../core/components/ProductFilters';
+import Search from '../../../../../../core/components/Search';
+import ProductFilters, { FilterForm } from '../../../../../../core/components/Search';
 import makeRequest from '../../../../../../services/api';
 
 const List = () => {
@@ -23,7 +24,11 @@ const List = () => {
 
   return (
     <div>
-      <ProductFilters onSearch={filter => getUsers(filter)} />
+      <Search 
+        onSearch={filter => getUsers(filter)} 
+        placeholder="usuário" 
+        request="users" 
+      />
     </div>
   )
 }
