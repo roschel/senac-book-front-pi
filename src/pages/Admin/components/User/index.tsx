@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Search from '../../../../core/components/Search';
 import Form from './components/Form';
 import List from './components/List';
 import './styles.scss';

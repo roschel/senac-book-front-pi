@@ -1,18 +1,44 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
-import Card from '../../../pages/Admin/components/Products/Card/index';
-import { Link } from 'react-router-dom';
-import './styles.scss';
+import React, { useEffect, useState } from 'react'
+import makeRequest from '../../../services/api'
+import {ReactComponent as SearchIcon} from '../../assets/images/search-icon.svg'
+import './styles.scss'
 
-const Search = () => {
-
-    
-
-    return (
-        <div className="product-search">
-            <input className="input-product-search" type="search" placeholder="Digite o Título do Livro"/>
-        </div>
-    )
+export type FilterForm = {
+  name?: string;
 }
 
-export default Search;
+type Props = {
+  onSearch: (filter: FilterForm) => void;
+  placeholder:string;
+  request:string;
+}
+
+const Search = ({onSearch, placeholder, request}: Props) => {
+  const [, setName]= useState('');
+
+  useEffect(() =>{
+    makeRequest.get(`/${request}`)
+  })
+
+  const handleChangeName = (name:string) => {
+    setName(name);
+
+    onSearch({name})
+  }
+
+  return(
+    <div className="card-base product-filters-container">
+      <div className="input-search">
+        <input 
+          type="text"
+          className="form-control mr-2"
+          placeholder={`Pesquisar ${placeholder}`}
+          onChange={e => handleChangeName(e.target.value)}
+        />
+        <SearchIcon />
+      </div>
+    </div>
+  )
+}
+
+export default Search

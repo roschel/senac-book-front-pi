@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Pagination from '../../core/components/Pagination';
-import ProductFilters, { FilterForm } from '../../core/components/ProductFilters';
+import Search from '../../core/components/Search';
+import ProductFilters, { FilterForm } from '../../core/components/Search';
 import { ProductsResponse } from '../../core/components/types/Product';
 import makeRequest from '../../services/api';
 import ProductCard from './components/ProductCard';
@@ -28,7 +29,11 @@ const Home: React.FC = () => {
 
   return (
     <div className="home-conatiner">
-      <ProductFilters onSearch={filter => getProducts(filter)} />
+      <Search 
+        onSearch={filter => getProducts(filter)} 
+        placeholder="produto"
+        request="products"
+      />
       <div className="catalogo-livros">
         {productsResponse?.content.map(book => (
           <Link to={`/products/${book.id}`} key={book.id}>
