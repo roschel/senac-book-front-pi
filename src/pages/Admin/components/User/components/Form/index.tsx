@@ -43,6 +43,7 @@ const Form = () => {
 					setValue('password', response.data.password);
 					setValue('email', response.data.email);
 					setValue('roles', response.data.roles);
+					setDisabled(response.data.status)
 				})
 		}
 
