@@ -83,7 +83,7 @@ const Form = () => {
 							ref={register()}
 							type="text"
 							className="form-control mb-5"
-							name="user"
+							name="name"
 							placeholder="Nome do Usuário"
 							disabled={!disabled}
 						/>

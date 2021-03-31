@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useHistory } from 'react-router';
+import Pagination from '../../../../../../core/components/Pagination';
 import Search from '../../../../../../core/components/Search';
 import ProductFilters, { FilterForm } from '../../../../../../core/components/Search';
 import { UsersResponse } from '../../../../../../core/components/types/User';
@@ -59,14 +60,23 @@ const List: React.FC = () => {
       </button>
       </div>
       <div>
-        {/* {userResponse?.content.map(user => (
+        {userResponse?.content.map(user => (
           user.status === true ? (
             <Card user={user} onDisabled={onDisabled} buttonTitle={'INATIVAR'} key={user.id}/>
           ) : (
             <Card user={user} onDisabled={onDisabled} buttonTitle={'ATIVAR'} key={user.id} />
           )
-        ))} */}
+        ))}
       </div>
+      {userResponse && (
+                <Pagination
+                    totalPages={userResponse.totalPages}
+                    activePage={activePage}
+                    onChange={page => setActivePage(page)}
+                    
+                />
+                
+            )}
     </div>
   )
 }
