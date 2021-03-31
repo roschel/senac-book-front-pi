@@ -6,8 +6,8 @@ import Home from './pages/Home';
 import Navbar from './core/components/Navbar';
 import Admin from './pages/Admin';
 
-import CadastrarProduto from './pages/Admin/CadastrarProduto';
 import List from './pages/Admin/components/Products/List';
+import User from './pages/Admin/components/User';
 
 
 const Routes = () => (
@@ -26,9 +26,6 @@ const Routes = () => (
 			</Route>
 			<Route path="/Admin/products">
 				<List />
-			</Route>
-			<Route path="/Admin/cadastrar">
-				<CadastrarProduto />
 			</Route>
 		</Switch>
 	</BrowserRouter>

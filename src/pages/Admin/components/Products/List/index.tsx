@@ -5,7 +5,8 @@ import makeRequest from '../../../../../services/api';
 import { ProductsResponse } from '../../../../../core/components/types/Product';
 import Card from '../Card';
 import Pagination from '../../../../../core/components/Pagination';
-import ProductFilters, { FilterForm } from '../../../../../core/components/ProductFilters';
+import { FilterForm } from '../../../../../core/components/Search';
+import Search from '../../../../../core/components/Search';
 
 
 const List: React.FC = () => {
@@ -50,7 +51,11 @@ const List: React.FC = () => {
     return (
         <div className="admin-products-list">
             <div className="d-flex mb-2">
-                <ProductFilters onSearch={filter => getProducts(filter)} />
+                <Search 
+                  onSearch={filter => getProducts(filter)} 
+                  placeholder="produto"  
+                  request="products"
+                />
                 <button className="btn btn-primary btn-lg" onClick={handleCreate}>
                     ADICIONAR
                 </button>
@@ -59,9 +64,9 @@ const List: React.FC = () => {
             <div>
                 {productResponse?.content.map(product => (
                     product.status === true ? (
-                        <Card product={product} onDisabled={onDisabled} buttonTitle={'INATIVAR'} />
+                        <Card product={product} onDisabled={onDisabled} buttonTitle={'INATIVAR'} key={product.id}/>
                     ) : (
-                        <Card product={product} onDisabled={onDisabled} buttonTitle={'ATIVAR'} />
+                        <Card product={product} onDisabled={onDisabled} buttonTitle={'ATIVAR'} key={product.id}/>
                     )
                 ))}
             </div>
