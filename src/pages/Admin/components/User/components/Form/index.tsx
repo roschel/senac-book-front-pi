@@ -116,7 +116,7 @@ const Form = () => {
 
 						<input
 							ref={register()}
-							type="text"
+							type="password"
 							className="form-control mb-5"
 							name="password"
 							placeholder="Senha"
