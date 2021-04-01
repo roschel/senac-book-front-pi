@@ -8,6 +8,7 @@ import Admin from './pages/Admin';
 
 import List from './pages/Admin/components/Products/List';
 import User from './pages/Admin/components/User';
+import NavbarLeft from './pages/Admin/components/NavbarLeft';
 
 
 const Routes = () => (
