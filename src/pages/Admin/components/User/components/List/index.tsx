@@ -1,12 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import Pagination from '../../../../../../core/components/Pagination';
-import Search from '../../../../../../core/components/Search';
-import ProductFilters, { FilterForm } from '../../../../../../core/components/Search';
+import Search, { FilterForm } from '../../../../../../core/components/Search';
 import { UsersResponse } from '../../../../../../core/components/types/User';
 import makeRequest from '../../../../../../services/api';
 import Card from '../Card';
-
 
 const List: React.FC = () => {
   const [userResponse, setUserResponse] = useState<UsersResponse>();
@@ -48,7 +46,7 @@ const List: React.FC = () => {
   }
 
   return (
-    <div className="admin-products-list">
+    <div className="admin-user-list">
       <div className="d-flex mb-2">
         <Search
           onSearch={filter => getUsers(filter)}
@@ -62,21 +60,20 @@ const List: React.FC = () => {
       <div>
         {userResponse?.content.map(user => (
           user.status === true ? (
-            <Card user={user} onDisabled={onDisabled} buttonTitle={'INATIVAR'} key={user.id}/>
+            <Card user={user} onDisabled={onDisabled} buttonTitle={'INATIVAR'} key={user.id} />
           ) : (
             <Card user={user} onDisabled={onDisabled} buttonTitle={'ATIVAR'} key={user.id} />
           )
         ))}
       </div>
       {userResponse && (
-                <Pagination
-                    totalPages={userResponse.totalPages}
-                    activePage={activePage}
-                    onChange={page => setActivePage(page)}
-                    
-                />
-                
-            )}
+        <Pagination
+          totalPages={userResponse.totalPages}
+          activePage={activePage}
+          onChange={page => setActivePage(page)}
+        />
+
+      )}
     </div>
   )
 }

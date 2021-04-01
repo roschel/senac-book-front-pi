@@ -1,10 +1,11 @@
 export type User = {
     id: number;
+    cpf:string
     name: string;
     login: string;
     password: string;
-    email: string;
     status: boolean;
+    role: Role;
 }
 
 export type Role = {
