@@ -5,12 +5,24 @@ export type User = {
     login: string;
     password: string;
     status: boolean;
-    role: Role;
+    address: Address;
+    roles: Role[];
 }
 
 export type Role = {
     id: number;
     authority: string;
+}
+
+export type Address = {
+    id: number;
+    zipCode: string;
+    address: string;
+    number: number;
+    addressComplement: string;
+    city: string;
+    state: string;
+    country: string;
 }
 
 export type UsersResponse = {

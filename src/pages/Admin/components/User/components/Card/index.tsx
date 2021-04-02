@@ -43,7 +43,7 @@ const Card = ({ user, onDisabled, buttonTitle }: Props) => {
                 Autorização:
               </strong>
             </label>
-            <label>{user.role}</label>
+            <label>{user.roles}</label>
           </div>
         </div>
         <div className="col-3 mt-2">
