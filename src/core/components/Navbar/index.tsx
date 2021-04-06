@@ -17,7 +17,7 @@ const Navbar = () => (
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/admin">
+                    <NavLink to="/auth/login">
                         Login
                     </NavLink>
                 </li>

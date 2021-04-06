@@ -9,6 +9,7 @@ import Admin from './pages/Admin';
 import List from './pages/Admin/components/Products/List';
 import User from './pages/Admin/components/User';
 import NavbarLeft from './pages/Admin/components/NavbarLeft';
+import Auth from './pages/Auth';
 
 
 const Routes = () => (
@@ -18,15 +19,19 @@ const Routes = () => (
 			<Route path="/" exact>
 				<Home />
 			</Route>
+
 			<Route path="/products/:productId">
 				<ProductDetails />
 			</Route>
+
+			<Route path="/auth">
+				<Auth />
+			</Route>
+
 			<Redirect from="/admin" to="/admin/products" exact />
+
 			<Route path="/admin">
 				<Admin />
-			</Route>
-			<Route path="/Admin/products">
-				<List />
 			</Route>
 		</Switch>
 	</BrowserRouter>
