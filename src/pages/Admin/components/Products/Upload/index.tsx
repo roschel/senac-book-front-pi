@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './styles.scss'
-import makeRequest from '../../../../../services/api'
+import { makeRequest } from '../../../../../services/api'
 import { Image } from '../../../../../core/components/types/Product'
 
 type Props = {

@@ -6,9 +6,6 @@ import Home from './pages/Home';
 import Navbar from './core/components/Navbar';
 import Admin from './pages/Admin';
 
-import List from './pages/Admin/components/Products/List';
-import User from './pages/Admin/components/User';
-import NavbarLeft from './pages/Admin/components/NavbarLeft';
 import Auth from './pages/Auth';
 
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import './styles.scss'
 import { ReactComponent as ArrowIcon } from '../../../../core/assets/images/arrow.svg'
-import makeRequest from '../../../../services/api';
+import { makeRequest } from '../../../../services/api';
 import { Product } from '../../../../core/components/types/Product'
 import StarsRating from '../../../../core/components/StarsRating';
 import DemoCarousel from '../../../../core/components/Carousel';
@@ -17,7 +17,7 @@ export const ProductDetails = () => {
 	const [disabledButton, setDisabledButton] = useState(true);
 
 	useEffect(() => {
-		makeRequest.get(`/products/${productId}`)
+		makeRequest({url:`/products/${productId}`})
 			.then(response => {
 				setDisabledButton(response.data.status);
 				setProduct(response.data);

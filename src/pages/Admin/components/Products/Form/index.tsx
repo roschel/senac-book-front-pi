@@ -1,4 +1,4 @@
-import makeRequest from '../../../../../services/api'
+import { makeRequest } from '../../../../../services/api'
 import React, { useEffect, useState } from 'react'
 import BaseForm from '../../BaseForm'
 import './styles.scss'
@@ -46,7 +46,7 @@ const Form = () => {
 
 	useEffect(() => {
 		if (isEditing) {
-			makeRequest.get(`/products/${productId}`)
+			makeRequest({url: `/products/${productId}`, method:'GET'})
 				.then(response => {
 					setValue('title', response.data.title);
 					setValue('description', response.data.description);
@@ -69,7 +69,7 @@ const Form = () => {
 	}, [productId, isEditing, setValue])
 
 	useEffect(() => {
-		makeRequest.get('/categories')
+		makeRequest({url:'/categories', method:'GET'})
 			.then(response => setCategories(response.data.content))
 			.catch(() => {
 				alert("Ocorreu um problema ao carregar as categories")
@@ -88,7 +88,7 @@ const Form = () => {
 		console.log(setUrlImage)
 		debugger
 		if (isEditing) {
-			makeRequest.put(`/products/${productId}`, payLoad)
+			makeRequest({url: `/products/${productId}`, data: payLoad, method: 'PUT'})
 				.then(() => {
 					alert('Produto editado com sucesso')
 				})
@@ -96,7 +96,7 @@ const Form = () => {
 					alert('Produto não editado')
 				})
 		} else {
-			makeRequest.post(`/products`, payLoad)
+			makeRequest({url: `/products`, data: payLoad, method: 'POST'})
 				.then((response) => {
 					console.log(response)
 					alert('Produto adicionado com sucesso')

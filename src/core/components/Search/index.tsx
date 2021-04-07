@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import makeRequest from '../../../services/api'
+import {makeRequest} from '../../../services/api'
 import {ReactComponent as SearchIcon} from '../../assets/images/search-icon.svg'
 import './styles.scss'
 
@@ -17,7 +17,7 @@ const Search = ({onSearch, placeholder, request}: Props) => {
   const [, setName]= useState('');
 
   useEffect(() =>{
-    makeRequest.get(`/${request}`)
+    makeRequest({url:`/${request}`, method: "GET"})
   })
 
   const handleChangeName = (name:string) => {

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { useParams } from 'react-router'
+import { useHistory, useParams } from 'react-router'
 import Select from 'react-select'
 
-import { Category, Image } from '../../../../../../core/components/types/Product'
-import { Role } from '../../../../../../core/components/types/User'
-import makeRequest from '../../../../../../services/api'
+import { Roles } from '../../../../../../core/components/types/User'
+import { makePrivateRequest } from '../../../../../../services/api'
 import BaseForm from '../../../BaseForm'
-import Upload from '../../../Products/Upload'
 import './styles.scss'
 
 
@@ -17,8 +15,8 @@ type FormState = {
   endereco: string;
   login: string;
   password: string;
-  email: string;
-  roles: Role[];
+  status: boolean;
+  roles: Roles[];
 }
 
 type ParamsType = {
@@ -27,33 +25,45 @@ type ParamsType = {
 
 const Form = () => {
   const { register, handleSubmit, setValue, control } = useForm<FormState>();
-  const { userId: userId } = useParams<ParamsType>();
+  const { userId } = useParams<ParamsType>();
   const isEditing = userId !== 'create'
   const formTitle = isEditing ? 'EDITAR USUÁRIO' : 'CADASTRAR USUÁRIO';
   const [disabled, setDisabled] = useState(true);
+  const [disabledLogin, setDisabledLogin] = useState(true);
+  const [roles, setRoles] = useState<Roles[]>([])
+  const history = useHistory();
 
   useEffect(() => {
     if (isEditing) {
-      makeRequest.get(`/users/${userId}`)
+      makePrivateRequest({ url: `/users/${userId}` })
         .then(response => {
           setValue('name', response.data.name);
           setValue('cpf', response.data.cpf);
           setValue('login', response.data.login);
           setValue('password', response.data.password);
-          setValue('email', response.data.email);
-          setValue('zipCode', response.data.address.zipCode)
-          setValue('address', response.data.address.address)
-          setValue('number', response.data.address.number)
-          setValue('addressComplement', response.data.address.addressComplement)
-          setValue('city', response.data.address.city)
-          setValue('state', response.data.address.state)
-          setValue('country', response.data.address.country)
+          setValue('status', response.data.status);
+          // setValue('zipCode', response.data.address.zipCode)
+          // setValue('address', response.data.address.address)
+          // setValue('number', response.data.address.number)
+          // setValue('addressComplement', response.data.address.addressComplement)
+          // setValue('city', response.data.address.city)
+          // setValue('state', response.data.address.state)
+          // setValue('country', response.data.address.country)
           setValue('roles', response.data.roles);
           setDisabled(response.data.status)
+          setDisabledLogin(false)
         })
     }
 
   }, [userId, isEditing, setValue])
+
+  useEffect(() => {
+    makePrivateRequest({ url: '/roles' })
+      .then(response => setRoles(response.data))
+      .catch(() => {
+        alert("Ocorreu um problema ao carregar as permissões")
+      })
+  }, []);
 
 
   const onSubmit = (formData: FormState) => {
@@ -61,18 +71,22 @@ const Form = () => {
       ...formData
     }
 
+    console.log('paylooooooooooooooooooad', payLoad)
+
     if (isEditing) {
-      makeRequest.put(`/users/${userId}`, payLoad)
+      makePrivateRequest({ url: `/users/${userId}`, data: payLoad, method: "PUT" })
         .then(() => {
-          alert('Usuário editado com sucesso')
+          // alert('Usuário editado com sucesso')
+          history.push(`/admin/users`)
         })
         .catch(() => {
           alert('Usuário não editado')
         })
     } else {
-      makeRequest.post(`/users`, payLoad)
-        .then((response) => {
-          alert('Usuário adicionado com sucesso')
+      makePrivateRequest({ url: `/users`, data: payLoad, method: "POST" })
+        .then(() => {
+          // alert('Usuário adicionado com sucesso')
+          history.push('/admin/users')
         })
         .catch(() => {
           alert('Usuário não adicionado')
@@ -184,7 +198,7 @@ const Form = () => {
               className="form-control mb-3"
               name="login"
               placeholder="Login: exemplo@email.com"
-              disabled={!disabled}
+              disabled={!disabled || !disabledLogin}
             />
           </div>
           <div className="col-6">
@@ -197,6 +211,32 @@ const Form = () => {
               disabled={!disabled}
             />
           </div>
+        </div>
+        <div className="row">
+          <div className="col-6">
+            <Controller
+              as={Select}
+              defaultValue=""
+              name="roles"
+              rules={{ required: true }}
+              control={control}
+              options={roles}
+              getOptionLabel={(option: Roles) => option.authority}
+              getOptionValue={(option: Roles) => String(option.id)}
+              classNamePrefix="roles-select"
+              placeholder="Permissões"
+              isMulti
+              isDisabled={!disabled}
+            />
+          </div>
+          <input
+							ref={register()}
+							type="checkbox"
+							className="form-check-input"
+							name="status"
+							disabled={!disabled}
+              hidden
+						/>
         </div>
       </BaseForm>
     </form>
