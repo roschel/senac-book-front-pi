@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import './styles.scss'
 import { useHistory } from 'react-router-dom'
-import makeRequest from '../../../../../services/api';
+import { makeRequest } from '../../../../../services/api';
 import { ProductsResponse } from '../../../../../core/components/types/Product';
 import Card from '../Card';
 import Pagination from '../../../../../core/components/Pagination';
@@ -26,7 +26,7 @@ const List: React.FC = () => {
             title: filter?.name
         }
 
-        makeRequest.get("/products", { params })
+      makeRequest({url: "/products", params })
             .then(response => setProductsResponse(response.data))
     }, [activePage])
 
@@ -37,7 +37,7 @@ const List: React.FC = () => {
     const onDisabled = (productId: number) => {
         const confirma = window.confirm("Deseja alterar o status do produto?")
         if (confirma) {
-            makeRequest.delete(`/products/${productId}`)
+          makeRequest({url: `/products/${productId}`, method:"delete"})
                 .then(response => {
                     alert(`${response.data}`)
                     getProducts()

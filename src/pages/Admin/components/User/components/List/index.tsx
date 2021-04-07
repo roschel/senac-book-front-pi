@@ -3,7 +3,8 @@ import { useHistory } from 'react-router';
 import Pagination from '../../../../../../core/components/Pagination';
 import Search, { FilterForm } from '../../../../../../core/components/Search';
 import { UsersResponse } from '../../../../../../core/components/types/User';
-import makeRequest from '../../../../../../services/api';
+import { isAllowedRole } from '../../../../../../core/components/utils/auth';
+import { makePrivateRequest } from '../../../../../../services/api';
 import Card from '../Card';
 
 const List: React.FC = () => {
@@ -23,8 +24,12 @@ const List: React.FC = () => {
       title: filter?.name
     }
 
-    makeRequest.get("/users", { params })
-      .then(response => setUserResponse(response.data))
+    makePrivateRequest({ url: "/users", params })
+      .then(response => {
+        setUserResponse(response.data)
+        console.log(response)
+      })
+      .catch(error => console.log('error', error))
   }, [activePage])
 
   useEffect(() => {
@@ -34,7 +39,7 @@ const List: React.FC = () => {
   const onDisabled = (userId: number) => {
     const confirmacao = window.confirm("Deseja alterar o status do usuário?")
     if (confirmacao) {
-      makeRequest.delete(`/users/${userId}`)
+      makePrivateRequest({ url: `/users/${userId}`, method: "DELETE" })
         .then(response => {
           alert(`${response.data}`)
           getUsers()
@@ -53,9 +58,11 @@ const List: React.FC = () => {
           placeholder="usuário"
           request="users"
         />
-        <button className="btn btn-primary btn-lg" onClick={handleCreate}>
-          ADICIONAR
-      </button>
+        {isAllowedRole(['ROLE_ADMIN']) && (
+          <button className="btn btn-primary btn-lg" onClick={handleCreate}>
+            ADICIONAR
+          </button>
+        )}
       </div>
       <div>
         {userResponse?.content.map(user => (

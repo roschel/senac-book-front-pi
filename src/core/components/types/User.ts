@@ -1,15 +1,14 @@
 export type User = {
     id: number;
-    cpf:string
     name: string;
+    cpf:string
     login: string;
     password: string;
     status: boolean;
-    address: Address;
-    roles: Role[];
+    roles: Roles[];
 }
 
-export type Role = {
+export type Roles = {
     id: number;
     authority: string;
 }

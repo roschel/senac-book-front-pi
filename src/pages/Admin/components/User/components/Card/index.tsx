@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Role, User } from '../../../../../../core/components/types/User';
+import { User } from '../../../../../../core/components/types/User';
+import { isAllowedRole } from '../../../../../../core/components/utils/auth';
 import './styles.scss';
 
 type Props = {
@@ -43,37 +44,32 @@ const Card = ({ user, onDisabled, buttonTitle }: Props) => {
                 Autorização:
               </strong>
             </label>
-            <label>{user.roles}</label>
+            {user.roles.map(role => (
+              <label>{role.authority}</label>
+            ))}
           </div>
         </div>
-        <div className="col-3 mt-2">
-          <Link
-            to={`/admin/users/${user.id}`}
-            type="button"
-            className="btn btn-outline-secondary"
-          >
-            EDITAR
-                    </Link>
+        {isAllowedRole(['ROLE_ADMIN']) && (
 
-          <button
-            type="button"
-            className="btn btn-outline-danger ml-2"
-            onClick={() => onDisabled(user.id)}
-          >
-            {buttonTitle}
-          </button>
+          <div className="col-3 offset-2 mt-2">
+            <Link
+              to={`/admin/users/${user.id}`}
+              type="button"
+              className="btn btn-outline-secondary"
+            >
+              EDITAR
+          </Link>
 
-          <div>
             <button
               type="button"
-              className="btn btn-outline-info mt-2"
-              onClick={() => handleOnClick(user.id)}
+              className="btn btn-outline-danger ml-2"
+              onClick={() => onDisabled(user.id)}
             >
-              VISUALIZAR
-                        </button>
-          </div>
+              {buttonTitle}
+            </button>
 
-        </div>
+          </div>
+        )}
       </div>
     </div>
 

@@ -1,7 +1,8 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
-import makeRequest from '../../../../services/api';
+import { useHistory } from 'react-router';
+import { saveSessionData } from '../../../../core/components/utils/auth';
+import {makeLogin} from '../../../../services/api';
 import AuthCard from '../Card';
 import './styles.scss';
 
@@ -12,13 +13,21 @@ type FormState={
 
 const Login = () => {
   const { register, handleSubmit } = useForm<FormState>();
+  const history = useHistory();
 
   const onSubmit = (data: FormState) => {
+    console.log('data', data)
     
-    makeRequest.post('/auth/login', data)
+    makeLogin(data)
       .then(response => {
-        console.log(response)
+        console.log('response',response)
+        saveSessionData(response.data)
+        history.push('/admin/products')
       })
+  }
+
+  const handleCancel = () => {
+    history.push('/')
   }
 
 
@@ -52,7 +61,7 @@ const Login = () => {
           </div>
 
           <div className="text-center">
-            <button className="btn btn-danger border-radius-10">
+            <button className="btn btn-danger border-radius-10" onClick={handleCancel}>
               Cancelar
             </button>
 
