@@ -1,6 +1,6 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import Auth from '../Auth';
+import { Switch } from 'react-router-dom';
+import PrivateRoute from '../../core/components/Routes/PrivateRoute';
 import NavbarLeft from './components/NavbarLeft';
 import Products from './components/Products';
 import User from './components/User';
@@ -11,16 +11,12 @@ const Admin = () => (
         <NavbarLeft />
         <div className="admin-content">
             <Switch>
-                <Route path="/admin/login">
-                    <Auth />
-                </Route>
-                <Route path="/admin/products">
+                <PrivateRoute path="/admin/products">
                     <Products />
-                </Route>
-                <Route path="/admin/users">
+                </PrivateRoute>
+                <PrivateRoute path="/admin/users">
                     <User />
-                </Route>
-                
+                </PrivateRoute>
             </Switch>
         </div>
     </div>

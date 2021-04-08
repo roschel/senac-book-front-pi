@@ -10,7 +10,7 @@ type Props = {
 const ProductCard = ({ product }: Props) => (
 	<div className="card-base border-radius-10 product-card">
 		{product.images.map(image => (
-			image.principal && <img src={image.imgUrl} alt={image.imgUrl} className="product-card-image" />
+			image.principal && <img src={image.imgUrl} alt={image.imgUrl} className="product-card-image" key={image.id} />
 		))}
 
 		<div className="product-info">
