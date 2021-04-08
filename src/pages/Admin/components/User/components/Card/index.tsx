@@ -40,7 +40,7 @@ const Card = ({ user, onDisabled, buttonTitle }: Props) => {
               </strong>
             </label>
             {user.roles.map(role => (
-              <label>{role.authority}</label>
+              <label className="ml-2">{role.authority}</label>
             ))}
           </div>
         </div>
