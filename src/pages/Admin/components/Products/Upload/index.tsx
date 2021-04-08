@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './styles.scss'
-import { makeRequest } from '../../../../../services/api'
+import { makePrivateRequest } from '../../../../../services/api'
 import { Image } from '../../../../../core/components/types/Product'
 
 type Props = {
@@ -34,7 +34,7 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
     const payload = new FormData();
     payload.append('file', selectedImage);
 
-    makeRequest({
+    makePrivateRequest({
       url: '/images/image',
       method: 'POST',
       data: payload,
@@ -96,7 +96,7 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
           }
 
 
-          makeRequest({
+          makePrivateRequest({
             url: `/images/image/${id}`,
             method: 'DELETE',
           })
