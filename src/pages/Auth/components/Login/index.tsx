@@ -21,8 +21,17 @@ const Login = () => {
     makeLogin(data)
       .then(response => {
         console.log('response',response)
+        if(!response.data.userStatus) {
+          history.push('/auth/login')
+          alert('Usuário ${response.data.login} se encontra desativado')
+          return
+        }
         saveSessionData(response.data)
         history.push('/admin/products')
+      })
+      .catch(e => {
+        console.log('erro', e)
+        alert('usuário ou senha incorretos')
       })
   }
 

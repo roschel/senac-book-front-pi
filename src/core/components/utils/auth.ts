@@ -46,6 +46,18 @@ export const getAccessTokenDecoded = () => {
   }
 }
 
+export const isTokenValid = () => {
+  const {exp} = getAccessTokenDecoded();
+
+  return(Date.now() <= exp * 1000)
+}
+
+export const isAuthenticated = () => {
+  const {access_token} = getSessionData();
+
+  return access_token && isTokenValid();
+}
+
 export const isAllowedRole = (routesRoles: Role[]=[]) => {
   if (routesRoles.length === 0){
     return true

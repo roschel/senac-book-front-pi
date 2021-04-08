@@ -12,11 +12,6 @@ type Props = {
 
 const Card = ({ user, onDisabled, buttonTitle }: Props) => {
 
-  const history = useHistory();
-  const handleOnClick = (userId: number) => {
-    history.push(`/users/${userId}`)
-  }
-
   return (
     <div className="card-base user-card-admin">
       <div className="row">
