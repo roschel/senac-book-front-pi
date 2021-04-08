@@ -23,7 +23,7 @@ const Login = () => {
         console.log('response',response)
         if(!response.data.userStatus) {
           history.push('/auth/login')
-          alert('Usuário ${response.data.login} se encontra desativado')
+          alert(`Usuário ${response.data.login} se encontra desativado`)
           return
         }
         saveSessionData(response.data)

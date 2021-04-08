@@ -198,7 +198,7 @@ const Form = () => {
               className="form-control mb-3"
               name="login"
               placeholder="Login: exemplo@email.com"
-              disabled={!disabled || !disabledLogin}
+              readOnly={!disabled || !disabledLogin}
             />
           </div>
           <div className="col-6">
