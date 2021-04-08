@@ -105,7 +105,6 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
       }
       productImageUrl = imageObject
       console.log('productImageUrl', productImageUrl)
-      debugger
       setUpdate(true)
     }
   }
