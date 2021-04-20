@@ -20,4 +20,5 @@ export type Address = {
     city: string;
     state: string;
     country: string;
+    payment: boolean;
 }
