@@ -17,6 +17,11 @@ const Navbar = () => (
                     </NavLink>
                 </li>
                 <li>
+                    <NavLink to="/client/register">
+                        Cadastre-se
+                    </NavLink>
+                </li>
+                <li>
                     <NavLink to="/auth/login">
                         Login
                     </NavLink>
