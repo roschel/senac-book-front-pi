@@ -8,7 +8,7 @@ import Admin from './pages/Admin';
 
 import Auth from './pages/Auth';
 
-import Register from './pages/Client/components/Register'
+import Register from './pages/Client/components/Form'
 
 
 const Routes = () => (
