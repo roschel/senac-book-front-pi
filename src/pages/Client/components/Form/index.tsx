@@ -1,9 +1,10 @@
+import axios from 'axios';
 import { type } from 'node:os';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
 import { Address } from '../../../../core/components/types/Client';
-import { makePrivateRequest } from '../../../../services/api';
+import { makePrivateRequest, makeRequest } from '../../../../services/api';
 import BaseForm from '../../../Admin/components/BaseForm';
 import './styles.scss';
 
@@ -30,6 +31,11 @@ const Register = () => {
     const [disabledCpf, setDisabledCpf] = useState(true);
     const [disabledLogin, setDisabledLogin] = useState(true);
     const history = useHistory();
+    const [logradouro, setLogradouro] = useState();
+    const [cidade, setCidade] = useState();
+    const [estado, setEstado] = useState();
+    const [bairro, setBairro] = useState();
+
 
     useEffect(() => {
         if (isEditing) {
@@ -82,11 +88,27 @@ const Register = () => {
         }
     }
 
+    const onBlurCep = (cep: string) => {
+        console.log("cep", cep, typeof cep)
+        axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+            .then(response => {
+                console.log(response)
+                setLogradouro(response.data.logradouro)
+                setCidade(response.data.localidade)
+                setEstado(response.data.uf)
+                setBairro(response.data.bairro)
+            })
+
+    }
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="form-client">
             <BaseForm title={formTitle} buttonTitle={formTitle}>
+                <label>Dados Pessoais</label>
                 <div className="row">
+
                     <div className="col-6">
+
                         <input
                             ref={register()}
                             className="form-control mb-3"
@@ -96,7 +118,7 @@ const Register = () => {
                         />
 
                         <input
-                            className="form-control mb-3"
+                            className="form-control mb-5"
                             type="text" placeholder="CPF"
                             disabled={!disabledCpf}
                         />
@@ -105,26 +127,21 @@ const Register = () => {
                     <div className="col-6">
                         <input
                             ref={register()}
-                            className="form-control mb-3"
+                            className="form-control mb-5"
                             type="text"
                             name="lastName"
                             placeholder="Sobrenome"
                         />
-                        <input
-                            className="form-control mb-5"
-                            type="text"
-                            name="login"
-                            placeholder="Email"
-                            disabled={!disabledLogin}
-                        />
+
                     </div>
                 </div>
-
+                
                 <div className="row">
                     <div className="col-6">
                         <input
                             ref={register()}
                             className="form-control mb-3"
+                            onBlur={e => onBlurCep(e.target.value)}
                             name="zipCode"
                             type="text"
                             placeholder="CEP"
@@ -146,6 +163,7 @@ const Register = () => {
                             name="address"
                             type="text"
                             placeholder="Logradouro"
+                            value={logradouro}
                         />
                         <input
                             ref={register()}
@@ -166,6 +184,7 @@ const Register = () => {
                             name="city"
                             type="text"
                             placeholder="Cidade"
+                            value={cidade}
                         />
 
                     </div>
@@ -176,6 +195,7 @@ const Register = () => {
                             name="state"
                             type="text"
                             placeholder="Estado"
+                            value={estado}
                         />
 
                     </div>
@@ -183,9 +203,10 @@ const Register = () => {
                         <input
                             ref={register()}
                             className="form-control mb-5"
-                            name="country"
+                            name="neighborhood"
                             type="text"
-                            placeholder="País"
+                            placeholder="Bairro"
+                            value={bairro}
                         />
 
                     </div>
@@ -210,6 +231,7 @@ const Register = () => {
                         <input
                             ref={register()}
                             className="form-control mb-3"
+                            onBlur={e => onBlurCep(e.target.value)}
                             name="zipCode"
                             type="text"
                             placeholder="CEP"
@@ -231,6 +253,7 @@ const Register = () => {
                             name="address"
                             type="text"
                             placeholder="Logradouro"
+                            value={logradouro}
                         />
                         <input
                             ref={register()}
@@ -251,6 +274,7 @@ const Register = () => {
                             name="city"
                             type="text"
                             placeholder="Cidade"
+                            value={cidade}
                         />
 
                     </div>
@@ -261,6 +285,7 @@ const Register = () => {
                             name="state"
                             type="text"
                             placeholder="Estado"
+                            value={estado}
                         />
 
                     </div>
@@ -268,9 +293,10 @@ const Register = () => {
                         <input
                             ref={register()}
                             className="form-control mb-5"
-                            name="country"
+                            name="couneighborhoodntry"
                             type="text"
-                            placeholder="País"
+                            placeholder="Bairro"
+                            value={bairro}
                         />
 
                     </div>
@@ -278,7 +304,7 @@ const Register = () => {
 
                 <div className="row">
                     <div className="col-8 client-login">
-                        <label className="titulo-card mt-2">Login</label>
+                        <label className="titulo-card mt-2">Dados de Acesso</label>
                         <input
                             className="form-control mb-2"
                             type="text"
