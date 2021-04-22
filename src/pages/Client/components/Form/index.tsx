@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { type } from 'node:os';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
@@ -9,318 +8,335 @@ import BaseForm from '../../../Admin/components/BaseForm';
 import './styles.scss';
 
 type FormState = {
-    id: number;
-    fistName: string;
-    lastName: string;
-    cpf: string;
-    login: string;
-    password: string;
-    status: boolean;
-    address: Address[];
+  id: number;
+  fistName: string;
+  lastName: string;
+  cpf: string;
+  login: string;
+  password: string;
+  status: boolean;
+  address: Address[];
 }
 
 type ParamsType = {
-    clientId: string;
+  clientId: string;
 }
 
 const Register = () => {
-    const { register, handleSubmit, setValue, control } = useForm<FormState>();
-    const { clientId } = useParams<ParamsType>();
-    const isEditing = clientId !== 'create'
-    const formTitle = isEditing ? 'EDITAR CLIENTE' : 'CADASTRAR CLIENTE';
-    const [disabledCpf, setDisabledCpf] = useState(true);
-    const [disabledLogin, setDisabledLogin] = useState(true);
-    const history = useHistory();
-    const [logradouro, setLogradouro] = useState();
-    const [cidade, setCidade] = useState();
-    const [estado, setEstado] = useState();
-    const [bairro, setBairro] = useState();
+  const { register, handleSubmit, setValue, control } = useForm<FormState>();
+  const { clientId } = useParams<ParamsType>();
+  const isEditing = clientId !== 'create'
+  const formTitle = 'CADASTRAR CLIENTE';
+  const [disabledCpf, setDisabledCpf] = useState(true);
+  const [disabledLogin, setDisabledLogin] = useState(true);
+  const history = useHistory();
+  const [logradouro, setLogradouro] = useState();
+  const [cidade, setCidade] = useState();
+  const [estado, setEstado] = useState();
+  const [bairro, setBairro] = useState();
 
 
-    useEffect(() => {
-        if (isEditing) {
-            makePrivateRequest({ url: `/clients/${clientId}` })
-                .then(response => {
-                    setValue('firstName', response.data.firstName);
-                    setValue('lastName', response.data.lastName);
-                    setValue('cpf', response.data.cpf);
-                    setValue('login', response.data.login);
-                    setValue('password', response.data.password);
-                    setValue('status', response.data.status);
-                    setValue('zipCode', response.data.address.zipCode)
-                    setValue('address', response.data.address.address)
-                    setValue('number', response.data.address.number)
-                    setValue('addressComplement', response.data.address.addressComplement)
-                    setValue('city', response.data.address.city)
-                    setValue('state', response.data.address.state)
-                    setValue('country', response.data.address.country)
-                    setValue('payment', response.data.address.payment)
-                    setDisabledCpf(false)
-                    setDisabledLogin(false)
-                })
-        }
-
-    }, [clientId, isEditing, setValue])
-
-    const onSubmit = (formData: FormState) => {
-        const payLoad = {
-            ...formData
-        }
-
-        console.log('paylooooooooooooooooooad', payLoad)
-
-        if (isEditing) {
-            makePrivateRequest({ url: `/clients/${clientId}`, data: payLoad, method: "PUT" })
-                .then(() => {
-                    history.push(`/`)
-                })
-                .catch(() => {
-                    alert('Usuário não editado')
-                })
-        } else {
-            makePrivateRequest({ url: `/clients`, data: payLoad, method: "POST" })
-                .then(() => {
-                    history.push('/')
-                })
-                .catch(() => {
-                    alert('Usuário não adicionado')
-                })
-        }
+  useEffect(() => {
+    if (isEditing) {
+      makePrivateRequest({ url: `/clients/${clientId}` })
+        .then(response => {
+          setValue('firstName', response.data.firstName);
+          setValue('lastName', response.data.lastName);
+          setValue('cpf', response.data.cpf);
+          setValue('login', response.data.login);
+          setValue('password', response.data.password);
+          setValue('status', response.data.status);
+          setValue('zipCode', response.data.address.zipCode)
+          setValue('address', response.data.address.address)
+          setValue('number', response.data.address.number)
+          setValue('addressComplement', response.data.address.addressComplement)
+          setValue('city', response.data.address.city)
+          setValue('state', response.data.address.state)
+          setValue('country', response.data.address.country)
+          setValue('payment', response.data.address.payment)
+          setDisabledCpf(false)
+          setDisabledLogin(false)
+        })
     }
 
-    const onBlurCep = (cep: string) => {
-        console.log("cep", cep, typeof cep)
-        axios.get(`https://viacep.com.br/ws/${cep}/json/`)
-            .then(response => {
-                console.log(response)
-                setLogradouro(response.data.logradouro)
-                setCidade(response.data.localidade)
-                setEstado(response.data.uf)
-                setBairro(response.data.bairro)
-            })
+  }, [clientId, isEditing, setValue])
 
+  const onSubmit = (formData: FormState) => {
+    const payLoad = {
+      ...formData,
+      roles:[{id:3}]
     }
 
-    return (
-        <form onSubmit={handleSubmit(onSubmit)} className="form-client">
-            <BaseForm title={formTitle} buttonTitle={formTitle}>
-                <label>Dados Pessoais</label>
-                <div className="row">
+    console.log('paylooooooooooooooooooad', payLoad)
 
-                    <div className="col-6">
+    // if (isEditing) {
+    //   makePrivateRequest({ url: `/clients/${clientId}`, data: payLoad, method: "PUT" })
+    //     .then(() => {
+    //       history.push(`/`)
+    //     })
+    //     .catch(() => {
+    //       alert('Usuário não editado')
+    //     })
+    // } else {
+    //   makePrivateRequest({ url: `/clients`, data: payLoad, method: "POST" })
+    //     .then(() => {
+    //       history.push('/')
+    //     })
+    //     .catch(() => {
+    //       alert('Usuário não adicionado')
+    //     })
+    // }
+  }
 
-                        <input
-                            ref={register()}
-                            className="form-control mb-3"
-                            type="text"
-                            name="firstName"
-                            placeholder="Nome"
-                        />
+  const onBlurCep = (cep: string) => {
+    console.log("cep", cep, typeof cep)
+    axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+      .then(response => {
+        console.log(response)
+        setLogradouro(response.data.logradouro)
+        setCidade(response.data.localidade)
+        setEstado(response.data.uf)
+        setBairro(response.data.bairro)
+      })
 
-                        <input
-                            className="form-control mb-5"
-                            type="text" placeholder="CPF"
-                            disabled={!disabledCpf}
-                        />
+  }
 
-                    </div>
-                    <div className="col-6">
-                        <input
-                            ref={register()}
-                            className="form-control mb-5"
-                            type="text"
-                            name="lastName"
-                            placeholder="Sobrenome"
-                        />
+  return (
+    <div className="container mt-3">
+      <form onSubmit={handleSubmit(onSubmit)} className="form-client">
+        <BaseForm title={formTitle} buttonTitle={formTitle}>
+          <label>Dados Pessoais</label>
+          <div className="row">
 
-                    </div>
-                </div>
-                
-                <div className="row">
-                    <div className="col-6">
-                        <input
-                            ref={register()}
-                            className="form-control mb-3"
-                            onBlur={e => onBlurCep(e.target.value)}
-                            name="zipCode"
-                            type="text"
-                            placeholder="CEP"
-                        />
-                        <input
-                            ref={register()}
-                            className="form-control mb-3"
-                            name="number"
-                            type="text"
-                            placeholder="Número"
-                        />
+            <div className="col-6">
 
-                    </div>
+              <input
+                ref={register()}
+                className="form-control mb-3"
+                type="text"
+                name="firstName"
+                placeholder="Nome"
+                tabIndex={1}
+              />
 
-                    <div className="col-6">
-                        <input
-                            ref={register()}
-                            className="form-control mb-3"
-                            name="address"
-                            type="text"
-                            placeholder="Logradouro"
-                            value={logradouro}
-                        />
-                        <input
-                            ref={register()}
-                            className="form-control mb-3"
-                            name="addressComplement"
-                            type="text"
-                            placeholder="Complemento"
-                        />
+              <input
+                className="form-control mb-5"
+                type="text" 
+                placeholder="CPF"
+                name="cpf"
+                disabled={!disabledCpf}
+                tabIndex={3}
+              />
 
-                    </div>
+            </div>
+            <div className="col-6">
+              <input
+                ref={register()}
+                className="form-control mb-5"
+                type="text"
+                name="lastName"
+                placeholder="Sobrenome"
+                tabIndex={2}
+              />
 
-                </div>
-                <div className="row">
-                    <div className="col-4">
-                        <input
-                            ref={register()}
-                            className="form-control mb-3"
-                            name="city"
-                            type="text"
-                            placeholder="Cidade"
-                            value={cidade}
-                        />
+            </div>
+          </div>
 
-                    </div>
-                    <div className="col-4">
-                        <input
-                            ref={register()}
-                            className="form-control mb-3"
-                            name="state"
-                            type="text"
-                            placeholder="Estado"
-                            value={estado}
-                        />
+          <div className="row">
+            <div className="col-6">
+              <input
+                ref={register()}
+                className="form-control mb-3"
+                onBlur={e => onBlurCep(e.target.value)}
+                name="zipCode"
+                type="text"
+                placeholder="CEP"
+                tabIndex={4}
+              />
+              <input
+                ref={register()}
+                className="form-control mb-3"
+                name="number"
+                type="text"
+                placeholder="Número"
+                tabIndex={6}
+              />
 
-                    </div>
-                    <div className="col-4">
-                        <input
-                            ref={register()}
-                            className="form-control mb-5"
-                            name="neighborhood"
-                            type="text"
-                            placeholder="Bairro"
-                            value={bairro}
-                        />
+            </div>
 
-                    </div>
-                </div>
+            <div className="col-6">
+              <input
+                ref={register()}
+                className="form-control mb-3"
+                name="address"
+                type="text"
+                placeholder="Logradouro"
+                value={logradouro}
+                tabIndex={5}
+              />
+              <input
+                ref={register()}
+                className="form-control mb-3"
+                name="addressComplement"
+                type="text"
+                placeholder="Complemento"
+                tabIndex={7}
+              />
 
-                <div className="row">
-                    <div className="col-6">
-                        <label className="titulo-card mt-2">Endereço de faturamento</label>
+            </div>
 
-                        <input
-                            ref={register()}
-                            className="input-copiar-endereco-faturamento"
-                            name="payment"
-                            type="checkbox"
-                        />
-                        Copiar endereço de entrega
-                    </div>
-                </div>
+          </div>
+          <div className="row">
+            <div className="col-4">
+              <input
+                ref={register()}
+                className="form-control mb-3"
+                name="city"
+                type="text"
+                placeholder="Cidade"
+                value={cidade}
+                tabIndex={8}
+              />
 
-                <div className="row">
-                    <div className="col-6">
-                        <input
-                            ref={register()}
-                            className="form-control mb-3"
-                            onBlur={e => onBlurCep(e.target.value)}
-                            name="zipCode"
-                            type="text"
-                            placeholder="CEP"
-                        />
-                        <input
-                            ref={register()}
-                            className="form-control mb-3"
-                            name="number"
-                            type="text"
-                            placeholder="Número"
-                        />
+            </div>
+            <div className="col-4">
+              <input
+                ref={register()}
+                className="form-control mb-3"
+                name="state"
+                type="text"
+                placeholder="Estado"
+                value={estado}
+                tabIndex={9}
+              />
 
-                    </div>
+            </div>
+            <div className="col-4">
+              <input
+                ref={register()}
+                className="form-control mb-5"
+                name="neighborhood"
+                type="text"
+                placeholder="Bairro"
+                value={bairro}
+                tabIndex={10}
+              />
 
-                    <div className="col-6">
-                        <input
-                            ref={register()}
-                            className="form-control mb-3"
-                            name="address"
-                            type="text"
-                            placeholder="Logradouro"
-                            value={logradouro}
-                        />
-                        <input
-                            ref={register()}
-                            className="form-control mb-3"
-                            name="addressComplement"
-                            type="text"
-                            placeholder="Complemento"
-                        />
+            </div>
+          </div>
 
-                    </div>
+          <div className="row">
+            <div className="col-6">
+              <label className="titulo-card mt-2 mr-5">Endereço de faturamento</label>
 
-                </div>
-                <div className="row">
-                    <div className="col-4">
-                        <input
-                            ref={register()}
-                            className="form-control mb-3"
-                            name="city"
-                            type="text"
-                            placeholder="Cidade"
-                            value={cidade}
-                        />
+              <input
+                ref={register()}
+                className="input-copiar-endereco-faturamento"
+                name="payment"
+                type="checkbox"
+              />
+              <label className="titulo-card ml-1">Copiar endereço acima</label>
+            </div>
+          </div>
 
-                    </div>
-                    <div className="col-4">
-                        <input
-                            ref={register()}
-                            className="form-control mb-3"
-                            name="state"
-                            type="text"
-                            placeholder="Estado"
-                            value={estado}
-                        />
+          <div className="row">
+            <div className="col-6">
+              <input
+                ref={register()}
+                className="form-control mb-3"
+                onBlur={e => onBlurCep(e.target.value)}
+                name="zipCode"
+                type="text"
+                placeholder="CEP"
+              />
+              <input
+                ref={register()}
+                className="form-control mb-3"
+                name="number"
+                type="text"
+                placeholder="Número"
+              />
 
-                    </div>
-                    <div className="col-4">
-                        <input
-                            ref={register()}
-                            className="form-control mb-5"
-                            name="couneighborhoodntry"
-                            type="text"
-                            placeholder="Bairro"
-                            value={bairro}
-                        />
+            </div>
 
-                    </div>
-                </div>
+            <div className="col-6">
+              <input
+                ref={register()}
+                className="form-control mb-3"
+                name="address"
+                type="text"
+                placeholder="Logradouro"
+                value={logradouro}
+              />
+              <input
+                ref={register()}
+                className="form-control mb-3"
+                name="addressComplement"
+                type="text"
+                placeholder="Complemento"
+              />
 
-                <div className="row">
-                    <div className="col-8 client-login">
-                        <label className="titulo-card mt-2">Dados de Acesso</label>
-                        <input
-                            className="form-control mb-2"
-                            type="text"
-                            placeholder="Email"
-                            disabled={!disabledLogin}
-                        />
-                        <input
-                            className="form-control mb-2"
-                            type="text"
-                            placeholder="Senha"
-                        />
-                    </div>
-                </div>
-            </BaseForm>
-        </form>
-    )
+            </div>
+
+          </div>
+          <div className="row">
+            <div className="col-4">
+              <input
+                ref={register()}
+                className="form-control mb-3"
+                name="city"
+                type="text"
+                placeholder="Cidade"
+                value={cidade}
+              />
+
+            </div>
+            <div className="col-4">
+              <input
+                ref={register()}
+                className="form-control mb-3"
+                name="state"
+                type="text"
+                placeholder="Estado"
+                value={estado}
+              />
+
+            </div>
+            <div className="col-4">
+              <input
+                ref={register()}
+                className="form-control mb-5"
+                name="neighborhood"
+                type="text"
+                placeholder="Bairro"
+                value={bairro}
+              />
+
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-8 client-login">
+              <label className="titulo-card mt-2">Dados de Acesso</label>
+              <input
+                className="form-control mb-2"
+                type="text"
+                placeholder="Email"
+                name="login"
+                disabled={!disabledLogin}
+              />
+              <input
+                className="form-control mb-2"
+                type="text"
+                name="password"
+                placeholder="Senha"
+              />
+            </div>
+          </div>
+        </BaseForm>
+      </form>
+    </div>
+  )
 }
 
 export default Register;
