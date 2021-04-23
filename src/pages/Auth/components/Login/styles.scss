@@ -9,10 +9,9 @@
       margin-top: 30px;
 
       .linha {
-        background: grey;
-        height: 1px;
+        border-top: 1.5px dashed gray;
         width: 180px;
-        margin: 20px auto;
+        margin: auto;
       }
     }
   }
