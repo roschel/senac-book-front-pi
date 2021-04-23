@@ -7,8 +7,6 @@ import { makePrivateRequest, makeRequest } from '../../../../services/api';
 import BaseForm from '../../../Admin/components/BaseForm';
 import './styles.scss';
 
-var copy = false;
-
 type FormState = {
   id: number;
   firstName: string;
@@ -51,6 +49,7 @@ const Register = () => {
   const [cidade, setCidade] = useState();
   const [estado, setEstado] = useState();
   const [bairro, setBairro] = useState();
+  const [copy, setCopy] = useState(false);
 
 
   useEffect(() => {
@@ -146,8 +145,11 @@ const Register = () => {
   }
 
   const onCopy = () => {
-    console.log('CÓPIA')
-    copy = true
+    if(copy){
+      setCopy(false)
+    }else{
+      setCopy(true)
+    }
     console.log(copy)
   }
 
@@ -283,6 +285,7 @@ const Register = () => {
               <input
                 ref={register()}
                 className="input-copiar-endereco-faturamento"
+                id="payment2"
                 name="payment2"
                 type="checkbox"
                 onChange={onCopy}
