@@ -7,15 +7,32 @@ import { makePrivateRequest, makeRequest } from '../../../../services/api';
 import BaseForm from '../../../Admin/components/BaseForm';
 import './styles.scss';
 
+var copy = false;
+
 type FormState = {
   id: number;
-  fistName: string;
+  firstName: string;
   lastName: string;
   cpf: string;
   login: string;
   password: string;
   status: boolean;
-  address: Address[];
+  zipCode: string;
+  address: string;
+  number: number;
+  addressComplement: string;
+  city: string;
+  state: string;
+  neighborhood: string;
+  payment: boolean;
+  zipCode2: string;
+  address2: string;
+  number2: number;
+  addressComplement2: string;
+  city2: string;
+  state2: string;
+  neighborhood2: string;
+  payment2: boolean;
 }
 
 type ParamsType = {
@@ -52,7 +69,7 @@ const Register = () => {
           setValue('addressComplement', response.data.address.addressComplement)
           setValue('city', response.data.address.city)
           setValue('state', response.data.address.state)
-          setValue('country', response.data.address.country)
+          setValue('neighborhood', response.data.address.country)
           setValue('payment', response.data.address.payment)
           setDisabledCpf(false)
           setDisabledLogin(false)
@@ -62,30 +79,58 @@ const Register = () => {
   }, [clientId, isEditing, setValue])
 
   const onSubmit = (formData: FormState) => {
-    const payLoad = {
-      ...formData,
-      roles:[{id:3}]
+    const address1 = {
+      address: formData.address,
+      zipCode: formData.zipCode,
+      city: formData.city,
+      neighborhood: formData.neighborhood,
+      state: formData.state,
+      addressComplement: formData.addressComplement,
+      number: formData.number,
+      payment: false,
     }
+
+    const address2 = {
+      address: formData.address2,
+      zipCode: formData.zipCode2,
+      city: formData.city2,
+      neighborhood: formData.neighborhood2,
+      state: formData.state2,
+      addressComplement: formData.addressComplement2,
+      number: formData.number2,
+      payment: true,
+    }
+    const payLoad = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      cpf: formData.cpf,
+      login: formData.login,
+      password: formData.password,
+      status: formData.status,
+      roles: [{ id: 3 }],
+      addresses: [address1, address2]
+    }
+
 
     console.log('paylooooooooooooooooooad', payLoad)
 
-    // if (isEditing) {
-    //   makePrivateRequest({ url: `/clients/${clientId}`, data: payLoad, method: "PUT" })
-    //     .then(() => {
-    //       history.push(`/`)
-    //     })
-    //     .catch(() => {
-    //       alert('Usuário não editado')
-    //     })
-    // } else {
-    //   makePrivateRequest({ url: `/clients`, data: payLoad, method: "POST" })
-    //     .then(() => {
-    //       history.push('/')
-    //     })
-    //     .catch(() => {
-    //       alert('Usuário não adicionado')
-    //     })
-    // }
+    if (!isEditing) {
+      makePrivateRequest({ url: `/clients/${clientId}`, data: payLoad, method: "PUT" })
+        .then(() => {
+          history.push(`/`)
+        })
+        .catch(() => {
+          alert('Usuário não editado')
+        })
+    } else {
+      makePrivateRequest({ url: `/clients`, data: payLoad, method: "POST" })
+        .then(() => {
+          history.push('/')
+        })
+        .catch(() => {
+          alert('Usuário não adicionado')
+        })
+    }
   }
 
   const onBlurCep = (cep: string) => {
@@ -98,7 +143,12 @@ const Register = () => {
         setEstado(response.data.uf)
         setBairro(response.data.bairro)
       })
+  }
 
+  const onCopy = () => {
+    console.log('CÓPIA')
+    copy = true
+    console.log(copy)
   }
 
   return (
@@ -120,8 +170,9 @@ const Register = () => {
               />
 
               <input
+                ref={register()}
                 className="form-control mb-5"
-                type="text" 
+                type="text"
                 placeholder="CPF"
                 name="cpf"
                 disabled={!disabledCpf}
@@ -232,93 +283,100 @@ const Register = () => {
               <input
                 ref={register()}
                 className="input-copiar-endereco-faturamento"
-                name="payment"
+                name="payment2"
                 type="checkbox"
+                onChange={onCopy}
               />
               <label className="titulo-card ml-1">Copiar endereço acima</label>
             </div>
           </div>
 
-          <div className="row">
-            <div className="col-6">
-              <input
-                ref={register()}
-                className="form-control mb-3"
-                onBlur={e => onBlurCep(e.target.value)}
-                name="zipCode"
-                type="text"
-                placeholder="CEP"
-              />
-              <input
-                ref={register()}
-                className="form-control mb-3"
-                name="number"
-                type="text"
-                placeholder="Número"
-              />
+          {!copy && 
+          <div className="desabilitar">
+            <div className="row">
+              <div className="col-6">
+                <input
+                  ref={register()}
+                  className="form-control mb-3"
+                  onBlur={e => onBlurCep(e.target.value)}
+                  name="zipCode2"
+                  type="text"
+                  placeholder="CEP"
+                />
+                <input
+                  ref={register()}
+                  className="form-control mb-3"
+                  name="number2"
+                  id="number2"
+                  type="text"
+                  placeholder="Número"
+                />
+
+              </div>
+
+              <div className="col-6">
+                <input
+                  ref={register()}
+                  className="form-control mb-3"
+                  name="address2"
+                  type="text"
+                  placeholder="Logradouro"
+                  value={logradouro}
+                />
+                <input
+                  ref={register()}
+                  className="form-control mb-3"
+                  name="addressComplement2"
+                  type="text"
+                  placeholder="Complemento"
+                />
+
+              </div>
 
             </div>
+            <div className="row">
+              <div className="col-4">
+                <input
+                  ref={register()}
+                  className="form-control mb-3"
+                  name="city2"
+                  type="text"
+                  placeholder="Cidade"
+                  value={cidade}
+                />
 
-            <div className="col-6">
-              <input
-                ref={register()}
-                className="form-control mb-3"
-                name="address"
-                type="text"
-                placeholder="Logradouro"
-                value={logradouro}
-              />
-              <input
-                ref={register()}
-                className="form-control mb-3"
-                name="addressComplement"
-                type="text"
-                placeholder="Complemento"
-              />
+              </div>
+              <div className="col-4">
+                <input
+                  ref={register()}
+                  className="form-control mb-3"
+                  name="state2"
+                  type="text"
+                  placeholder="Estado"
+                  value={estado}
+                />
 
+              </div>
+              <div className="col-4">
+                <input
+                  ref={register()}
+                  className="form-control mb-5"
+                  name="neighborhood2"
+                  type="text"
+                  placeholder="Bairro"
+                  value={bairro}
+                />
+
+              </div>
             </div>
-
           </div>
-          <div className="row">
-            <div className="col-4">
-              <input
-                ref={register()}
-                className="form-control mb-3"
-                name="city"
-                type="text"
-                placeholder="Cidade"
-                value={cidade}
-              />
-
-            </div>
-            <div className="col-4">
-              <input
-                ref={register()}
-                className="form-control mb-3"
-                name="state"
-                type="text"
-                placeholder="Estado"
-                value={estado}
-              />
-
-            </div>
-            <div className="col-4">
-              <input
-                ref={register()}
-                className="form-control mb-5"
-                name="neighborhood"
-                type="text"
-                placeholder="Bairro"
-                value={bairro}
-              />
-
-            </div>
-          </div>
+          }
 
           <div className="row">
             <div className="col-8 client-login">
               <label className="titulo-card mt-2">Dados de Acesso</label>
               <input
+                ref={register()}
                 className="form-control mb-2"
                 type="text"
                 placeholder="Email"
@@ -326,13 +384,15 @@ const Register = () => {
                 disabled={!disabledLogin}
               />
               <input
+                ref={register()}
                 className="form-control mb-2"
-                type="text"
+                type="password"
                 name="password"
                 placeholder="Senha"
               />
             </div>
           </div>
+
         </BaseForm>
       </form>
     </div>
