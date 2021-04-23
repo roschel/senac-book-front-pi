@@ -1,3 +1,19 @@
 .login-form {
-    margin-top: 50px;
+  margin-top: 50px;
+
+  .cadastrar {
+    text-align: center;
+
+    .divisao {
+      display: flex;
+      margin-top: 30px;
+
+      .linha {
+        background: grey;
+        height: 1px;
+        width: 180px;
+        margin: 20px auto;
+      }
+    }
+  }
 }
