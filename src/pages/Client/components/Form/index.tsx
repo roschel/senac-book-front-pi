@@ -50,6 +50,10 @@ const Register = () => {
   const [estado, setEstado] = useState();
   const [bairro, setBairro] = useState();
   const [copy, setCopy] = useState(false);
+  const [logradouro2, setLogradouro2] = useState();
+  const [cidade2, setCidade2] = useState();
+  const [estado2, setEstado2] = useState();
+  const [bairro2, setBairro2] = useState();
 
 
   useEffect(() => {
@@ -78,36 +82,61 @@ const Register = () => {
   }, [clientId, isEditing, setValue])
 
   const onSubmit = (formData: FormState) => {
-    const address1 = {
-      address: formData.address,
-      zipCode: formData.zipCode,
-      city: formData.city,
-      neighborhood: formData.neighborhood,
-      state: formData.state,
-      addressComplement: formData.addressComplement,
-      number: formData.number,
-      payment: false,
-    }
-
-    const address2 = {
-      address: formData.address2,
-      zipCode: formData.zipCode2,
-      city: formData.city2,
-      neighborhood: formData.neighborhood2,
-      state: formData.state2,
-      addressComplement: formData.addressComplement2,
-      number: formData.number2,
-      payment: true,
-    }
-    const payLoad = {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      cpf: formData.cpf,
-      login: formData.login,
-      password: formData.password,
-      status: formData.status,
-      roles: [{ id: 3 }],
-      addresses: [address1, address2]
+    if (copy) {
+      const address1 = {
+        address: formData.address,
+        zipCode: formData.zipCode,
+        city: formData.city,
+        neighborhood: formData.neighborhood,
+        state: formData.state,
+        addressComplement: formData.addressComplement,
+        number: formData.number,
+        payment: true,
+      } 
+  
+      var payLoad = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        cpf: formData.cpf,
+        login: formData.login,
+        password: formData.password,
+        status: formData.status,
+        roles: [{ id: 3 }],
+        addresses: [address1]
+      }
+    } else {
+      const address1 = {
+        address: formData.address,
+        zipCode: formData.zipCode,
+        city: formData.city,
+        neighborhood: formData.neighborhood,
+        state: formData.state,
+        addressComplement: formData.addressComplement,
+        number: formData.number,
+        payment: false,
+      }
+  
+      const address2 = {
+        address: formData.address2,
+        zipCode: formData.zipCode2,
+        city: formData.city2,
+        neighborhood: formData.neighborhood2,
+        state: formData.state2,
+        addressComplement: formData.addressComplement2,
+        number: formData.number2,
+        payment: true,
+      }
+  
+      var payLoad = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        cpf: formData.cpf,
+        login: formData.login,
+        password: formData.password,
+        status: formData.status,
+        roles: [{ id: 3 }],
+        addresses: [address1, address2]
+      }
     }
 
 
@@ -141,6 +170,18 @@ const Register = () => {
         setCidade(response.data.localidade)
         setEstado(response.data.uf)
         setBairro(response.data.bairro)
+      })
+  }
+
+  const onBlurCep2 = (cep: string) => {
+    console.log("cep", cep, typeof cep)
+    axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+      .then(response => {
+        console.log(response)
+        setLogradouro2(response.data.logradouro)
+        setCidade2(response.data.localidade)
+        setEstado2(response.data.uf)
+        setBairro2(response.data.bairro)
       })
   }
 
@@ -301,7 +342,7 @@ const Register = () => {
                 <input
                   ref={register()}
                   className="form-control mb-3"
-                  onBlur={e => onBlurCep(e.target.value)}
+                  onBlur={e => onBlurCep2(e.target.value)}
                   name="zipCode2"
                   type="text"
                   placeholder="CEP"
@@ -324,7 +365,7 @@ const Register = () => {
                   name="address2"
                   type="text"
                   placeholder="Logradouro"
-                  value={logradouro}
+                  value={logradouro2}
                 />
                 <input
                   ref={register()}
@@ -345,7 +386,7 @@ const Register = () => {
                   name="city2"
                   type="text"
                   placeholder="Cidade"
-                  value={cidade}
+                  value={cidade2}
                 />
 
               </div>
@@ -356,7 +397,7 @@ const Register = () => {
                   name="state2"
                   type="text"
                   placeholder="Estado"
-                  value={estado}
+                  value={estado2}
                 />
 
               </div>
@@ -367,7 +408,7 @@ const Register = () => {
                   name="neighborhood2"
                   type="text"
                   placeholder="Bairro"
-                  value={bairro}
+                  value={bairro2}
                 />
 
               </div>
