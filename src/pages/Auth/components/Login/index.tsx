@@ -39,6 +39,9 @@ const Login = () => {
     history.push('/')
   }
 
+  const handleRegister = () => {
+    history.push('/client/register')
+  }
 
   return (
     <div>
@@ -75,13 +78,25 @@ const Login = () => {
             </button>
 
             <button className="btn btn-primary border-radius-10 ml-2">
-              Logar
+              Entrar
             </button>
           </div>
 
+          <div className="cadastrar">
+            <div className="divisao">
+              <div className="linha"/>
+              <h4>ou</h4>
+              <div className="linha"/>
+            </div>
+          
+            <h4><strong>Crie uma conta</strong></h4>
+
+            <button className="btn btn-primary border-radius-10 ml-2 mt-3" onClick={handleRegister}>
+              Cadastre-se
+            </button>
+          </div>
         </form>
       </AuthCard>
-
     </div>
   )
 }

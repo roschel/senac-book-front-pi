@@ -9,7 +9,7 @@ type Props = {
 const AuthCard = ({title, children}: Props) => {
     return (
         <div className="card-base auth-card">
-            <h1 className="auth-card-title">{title}</h1>
+            <h2 className="auth-card-title"><strong>{title}</strong></h2>
             {children}
         </div>
     );
