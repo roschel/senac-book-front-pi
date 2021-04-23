@@ -42,16 +42,16 @@ const Form = () => {
           setValue('login', response.data.login);
           setValue('password', response.data.password);
           setValue('status', response.data.status);
-          // setValue('zipCode', response.data.address.zipCode)
-          // setValue('address', response.data.address.address)
-          // setValue('number', response.data.address.number)
-          // setValue('addressComplement', response.data.address.addressComplement)
-          // setValue('city', response.data.address.city)
-          // setValue('state', response.data.address.state)
-          // setValue('country', response.data.address.country)
+          setValue('zipCode', response.data.zipCode);
+          setValue('address', response.data.address);
+          setValue('number', response.data.number);
+          setValue('addressComplement', response.data.addressComplement);
+          setValue('city', response.data.city);
+          setValue('state', response.data.state);
+          setValue('country', response.data.country);
           setValue('roles', response.data.roles);
-          setDisabled(response.data.status)
-          setDisabledLogin(false)
+          setDisabled(response.data.status);
+          setDisabledLogin(false);
         })
     }
 
