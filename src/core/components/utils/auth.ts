@@ -16,7 +16,7 @@ type AccessToken = {
   authorities: Role[],
 }
 
-export type Role = 'ROLE_ESTOQUISTA' | 'ROLE_ADMIN';
+export type Role = 'ROLE_ESTOQUISTA' | 'ROLE_ADMIN' | "ROLE_CLIENTE";
 
 export const CLIENT_ID='b9149d72b4f5691835a7536a538b3c2c'
 export const CLIENT_SECRET='b9149d72b4f5691835a7536a538b3c2c'

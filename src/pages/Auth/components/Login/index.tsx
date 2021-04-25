@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router';
-import { saveSessionData } from '../../../../core/components/utils/auth';
+import { getAccessTokenDecoded, isAllowedRole, saveSessionData } from '../../../../core/components/utils/auth';
 import {makeLogin} from '../../../../services/api';
 import AuthCard from '../Card';
 import './styles.scss';
@@ -20,14 +20,19 @@ const Login = () => {
     
     makeLogin(data)
       .then(response => {
-        console.log('response',response)
-        if(!response.data.userStatus) {
-          history.push('/auth/login')
-          alert(`Usuário ${response.data.login} se encontra desativado`)
-          return
+        if(isAllowedRole(['ROLE_ADMIN', 'ROLE_ESTOQUISTA'])){
+          console.log('response',response)
+          if(!response.data.userStatus) {
+            history.push('/auth/login')
+            alert(`Usuário ${response.data.login} se encontra desativado`)
+            return
+          }
+          saveSessionData(response.data)
+          history.push('/admin/products')
+        }else{
+          saveSessionData(response.data)
+          history.push('/')
         }
-        saveSessionData(response.data)
-        history.push('/admin/products')
       })
       .catch(e => {
         console.log('erro', e)
