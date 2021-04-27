@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { getSessionData, isAllowedRole, isAuthenticated } from '../utils/auth';
-import './styles.scss'
+import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
+import { getSessionData, isAllowedRole, isAuthenticated, isTokenValid, logout } from '../utils/auth';
+import './styles.scss';
 
 const Navbar = () => {
   const [userName, setUserName] = useState('');
+  const location = useLocation();
+  const history = useHistory();
 
   useEffect(() => {
-    console.log('reiniciou')
     setUserName(getSessionData().userFirstName)
-  }, [userName])
+  }, [location])
 
+  const handleLogout = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    event.preventDefault();
+    logout();
+    history.replace('/admin/products')
+}
 
   return (
     <nav className="row bg-primary main-nav">
@@ -26,8 +32,8 @@ const Navbar = () => {
               HOME
             </NavLink>
           </li>
-          <li>
-            {(!isAuthenticated() && !isAllowedRole(["ROLE_CLIENTE"])) ? (
+          {/* <li>
+            {(!isAuthenticated() || !isAllowedRole(["ROLE_CLIENTE"])) ? (
               <NavLink to="/auth/login">
                 Login
               </NavLink>
@@ -36,8 +42,32 @@ const Navbar = () => {
                 Olá, {userName}
               </NavLink>
             )}
+          </li> */}
 
+          <li>
+            {(isAuthenticated() && isTokenValid()) ? (
+              isAllowedRole(["ROLE_CLIENTE"]) ? (
+                <NavLink to={`/client/${getSessionData().userId}`}>
+                  Olá, {userName}
+                </NavLink>
+              ) : (
+                <NavLink to="/admin/products">
+                  Login
+                </NavLink>
+              )
+            ) : (
+              <NavLink to="/auth/login">
+                Login
+              </NavLink>
+            )}
+          </li>
 
+          {userName && (
+            <Link to="/auth/login" onClick={handleLogout}>
+              Logout
+            </Link>
+          )}
+          <li>
           </li>
         </ul>
       </div>

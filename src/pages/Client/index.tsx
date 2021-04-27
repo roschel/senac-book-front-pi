@@ -12,10 +12,10 @@ const Client = () => (
         <NavBarClient />
         <div className="admin-content">
             <Switch>
-                <PrivateRoute path="/client/:clientId" exact>
+                <PrivateRoute allowedRoutes={['ROLE_CLIENTE']} path="/client/:clientId" exact>
                     <ClientData />
                 </PrivateRoute>
-                <PrivateRoute path="/client/:clientId/addresses">
+                <PrivateRoute allowedRoutes={['ROLE_CLIENTE']} path="/client/:clientId/addresses">
                     <ClientAddress />
                 </PrivateRoute>
             </Switch>

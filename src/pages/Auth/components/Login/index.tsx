@@ -20,17 +20,19 @@ const Login = () => {
     
     makeLogin(data)
       .then(response => {
-        if(isAllowedRole(['ROLE_ADMIN', 'ROLE_ESTOQUISTA'])){
+        saveSessionData(response.data)
+
+        if(isAllowedRole(['ROLE_ADMIN'])){
+          console.log('admin')
           console.log('response',response)
           if(!response.data.userStatus) {
             history.push('/auth/login')
             alert(`Usuário ${response.data.login} se encontra desativado`)
             return
           }
-          saveSessionData(response.data)
           history.push('/admin/products')
         }else{
-          saveSessionData(response.data)
+          console.log('cliente')
           history.push('/')
         }
       })

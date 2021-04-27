@@ -1,5 +1,5 @@
-import jwtDecode from 'jwt-decode'
-import { Roles } from '../types/User'
+import jwtDecode from 'jwt-decode';
+import history from './history'
 
 type LoginResponse = {
   access_token: string;
@@ -66,4 +66,9 @@ export const isAllowedRole = (routesRoles: Role[]=[]) => {
   const {authorities} = getAccessTokenDecoded()
 
   return routesRoles.some(role => authorities?.includes(role))
+}
+
+export const logout = () => {
+  localStorage.removeItem('sessionData');
+  history.replace('/auth/login');
 }
