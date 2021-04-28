@@ -71,7 +71,7 @@ return (
               type="text"
               placeholder="CPF"
               name="cpf"
-              disabled={!disabledCpf}
+              disabled={disabledCpf}
               tabIndex={3}
             />
 
@@ -97,7 +97,7 @@ return (
               type="text"
               placeholder="Email"
               name="login"
-              disabled={!disabledLogin}
+              disabled={disabledLogin}
             />
             <input
                 ref={register()}
@@ -105,7 +105,7 @@ return (
                 type="password"
                 name="password"
                 placeholder="Senha"
-                hidden
+                
               />
           </div>
         </div>
