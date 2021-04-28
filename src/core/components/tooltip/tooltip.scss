@@ -1,0 +1,28 @@
+.tooltip-container {
+  background: black;
+  border-radius: 5px;
+  position: absolute;
+  opacity: 0;
+  top: 100%;
+  padding: 5px 15px;
+  z-index: -1;
+
+  transition: all .3s;
+  
+  &.is-visible {
+    opacity: 92%;
+    z-index: 1;
+  }
+
+  // &:before { //seta do tooltip
+  //   content: "";
+  //   width: 0;
+  //   height: 0;
+  //   border: 3px solid transparent;
+  //   border-bottom-color: black;
+  //   position: absolute;
+  //   bottom: 100%;
+  //   left: 50%;
+  //   transform: translate(-50%, 0%);
+  // }
+}
