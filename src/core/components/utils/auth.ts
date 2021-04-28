@@ -1,5 +1,5 @@
-import jwtDecode from 'jwt-decode'
-import { Roles } from '../types/User'
+import jwtDecode from 'jwt-decode';
+import history from './history'
 
 type LoginResponse = {
   access_token: string;
@@ -16,7 +16,7 @@ type AccessToken = {
   authorities: Role[],
 }
 
-export type Role = 'ROLE_ESTOQUISTA' | 'ROLE_ADMIN';
+export type Role = 'ROLE_ESTOQUISTA' | 'ROLE_ADMIN' | "ROLE_CLIENTE";
 
 export const CLIENT_ID='b9149d72b4f5691835a7536a538b3c2c'
 export const CLIENT_SECRET='b9149d72b4f5691835a7536a538b3c2c'
@@ -66,4 +66,9 @@ export const isAllowedRole = (routesRoles: Role[]=[]) => {
   const {authorities} = getAccessTokenDecoded()
 
   return routesRoles.some(role => authorities?.includes(role))
+}
+
+export const logout = () => {
+  localStorage.removeItem('sessionData');
+  history.replace('/auth/login');
 }

@@ -9,6 +9,7 @@ import Admin from './pages/Admin';
 import Auth from './pages/Auth';
 
 import Register from './pages/Client/components/Form'
+import Client from './pages/Client';
 
 
 const Routes = () => (
@@ -33,9 +34,14 @@ const Routes = () => (
 				<Admin />
 			</Route>
 
-			<Route path="/client">
+			<Route path="/client/register">
 				<Register />
 			</Route>
+
+      <Route path="/client">
+				<Client />
+			</Route>
+
 		</Switch>
 	</BrowserRouter>
 )
