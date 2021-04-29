@@ -45,7 +45,18 @@ const ClientData = () => {
   }, [clientId, isEditing, setValue])
 
 const onSubmit = (formData: FormState) => {
-  console.log(formData)
+  const payload = {
+    ...formData
+  }
+
+  makePrivateRequest({ url: `/clients/${clientId}`, data: payload, method:"PUT"})
+    .then(() => {
+      history.push(`/client/${clientId}`)
+      alert('Dados atualizados')
+    })
+    .catch(() => {
+      alert('Cliente não editado.')
+    })
 }
 
 return (
@@ -105,6 +116,7 @@ return (
                 type="password"
                 name="password"
                 placeholder="Senha"
+                readOnly
                 
               />
           </div>
