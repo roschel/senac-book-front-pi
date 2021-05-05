@@ -9,6 +9,7 @@
 
 .card-image {
     margin-left: 20px;
+    width: 80px;
 }
 
 .quantidade {
@@ -28,7 +29,7 @@
 
 .preco {
     text-align: end;
-    margin-left: 63px;
+    margin-left: 82px;
     margin-top: 15px;
 }
 
@@ -36,6 +37,11 @@
     display: flex;
     justify-content: center;
     justify-content: space-between;
+    text-align: center;
+}
+
+.titulo-qtd {
+    margin-left: 75px;
 }
 
 .info {
@@ -45,7 +51,8 @@
 }
 
 .remove {
-    width: fit-content;
-    margin-left: 430px;
-    margin-top: -35px;
+    margin-top: -40px;
+    margin-right: -200px;
+    margin-left: 150px;
+    width: auto;
 }
