@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 import Tooltip from '../tooltip/tooltip';
 import { getSessionData, isAllowedRole, isAuthenticated, isTokenValid, logout } from '../utils/auth';
+import imgCart from '../../assets/images/cesta.svg'
 import './styles.scss';
 
 const Navbar = () => {
@@ -83,6 +84,9 @@ const Navbar = () => {
             </Link>
           )} */}
           <li>
+            <NavLink to="/cart" exact>
+                <img className="img-cart" src={imgCart} alt=""/>
+            </NavLink>
           </li>
         </ul>
       </div>
