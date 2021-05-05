@@ -15,11 +15,15 @@ const ProductCard = () => {
         }
     }
 
+    const removeProduct = () => {
+        console.log('remover')
+    }
+
     return (
         <div className="card card-geral">
             <div className="card-body">
                 <div className="geral row">
-                    <div className="card card-image col-2">
+                    <div className="card card-image">
                         <img src="http://books.google.com/books/content?id=Red7DwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api" alt="imagem" />
                     </div>
                     
@@ -31,7 +35,7 @@ const ProductCard = () => {
                         </div>
 
                         <div className="row infos mt-3">
-                            <label className="nomeLivro col-3">Admnistração Geral e Profissional</label>
+                            <label className="nomeLivro col-4">Admnistração Geral e Profissional</label>
 
                             <div className="quantidade col-1">
                                 <button
@@ -49,14 +53,18 @@ const ProductCard = () => {
                                 </button>
                             </div>
 
-                            <div className="preco col-5">
-                                <label className="valor"><strong>R$ 49,99</strong></label>
+                            <div className="preco col-4">
+                                <label><strong>R$ 49,99</strong></label>
+                                <button 
+                                    className="remove btn btn-danger"
+                                    onClick={removeProduct}>
+                                        <img src={lixeira} alt="remover"/>
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <label className="btn btn-outline-danger remove">remover</label>
         </div>
     )
 }
