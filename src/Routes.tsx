@@ -11,6 +11,7 @@ import Auth from './pages/Auth';
 import Register from './pages/Client/components/Form'
 import Client from './pages/Client';
 
+import Cart from './pages/Cart'
 
 const Routes = () => (
 	<BrowserRouter>
@@ -36,6 +37,10 @@ const Routes = () => (
 
 			<Route path="/client/register">
 				<Register />
+			</Route>
+
+			<Route path="/cart">
+				<Cart />
 			</Route>
 
       <Route path="/client">
