@@ -4,14 +4,23 @@ import { Product } from '../../core/components/types/Product'
 
 import './styles.scss'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 const Cart = () => {
+    const [numberBooks, setNumberBooks] = useState(0);
+
+    const removeProduct = (quantity: number) => {
+        setNumberBooks(quantity);
+    }
 
     const getCartData = () => {
         const cartData = localStorage.getItem("cartData") ?? '{}';
         const parsedCartData = JSON.parse(cartData);
         return parsedCartData as Product[];
     }
+
+    useEffect(() => {
+    }, [numberBooks])
 
     if (!localStorage.getItem("cartData")) {
         return (
@@ -27,12 +36,13 @@ const Cart = () => {
 
         )
     }
+
     return (
         <>
             <div className="row">
                 {getCartData()?.map(book => (
                     <div className="col-9 mt-2">
-                        <ProductCardCart product={book} />
+                        <ProductCardCart product={book} quantityProduct={removeProduct} />
                     </div>
                 ))}
                 <div className="col-3 mt-2">
