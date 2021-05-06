@@ -24,6 +24,19 @@ export const ProductDetails = () => {
 			})
 	}, [productId]);
 
+	const saveCartData = (product: Product) => {
+		const cartData = localStorage.getItem("cartData");
+		if(cartData) {
+  			const parsedCartData = JSON.parse(cartData);	
+			parsedCartData.push(product)		
+			localStorage.setItem("cartData", JSON.stringify(parsedCartData));
+		} else {
+			const products = [];
+			products.push(product)
+			localStorage.setItem("cartData", JSON.stringify(products));
+		}
+	}
+
 	return (
 		<div className="product-details-container">
 			<div className="card-base border-radius-20 product-details">
@@ -41,7 +54,7 @@ export const ProductDetails = () => {
 								/>
 
 							</div>
-							<h1 className="product-details-name">
+							<h1 className="product-details-name" id="titulo">
 								{product?.title}
 							</h1>
 							<div className="product-details-rating">
@@ -69,8 +82,10 @@ export const ProductDetails = () => {
 						</div>
 
 						{product?.status === true ? (
-							<button className="btn btn-primary">
-								COMPRAR
+							<button className="btn btn-primary" onClick={() => saveCartData(product)}>
+								<Link to="/cart">
+									Comprar
+								</Link>
 							</button>
 						) : (
 							<button
