@@ -8,9 +8,10 @@ import './styles.scss'
 
 type Props = {
     product: Product;
+    quantityProduct: (quantity: number) => void;
 }
 
-const ProductCardCart = ({ product }: Props) => {
+const ProductCardCart = ({ product, quantityProduct }: Props) => {
     const [counter, setCounter] = useState(1);
     const [productPrice, setProductPrice] = useState(product.price);
     const [activePage, setActivePage] = useState(0);
@@ -46,7 +47,7 @@ const ProductCardCart = ({ product }: Props) => {
             localStorage.setItem('cartData', JSON.stringify(parsedCartData))
         }
 
-        window.location.reload()
+        quantityProduct(parsedCartData.length)
     }
 
     return (
