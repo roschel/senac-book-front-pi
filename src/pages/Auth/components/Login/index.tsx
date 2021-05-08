@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router';
-import { getAccessTokenDecoded, isAllowedRole, saveSessionData } from '../../../../core/components/utils/auth';
+import { isAllowedRole, saveSessionData } from '../../../../core/components/utils/auth';
 import {makeLogin} from '../../../../services/api';
 import AuthCard from '../Card';
 import './styles.scss';
