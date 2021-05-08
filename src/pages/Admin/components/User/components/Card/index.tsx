@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { User } from '../../../../../../core/components/types/User';
 import { isAllowedRole } from '../../../../../../core/components/utils/auth';
 import './styles.scss';

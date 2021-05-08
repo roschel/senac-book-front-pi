@@ -6,6 +6,7 @@ import { makeRequest } from '../../../../services/api';
 import { Product } from '../../../../core/components/types/Product'
 import StarsRating from '../../../../core/components/StarsRating';
 import DemoCarousel from '../../../../core/components/Carousel';
+import { getCartData, ProductsCart, saveCartData } from '../../../../core/components/utils/cart';
 
 type ParamsType = {
 	productId: string;
@@ -24,16 +25,23 @@ export const ProductDetails = () => {
 			})
 	}, [productId]);
 
-	const saveCartData = (product: Product) => {
-		const cartData = localStorage.getItem("cartData");
+	const saveData = (product: Product) => {
+		const cartData = getCartData();
 		if(cartData) {
-  			const parsedCartData = JSON.parse(cartData);	
-			parsedCartData.push(product)		
-			localStorage.setItem("cartData", JSON.stringify(parsedCartData));
+      let payload: ProductsCart={
+        product,
+        sellQuantity:1
+      }
+			cartData.push(payload)		
+			saveCartData(cartData)
 		} else {
-			const products = [];
-			products.push(product)
-			localStorage.setItem("cartData", JSON.stringify(products));
+      const products = []
+			let payload: ProductsCart={
+        product,
+        sellQuantity:1
+      }
+			products.push(payload)
+      saveCartData(products)
 		}
 	}
 
@@ -82,7 +90,7 @@ export const ProductDetails = () => {
 						</div>
 
 						{product?.status === true ? (
-							<button className="btn btn-primary" onClick={() => saveCartData(product)}>
+							<button className="btn btn-primary" onClick={() => saveData(product)}>
 								<Link to="/cart">
 									Comprar
 								</Link>

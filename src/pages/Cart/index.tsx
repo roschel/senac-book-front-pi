@@ -1,57 +1,55 @@
-import ProductCardCart from './components/ProductCardCart'
-import OrderSummary from './components/OrderSummary'
-import { Product } from '../../core/components/types/Product'
+import React from 'react'
 
 import './styles.scss'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { getCartData } from '../../core/components/utils/cart'
+import ProductCardCart from './components/ProductCardCart'
+import OrderSummary from './components/OrderSummary'
 
 const Cart = () => {
-    const [numberBooks, setNumberBooks] = useState(0);
+  const [numberBooks, setNumberBooks] = useState(-1);
+  const [updateSummaryCart, setUpdateSummaryCart] = useState(false);
+  const getCart = getCartData()
 
-    const removeProduct = (quantity: number) => {
-        setNumberBooks(quantity);
-    }
+  const removeProduct = (quantity: number) => {
+    setNumberBooks(quantity);
+  }
 
-    const getCartData = () => {
-        const cartData = localStorage.getItem("cartData") ?? '{}';
-        const parsedCartData = JSON.parse(cartData);
-        return parsedCartData as Product[];
-    }
+  const uploadSummary = (updadte: boolean) => {
+    setUpdateSummaryCart(true)
+  }
 
-    useEffect(() => {
-    }, [numberBooks])
+  useEffect(() => {
+    setUpdateSummaryCart(false)
+  }, [numberBooks, updateSummaryCart])
 
-    if (!localStorage.getItem("cartData")) {
-        return (
-            <div className="cesta-vazia">
-                <h5>SUA CESTA ESTÁ VAZIA</h5>
-                <br />
-                <button className="btn btn-primary">
-                    <Link to="/">
-                        Começar a comprar
-					</Link>
-                </button>
+  return (
+    <>
+      {!getCart?.length ? (
+        <div className="cesta-vazia">
+          <h5>SUA CESTA ESTÁ VAZIA</h5>
+          <br />
+          <button className="btn btn-primary">
+            <Link to="/">
+              Começar a comprar
+            </Link>
+          </button>
+        </div>
+      ) : (
+        <div className="grid">
+          {getCart?.map(book => (
+            <div className="books-list">
+              <ProductCardCart product={book} quantityProduct={removeProduct} uploadSummary={uploadSummary} />
             </div>
-
-        )
-    }
-
-    return (
-        <>
-            <div className="row">
-                {getCartData()?.map(book => (
-                    <div className="col-9 mt-2">
-                        <ProductCardCart product={book} quantityProduct={removeProduct} />
-                    </div>
-                ))}
-                <div className="col-3 mt-2">
-                    <OrderSummary />
-                </div>
-            </div>
-        </>
-    )
-
+          ))}
+          <div className="summary">
+            <OrderSummary books={getCart} updateSummaryCart={updateSummaryCart} />
+          </div>
+        </div>
+      )}
+    </>
+  )
 }
 
 export default Cart;
