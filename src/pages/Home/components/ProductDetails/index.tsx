@@ -72,7 +72,7 @@ export const ProductDetails = () => {
 								/>
 							</div>
 							<div className="product-details-price mt-3">
-								R$ {product?.price}
+								R$ {product?.price.toFixed(2).replace(".",",")}
 							</div>
 						</div>
 					}
