@@ -13,6 +13,7 @@ const Checkout = () => {
   const [quantidadeTotalDeProdutos, setQuantidadeTotalDeProdutos] = useState(0);
   const [valorTotalDeLivros, setValorTotalDeLivros] = useState(0);
   const [valorTotal, setValorTotal] = useState(0);
+  const [shipping, setShipping] = useState(0);
 
   useEffect(() => {
     const data = getCartData()
@@ -30,7 +31,7 @@ const Checkout = () => {
     })
     setQuantidadeTotalDeProdutos(sumQuantidadeTotalDeProdutos)
 
-    setValorTotal(sum + shipping)
+    setValorTotal(sum + 0)
     
     makePrivateRequest({ url: `/clients/${data.customerId}` })
       .then(response => {
