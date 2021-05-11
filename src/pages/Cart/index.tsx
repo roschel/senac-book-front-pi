@@ -1,55 +1,22 @@
-import React from 'react'
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import PrivateRoute from '../../core/components/Routes/PrivateRoute';
+import Checkout from './components/Checkout';
+import Items from './components/Items';
 
-import './styles.scss'
-import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import { getCartData } from '../../core/components/utils/cart'
-import ProductCardCart from './components/ProductCardCart'
-import OrderSummary from './components/OrderSummary'
-
-const Cart = () => {
-  const [numberBooks, setNumberBooks] = useState(-1);
-  const [updateSummaryCart, setUpdateSummaryCart] = useState(false);
-  const getCart = getCartData()
-
-  const removeProduct = (quantity: number) => {
-    setNumberBooks(quantity);
-  }
-
-  const uploadSummary = (updadte: boolean) => {
-    setUpdateSummaryCart(true)
-  }
-
-  useEffect(() => {
-    setUpdateSummaryCart(false)
-  }, [numberBooks, updateSummaryCart])
-
-  return (
-    <>
-      {!getCart?.length ? (
-        <div className="cesta-vazia">
-          <h5>SUA CESTA ESTÁ VAZIA</h5>
-          <br />
-          <button className="btn btn-primary">
-            <Link to="/">
-              Começar a comprar
-            </Link>
-          </button>
+const Cart = () => (
+    <div className="">
+        <div className="">
+            <Switch>
+                <Route path="/cart" exact>
+                    <Items />
+                </Route>
+                <PrivateRoute allowedRoutes={['ROLE_CLIENTE']} path="/cart/checkout">
+                    <Checkout />
+                </PrivateRoute>
+            </Switch>
         </div>
-      ) : (
-        <div className="grid">
-          {getCart?.map(book => (
-            <div className="books-list">
-              <ProductCardCart product={book} quantityProduct={removeProduct} uploadSummary={uploadSummary} />
-            </div>
-          ))}
-          <div className="summary">
-            <OrderSummary books={getCart} updateSummaryCart={updateSummaryCart} />
-          </div>
-        </div>
-      )}
-    </>
-  )
-}
+    </div>
+);
 
 export default Cart;

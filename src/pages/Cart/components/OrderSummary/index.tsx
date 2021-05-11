@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { ProductsCart } from '../../../../core/components/utils/cart'
+import { useHistory } from 'react-router'
+import { getCartData, ProductsCart } from '../../../../core/components/utils/cart'
 
 import './styles.scss'
 
@@ -13,6 +14,7 @@ const OrderSummary = ({ books, updateSummaryCart }: Props) => {
   const [quantidadeTotalDeProdutos, setQuantidadeTotalDeProdutos] = useState(0);
   const [shipping, setShipping] = useState(0);
   const [valorTotal, setValorTotal] = useState(0);
+  const history = useHistory();
 
   const somaValoresDeLivros = () => {
     let sum = 0
@@ -38,6 +40,15 @@ const OrderSummary = ({ books, updateSummaryCart }: Props) => {
     somaValoresDeLivros()
   }, [updateSummaryCart, shipping])
 
+  const handleSubmit = () => {
+    const cartSession = getCartData()
+    if (!cartSession.customerId) {
+      alert('É preciso logar no sistema para realizar o checkout')
+      history.push('/')
+    }
+    history.push('/cart/checkout')
+  }
+
   return (
     <div className="card container">
       <h5><strong>resumo do pedido</strong></h5>
@@ -55,7 +66,14 @@ const OrderSummary = ({ books, updateSummaryCart }: Props) => {
         <h5 className="col-6"><strong>total</strong></h5>
         <h5 className="col-6 valor"><strong>R$ {valorTotal.toFixed(2).replace(".",",")}</strong></h5>
       </div>
-      <button className="btn btn-primary mb-3">Finalizar pedido</button>
+
+      <button 
+        className="btn btn-primary mb-3"
+        onClick={handleSubmit}
+      >
+        Finalizar pedido
+      </button>
+
       <div className="frete card col 12 mb-2">
         <h6 className="calcular"><strong>Calcular frete</strong></h6>
         <input
