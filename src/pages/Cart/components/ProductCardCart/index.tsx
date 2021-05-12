@@ -26,12 +26,12 @@ const ProductCardCart = ({ product, quantityProduct, uploadSummary }: Props) => 
 
       const booksCart = getCartData();
 
-      booksCart.map(book => {
+      booksCart.products.map(book => {
         if (book.product.id === id) {
           book["sellQuantity"] = counter2
         }
       })
-      setProducts(getCartData())
+      setProducts(getCartData().products)
       saveCartData(booksCart)
       uploadSummary(true)
       setCounter(counter2);
@@ -45,12 +45,12 @@ const ProductCardCart = ({ product, quantityProduct, uploadSummary }: Props) => 
 
       const booksCart = getCartData();
 
-      booksCart.map(book => {
+      booksCart.products.map(book => {
         if (book.product.id === id) {
           book["sellQuantity"] = counter2
         }
       })
-      setProducts(getCartData())
+      setProducts(getCartData().products)
       saveCartData(booksCart)
       uploadSummary(true)
       setCounter(counter2);
@@ -64,18 +64,18 @@ const ProductCardCart = ({ product, quantityProduct, uploadSummary }: Props) => 
       return
     }
     console.log('remover2')
-    parsedCartData.forEach((element, i) => {
+    parsedCartData.products.forEach((element, i) => {
       if (element.product.id === productId) {
-        parsedCartData.splice(i, 1)
+        parsedCartData.products.splice(i, 1)
       }
     });
-    if (parsedCartData.length === 0) {
+    if (parsedCartData.products.length === 0) {
       localStorage.clear()
       quantityProduct(0)
     } else {
-      setProducts(parsedCartData)
+      setProducts(parsedCartData.products)
       localStorage.setItem('cartData', JSON.stringify(parsedCartData))
-      quantityProduct(parsedCartData.length)
+      quantityProduct(parsedCartData.products.length)
     }
 
   }
