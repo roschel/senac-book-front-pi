@@ -1,5 +1,23 @@
 .resume{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 900px 100px;
+  grid-template-rows: auto;
+  grid-gap: 10px;
+  padding: 10px;
+
+  .resume-customer {
+    grid-column: 1/3;
+    height: 180px;
+  }
+
+  .resume-products {
+    grid-column: 3;
+    grid-row-start: 1;
+    grid-row-end: last;
+    border-radius: 10px;
+  }
+}
+
+.summary {
+  border-radius: 1000px;
 }
