@@ -71,7 +71,7 @@ const OrderSummary = ({ books, updateSummaryCart }: Props) => {
         className="btn btn-primary mb-3"
         onClick={handleSubmit}
       >
-        Finalizar pedido
+        Continuar
       </button>
 
       <div className="frete card col 12 mb-2">

@@ -6,6 +6,7 @@ import { getCartData, ProductsCart } from '../../../../core/components/utils/car
 import { makePrivateRequest } from '../../../../services/api'
 import OrderSummary from '../OrderSummary'
 import Card from '../Checkout/components/Card'
+import Payment from '../Checkout/components/Payment'
 
 import './styles.scss'
 import { useParams } from 'react-router'
@@ -25,6 +26,8 @@ const Checkout: React.FC = () => {
   const getCart = getCartData();
   const [addresses, setAddresses] = useState<Address[]>();
   const { clientId } = useParams<ParamsType>();
+  // const [confirmAdd, setConfirmAdd] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState<Address>();
 
   useEffect(() => {
     const data = getCartData()
@@ -61,42 +64,39 @@ const Checkout: React.FC = () => {
   }
 
   return (
-    <div className="resume">
-      <div className="resume-customer">
-        {addresses?.map(address => (
-          <Card
-            address={address}
-            clientId={clientId}
-            onDisabled={onDisabled}
-            buttonTitle={'INATIVAR'}
-            key={address.id}
-            onPaymentChange={onPaymentChange}
-          />
-        ))}
-        {/* <span>{customer?.fistName}</span> */}
-      </div>
-      <div className="resume-products">
-        <div className="summary">
-          <OrderSummary
-            books={getCart.products}
-            updateSummaryCart={updateSummaryCart}
-            key={getCart.customerId}
-          />
-        </div>
-        {/* {quantidadeTotalDeProdutos > 1 ? (
-            <h6 className="col-6">{quantidadeTotalDeProdutos} produtos</h6>
-          ) : (
-            <h6 className="col-6">{quantidadeTotalDeProdutos} produto</h6>
-          )}
-          <h6 className="col-6 valor">R$ {valorTotalDeLivros.toFixed(2).replace(".", ",")}</h6>
-          <h6 className="col-6"><em>frete</em></h6>
-          <h6 className="col-6 valor">R$ {shipping.toFixed(2).replace(".", ",")}</h6>
+    <>
+      <div className="resume">
+        <div className="resume-customer">
+          {addresses?.map(address => (
+            <button className="teste" onClick={() => setSelectedAddress(address)} key={address.id} >
+              <Card
+                address={address}
+                clientId={clientId}
+                onDisabled={onDisabled}
+                buttonTitle={'INATIVAR'}
+                key={address.id}
+                onPaymentChange={onPaymentChange}
+              />
+            </button>
+          ))}
 
-          <div className="linha col-12"></div>
-          <h5 className="col-6"><strong>total</strong></h5>
-          <h5 className="col-6 valor"><strong>R$ {valorTotal.toFixed(2).replace(".", ",")}</strong></h5> */}
+          {selectedAddress &&
+            <div className="pag">
+              <Payment address={selectedAddress} />
+            </div>
+          }
+        </div>
+        <div className="resume-products">
+          <div className="summary">
+            <OrderSummary
+              books={getCart.products}
+              updateSummaryCart={updateSummaryCart}
+              key={getCart.customerId}
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

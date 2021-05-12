@@ -1,6 +1,6 @@
 export type Client = {
   id: number;
-  fistName: string;
+  firstName: string;
   lastName: string;
   cpf: string;
   login: string;
