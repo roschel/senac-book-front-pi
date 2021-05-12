@@ -4,6 +4,7 @@ import Pagination from '../../core/components/Pagination';
 import Search from '../../core/components/Search';
 import { FilterForm } from '../../core/components/Search';
 import { ProductsResponse } from '../../core/components/types/Product';
+import { teste } from '../../core/components/utils/testeFrete';
 import { makeRequest } from '../../services/api';
 import ProductCard from './components/ProductCard';
 import './styles.scss'
@@ -26,6 +27,8 @@ const Home: React.FC = () => {
   useEffect(() => {
     getProducts()
   }, [getProducts])
+
+  teste();
 
   return (
     <div className="home-conatiner">
