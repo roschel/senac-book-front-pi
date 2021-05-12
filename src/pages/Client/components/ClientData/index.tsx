@@ -1,10 +1,7 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
-import { Address } from '../../../../core/components/types/Client';
-import { saveSessionData } from '../../../../core/components/utils/auth';
-import { makeLogin, makePrivateRequest, makeRequest } from '../../../../services/api';
+import { makePrivateRequest } from '../../../../services/api';
 import BaseForm from '../../../Admin/components/BaseForm';
 import './styles.scss';
 
@@ -23,13 +20,13 @@ type ParamsType = {
 }
 
 const ClientData = () => {
-  const { register, handleSubmit, setValue, control } = useForm<FormState>();
+  const { register, handleSubmit, setValue } = useForm<FormState>();
   const { clientId } = useParams<ParamsType>();
   const isEditing = clientId !== 'create'
   const formTitle = 'DADOS';
   const button = 'ATUALIZAR DADOS';
-  const [disabledCpf, setDisabledCpf] = useState(true);
-  const [disabledLogin, setDisabledLogin] = useState(true);
+  const [disabledCpf] = useState(true);
+  const [disabledLogin] = useState(true);
   const history = useHistory();
 
 

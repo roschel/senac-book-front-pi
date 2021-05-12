@@ -19,7 +19,7 @@ const ProductCard = ({ product }: Props) => (
 			</h6>
 
 			<div className="product-price mb-2">
-				R$ {product.price}
+				R$ {product.price.toFixed(2).replace(".",",")}
 			</div>
 
 			<div className="product-quantity mb-2">
