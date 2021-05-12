@@ -1,62 +1,14 @@
-.card-geral {
-    border-radius: 10px;
-}
-
-.card-body{
-  height: 180px;
-}
-
-.geral {
+.general {
     display: flex;
-    align-items: center;
+    flex-direction: row;
+    background-color: white;
+    border-radius: 15px;
 }
 
-.card-image {
-    margin-left: 20px;
+.imagem-produto {
     width: 80px;
 }
 
-.quantidade {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    margin-left: 80px;
-}
-
-.qtd {
-    margin-top: 8px;
-}
-
-.incrementar, .qtd {
-    margin-left: 20px;
-}
-
-.preco {
-    text-align: end;
-    margin-left: 82px;
-    margin-top: 15px;
-}
-
-.titulos {
-    display: flex;
-    justify-content: center;
-    justify-content: space-between;
-    text-align: center;
-}
-
-.titulo-qtd {
-    margin-left: 75px;
-}
-
-.info {
-    display: flex;
-    justify-content: center;
-    justify-content: space-between;
-}
-
-.remove {
-    margin-top: -40px;
-    margin-right: -200px;
-    margin-left: 150px;
-    width: auto;
+.card-image {
+    padding: 2px 2px;
 }

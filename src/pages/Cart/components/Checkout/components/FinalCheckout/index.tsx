@@ -1,11 +1,17 @@
 import { useHistory } from 'react-router'
+import { getCartData } from '../../../../../../core/components/utils/cart';
 import './styles.scss'
 
 const FinalCheckout = () => {
     const history = useHistory();
+    const data = getCartData()
 
     const handleBack = () => {
         history.push('/cart/checkout')
+    }
+
+    const handleSubmit = () => {
+
     }
 
     return (
@@ -74,6 +80,7 @@ const FinalCheckout = () => {
                 </button>
                 <button
                     className="btn btn-primary col-2 mt-3"
+                    onClick={handleSubmit}
                 >
                     Finalizar pedido
                 </button>

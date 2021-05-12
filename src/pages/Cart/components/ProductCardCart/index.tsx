@@ -12,10 +12,10 @@ type Props = {
 const ProductCardCart = ({ product, quantityProduct, uploadSummary }: Props) => {
   const [counter, setCounter] = useState<number>(product.sellQuantity);
   const [productPrice, setProductPrice] = useState(product.product?.price * counter);
-  const [ products, setProducts] = useState<ProductsCart[]>([]);
+  const [products, setProducts] = useState<ProductsCart[]>([]);
 
   useEffect(() => {
-    
+
   }, [counter])
 
   const onAdd = (id: number) => {
@@ -81,56 +81,48 @@ const ProductCardCart = ({ product, quantityProduct, uploadSummary }: Props) => 
   }
 
   return (
-    <div className="card card-geral">
-      <div className="card-body">
-        <div className="geral row">
-          <div className="card card-image">
-            {product.product?.images.map(image => (
-              image.principal && (
-                <img src={image.imgUrl} alt={image.imgUrl} />
-              )
-            ))}
-          </div>
+    <div className="general">
+      <div className="card-image">
+        {product.product?.images.map(image => (
+          image.principal && (
+            <img src={image.imgUrl} alt={image.imgUrl} className="imagem-produto" />
+          )
+        ))}
+      </div>
 
-          <div className="col-8 teste">
-            <div className="titulos">
-              <h6 className="titulo-produto"><strong>produto</strong></h6>
-              <h6 className="titulo-qtd"><strong>qtd.</strong></h6>
-              <h6 className="titulo-preco"><strong>preço</strong></h6>
-            </div>
+      <div className="titulos">
+        <h6 className="titulo-produto"><strong>produto</strong></h6>
+        <h6 className="titulo-qtd"><strong>qtd.</strong></h6>
+        <h6 className="titulo-preco"><strong>preço</strong></h6>
+      </div>
 
-            <div className="row infos mt-3">
-              <label className="nomeLivro col-4">
-                {product.product?.title}
-              </label>
+      <label className="nomeLivro">
+        {product.product?.title}
+      </label>
 
-              <div className="quantidade col-1">
-                <button
-                  className="decrementar btn btn-primary"
-                  onClick={() => onDecrement(product.product?.id)}
-                >
-                  -
+      <div className="quantidade">
+        <button
+          className="decrementar btn btn-primary"
+          onClick={() => onDecrement(product.product?.id)}
+        >
+          -
                 </button>
-                <h5 className="qtd">{counter}</h5>
-                <button
-                  className="incrementar btn btn-primary"
-                  onClick={() => onAdd(product.product?.id)}
-                >
-                  +
+        <h5 className="qtd">{counter}</h5>
+        <button
+          className="incrementar btn btn-primary"
+          onClick={() => onAdd(product.product?.id)}
+        >
+          +
                 </button>
-              </div>
+      </div>
 
-              <div className="preco col-4">
-                <label><strong>R$ {productPrice?.toFixed(2).replace(".", ",")}</strong></label>
-                <button
-                  className="remove btn btn-danger"
-                  onClick={() => removeProduct(product.product?.id)}>
-                  <img src={lixeira} alt="remover" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="preco">
+        <label><strong>R$ {productPrice?.toFixed(2).replace(".", ",")}</strong></label>
+        <button
+          className="remove btn btn-danger"
+          onClick={() => removeProduct(product.product?.id)}>
+          <img src={lixeira} alt="remover" />
+        </button>
       </div>
     </div>
   )
