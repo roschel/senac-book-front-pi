@@ -1,0 +1,23 @@
+.geral-client {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 15px;
+    padding: 10px 10px;
+}
+
+.cabecalho {
+    display: flex;
+    flex-direction: row;
+}
+
+.infos {
+    display: flex;
+    flex-direction: row;
+}
+
+.plus-button {
+    display: flex;
+    margin-top: -25px;
+    margin-left: -35px;
+}

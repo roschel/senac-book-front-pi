@@ -10,6 +10,7 @@ import OrderSummary from '../OrderSummary'
 const Items = () => {
   const [numberBooks, setNumberBooks] = useState(-1);
   const [updateSummaryCart, setUpdateSummaryCart] = useState(false);
+  const [shipping, setShipping] = useState(0);
   const getCart = getCartData()
 
   const removeProduct = (quantity: number) => {
@@ -39,7 +40,7 @@ const Items = () => {
       ) : (
         <div className="grid">
           {getCart.products.map(book => (
-            <div className="books-list">
+            <div className="books-list mb-4">
               <ProductCardCart 
                 product={book} 
                 quantityProduct={removeProduct} 
@@ -50,6 +51,8 @@ const Items = () => {
           ))}
           <div className="summary">
             <OrderSummary 
+              shipping={shipping}
+              setShipping={setShipping}
               books={getCart.products} 
               updateSummaryCart={updateSummaryCart} 
               key={getCart.customerId}

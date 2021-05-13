@@ -1,5 +1,9 @@
-.card-geral {
-    border-radius: 10px;
+.geral {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    border-radius: 15px;
+    width: auto;
 }
 
 .card-body{
@@ -12,8 +16,10 @@
 }
 
 .card-image {
-    margin-left: 20px;
     width: 80px;
+    margin-left: -925px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .quantidade {
@@ -42,13 +48,18 @@
     justify-content: center;
     justify-content: space-between;
     text-align: center;
+    margin-top: -150px;
 }
 
 .titulo-qtd {
-    margin-left: 75px;
+    margin-left: 90px;
 }
 
-.info {
+.titulo-preco {
+    margin-right: 25px;
+}
+
+.infos {
     display: flex;
     justify-content: center;
     justify-content: space-between;
@@ -56,7 +67,7 @@
 
 .remove {
     margin-top: -40px;
-    margin-right: -200px;
+    margin-right: -170px;
     margin-left: 150px;
     width: auto;
 }
