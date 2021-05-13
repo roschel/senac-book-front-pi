@@ -42,7 +42,7 @@ const FinalCheckout = () => {
       prod.push({id: element.product.id})
     });
 
-    const payLoad={
+    const payload={
       client:{
         id: data.customerId
       },
@@ -57,9 +57,16 @@ const FinalCheckout = () => {
       status: true,
       createdAt: Date.now()
     }
-    console.log(payLoad)
+    console.log(payload)
 
-    makePrivateRequest({url:`/orders`, data: payLoad, method:'POST'})
+    makePrivateRequest({url:`/orders`, data: payload, method:'POST'})
+    .then(response => {
+      alert("Compra finalizada com sucesso! Seu número de pedido é: " + response.data.id)
+    })
+    .catch(response => {
+      alert("Ops, algo está errado... tente novamente mais tarde!")
+      console.log(response)
+    })
     .finally(() => {
       history.push(`/client/${data.customerId}/orders`)
     })
