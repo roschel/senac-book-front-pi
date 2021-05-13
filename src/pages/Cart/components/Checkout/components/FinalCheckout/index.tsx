@@ -4,6 +4,7 @@ import { Client } from '../../../../../../core/components/types/Client';
 import { CartSession, getCartData, Payment } from '../../../../../../core/components/utils/cart';
 import { makePrivateRequest } from '../../../../../../services/api';
 import Products from '../../../../../Admin/components/Products';
+import { format } from 'date-fns'
 import './styles.scss'
 
 const FinalCheckout = () => {
@@ -53,8 +54,10 @@ const FinalCheckout = () => {
       value: data.value,
       shipping: data.shipping,
       totalValue: data.totalValue,
-      status: true
+      status: true,
+      createdAt: Date.now()
     }
+    console.log(payLoad)
 
     makePrivateRequest({url:`/orders`, data: payLoad, method:'POST'})
     .finally(() => {
@@ -112,7 +115,7 @@ const FinalCheckout = () => {
             {!payment ? (
               <div className="boleto">
                 <h6>Boleto bancário</h6>
-                <h6><strong>Vencimento: </strong> {Date.now() + 2} </h6>
+                <h6><strong>Vencimento: </strong> {format(new Date().setDate(new Date().getDate() + 2), "dd/MM/yyyy")} </h6>
               </div>
 
             ) : (
