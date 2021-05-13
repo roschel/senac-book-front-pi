@@ -81,10 +81,8 @@ const ProductCardCart = ({ product, quantityProduct, uploadSummary }: Props) => 
   }
 
   return (
-    <div className="card">
-      <div className="card-body">
         <div className="geral row">
-          <div className="card card-image">
+          <div className="card-image">
             {product.product?.images.map(image => (
               image.principal && (
                 <img src={image.imgUrl} alt={image.imgUrl} />
@@ -131,8 +129,6 @@ const ProductCardCart = ({ product, quantityProduct, uploadSummary }: Props) => 
             </div>
           </div>
         </div>
-      </div>
-    </div>
   )
 }
 

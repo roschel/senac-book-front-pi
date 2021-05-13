@@ -40,7 +40,7 @@ const Items = () => {
       ) : (
         <div className="grid">
           {getCart.products.map(book => (
-            <div className="books-list">
+            <div className="books-list mb-4">
               <ProductCardCart 
                 product={book} 
                 quantityProduct={removeProduct} 

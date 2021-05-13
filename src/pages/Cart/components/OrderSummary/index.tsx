@@ -56,8 +56,8 @@ const OrderSummary = ({ books, updateSummaryCart, shipping, setShipping }: Props
   }
 
   return (
-    <div className="card container">
-      <h5><strong>resumo do pedido</strong></h5>
+    <div className="container">
+      <h5 className="title-summary"><strong>resumo do pedido</strong></h5>
       <div className="card-body row">
         {quantidadeTotalDeProdutos > 1 ? (
           <h6 className="col-6">{quantidadeTotalDeProdutos} produtos</h6>
@@ -72,13 +72,14 @@ const OrderSummary = ({ books, updateSummaryCart, shipping, setShipping }: Props
         <h5 className="col-6"><strong>total</strong></h5>
         <h5 className="col-6 valor"><strong>R$ {valorTotal.toFixed(2).replace(".", ",")}</strong></h5>
       </div>
-
-      <button
-        className="btn btn-primary mb-3"
-        onClick={handleSubmit}
-      >
-        Continuar
-      </button>
+      <div className="continuar">
+        <button
+          className="btn btn-primary mb-3"
+          onClick={handleSubmit}
+        >
+          Continuar
+        </button>
+      </div>
 
       <div className="frete card col 12 mb-2">
         <h6 className="calcular"><strong>Calcular frete</strong></h6>
@@ -88,7 +89,9 @@ const OrderSummary = ({ books, updateSummaryCart, shipping, setShipping }: Props
           placeholder="ex: 12345-678"
           onBlur={e => calcularFrete(e.target.value)}
         />
-        <button className="btn btn-outline-primary mb-2">Calcular</button>
+        <div className="calc">
+          <button className="btn btn-outline-primary mb-2">Calcular</button>
+        </div>
       </div>
     </div>
   )

@@ -63,7 +63,7 @@ const FinalCheckout = () => {
   }
 
   return (
-    <div className="geral container">
+    <div className="geral">
       <div>
         <h4>Finalizar pedido</h4>
       </div>
