@@ -62,6 +62,7 @@ const FinalCheckout = () => {
     makePrivateRequest({url:`/orders`, data: payload, method:'POST'})
     .then(response => {
       alert("Compra finalizada com sucesso! Seu número de pedido é: " + response.data.id)
+      localStorage.removeItem('cartData')
     })
     .catch(response => {
       alert("Ops, algo está errado... tente novamente mais tarde!")
