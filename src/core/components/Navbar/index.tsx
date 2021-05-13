@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
-import Tooltip from '../tooltip/tooltip';
+import Login from '../../../pages/Auth/components/Login';
+import Modal from '../Modal';
+import Tooltip from '../Tooltip';
 import { getSessionData, isAllowedRole, isAuthenticated, isTokenValid, logout } from '../utils/auth';
+import { getLocationElement } from '../utils/functions';
 import './styles.scss';
 
 const Navbar = () => {
@@ -9,6 +12,8 @@ const Navbar = () => {
   const location = useLocation();
   const history = useHistory();
   const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [top, left, height, width] = getLocationElement(document.getElementById("profile"));
+  const [showModalLogin, setShowModalLogin] = useState(false);
 
   useEffect(() => {
     setUserName(getSessionData().userFirstName)
@@ -17,76 +22,91 @@ const Navbar = () => {
   const handleLogout = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     event.preventDefault();
     logout();
-    history.replace('/admin/products')
-}
+    // history.replace('/admin/products')
+    history.replace('/')
+  }
 
   return (
-    <nav className="row bg-primary main-nav">
-      <div className="col2">
+    <nav className="main-nav">
+      <div>
         <Link to="/" className='nav-logo-text'>
           <h4>Senac Books</h4>
         </Link>
       </div>
-      <div className="col-6 offset-4" >
+
+      <div>
         <ul className="main-menu">
           <li>
             <NavLink to="/" exact>
-                HOME
+              HOME
             </NavLink>
           </li>
-          {/* <li>
-            {(!isAuthenticated() || !isAllowedRole(["ROLE_CLIENTE"])) ? (
-              <NavLink to="/auth/login">
-              Login
-              </NavLink>
-              ) : (
-              <NavLink to={`/client/${getSessionData().userId}`}>
-                Olá, {userName}
-                </NavLink>
-                )}
-          </li> */}
 
           <li>
             {(isAuthenticated() && isTokenValid()) ? (
               isAllowedRole(["ROLE_CLIENTE"]) ? (
-                <div 
+                <div
                   onClick={() => setTooltipVisible(!tooltipVisible)}
-                  onMouseEnter={() => setTooltipVisible(true)} 
-                  onMouseLeave={() => setTooltipVisible(false)} 
-                  className="perfil">
-                  <span>Olá, {userName}</span>
-                  <Tooltip visible={tooltipVisible}>
-                    <Link to={`/client/${getSessionData().userId}`}>
+                  onMouseEnter={() => setTooltipVisible(true)}
+                  onMouseLeave={() => setTooltipVisible(false)}
+                >
+                  <span
+                    id="profile"
+                    className={`perfil ${tooltipVisible ? "perfil-active" : ""}`}
+                  >
+                    Olá, {userName}
+                  </span>
+                  <Tooltip
+                    visible={tooltipVisible}
+                    location={{
+                      left: left ?? 0,
+                      top: top ?? 0,
+                      height: height,
+                      width: width
+                    }}
+                    position="bottom"
+                  >
+                    <Link
+                      to={`/client/${getSessionData().userId}`}
+                    >
                       Perfil
                     </Link>
                     <br />
-                    <Link to="/auth/login" onClick={handleLogout}>
+                    <Link
+                      to="/auth/login" onClick={handleLogout}
+                    >
                       Logout
                     </Link>
                   </Tooltip>
                 </div>
               ) : (
-                <NavLink to="/admin/products">
-                  Login
-                </NavLink>
+                // <NavLink to="/admin/products">
+                <Link to="/" onClick={() => setShowModalLogin(true)}>
+                  LOGIN
+                </Link>
+                // </NavLink>
               )
             ) : (
-              <NavLink to="/auth/login">
-                Login
-              </NavLink>
+              // <NavLink to="/auth/login">
+              <Link to="/" onClick={() => setShowModalLogin(true)}>
+                LOGIN
+              </Link>
+              // {/* </NavLink> */}
             )}
-          </li>
-
-          {/* {userName && (
-            <Link to="/auth/login" onClick={handleLogout}>
-              Logout
-            </Link>
-          )} */}
-          <li>
           </li>
         </ul>
       </div>
+
+      <Modal
+        showModal={showModalLogin}
+        setShowModal={setShowModalLogin}
+      >
+        <Login
+          setShowModal={setShowModalLogin}
+        />
+      </Modal>
     </nav>
   )
 }
+
 export default Navbar;

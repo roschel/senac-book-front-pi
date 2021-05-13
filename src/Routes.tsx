@@ -21,11 +21,11 @@ const Routes = () => (
 			</Route>
 
 			<Route path="/products/:productId">
-				<ProductDetails />
+				{/* <ProductDetails /> */}
 			</Route>
 
 			<Route path="/auth">
-				<Auth />
+				{/* <Auth /> */}
 			</Route>
 
 			<Redirect from="/admin" to="/admin/products" exact />

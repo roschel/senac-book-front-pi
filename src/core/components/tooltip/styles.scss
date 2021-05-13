@@ -1,0 +1,16 @@
+.tooltip-container {
+  background: black;
+  border-radius: 5px;
+  position: absolute;
+  opacity: 0;
+  top: 100%;
+  padding: 5px 15px;
+  z-index: -1;
+
+  transition: all .2s;
+
+  &.is-visible {
+    opacity: 92%;
+    z-index: 1;
+  }
+}

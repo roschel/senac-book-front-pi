@@ -8,19 +8,19 @@ import NavBarClient from './components/NavbarClient';
 import './styles.scss';
 
 const Client = () => (
-    <div className="admin-container">
-        <NavBarClient />
-        <div className="admin-content">
-            <Switch>
-                <PrivateRoute allowedRoutes={['ROLE_CLIENTE']} path="/client/:clientId" exact>
-                    <ClientData />
-                </PrivateRoute>
-                <PrivateRoute allowedRoutes={['ROLE_CLIENTE']} path="/client/:clientId/addresses">
-                    <ClientAddress />
-                </PrivateRoute>
-            </Switch>
-        </div>
+  <div className="admin-container">
+    <NavBarClient />
+    <div className="admin-content">
+      <Switch>
+        <PrivateRoute allowedRoutes={['ROLE_CLIENTE']} path="/client/:clientId" exact>
+          <ClientData />
+        </PrivateRoute>
+        <PrivateRoute allowedRoutes={['ROLE_CLIENTE']} path="/client/:clientId/addresses">
+          <ClientAddress />
+        </PrivateRoute>
+      </Switch>
     </div>
+  </div>
 );
 
 export default Client;

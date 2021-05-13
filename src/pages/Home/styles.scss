@@ -1,18 +1,41 @@
-.home-container{
-  margin-top: 26px;
-  padding: 0 40px 50px 40px;
+.home-container {
+  height: calc(100vh - 70px);
+  padding-top: 30px;
 }
 
-.catalog-title{
-  font-size: 24px;
-  line-height: 33px;
-  letter-spacing: -0.015em;
+.search {
+  // margin-top: 30px;
+  display: flex;
+  justify-content: center;
 }
 
-.catalogo-livros{
-  margin-top: 43px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 250px);
-  grid-gap: 33px 30px;
-  justify-content: space-between;
+.books-container {
+  height: calc(100vh - 70px - (60px + 30px));
+  // (tamanho da tela) - (navbar) - (search + margin)
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.books-catalog {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  // width: auto;
+
+  gap: 30px 100px;
+  padding: 30px 100px 30px;
+}
+
+.books-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-bottom: 30px;
+}
+
+.teste {
+  display: block;
+  position: fixed;
+  background: black;
 }
