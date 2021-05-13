@@ -1,7 +1,8 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
-import { calculateShipping, getCartData, ProductsCart } from '../../../../core/components/utils/cart'
+import { getSessionData } from '../../../../core/components/utils/auth'
+import { calculateShipping, getCartData, ProductsCart, saveCartData } from '../../../../core/components/utils/cart'
 
 import './styles.scss'
 
@@ -47,7 +48,14 @@ const OrderSummary = ({ books, updateSummaryCart, shipping, setShipping }: Props
   }, [updateSummaryCart, shipping])
 
   const handleSubmit = () => {
+    const sessionData = getSessionData()
     const cartSession = getCartData()
+
+    if (sessionData && !cartSession.customerId) {
+      cartSession.customerId = sessionData.userId
+      saveCartData(cartSession)
+    }
+
     if (!cartSession.customerId) {
       alert('É preciso logar no sistema para realizar o checkout')
       history.push('/')
