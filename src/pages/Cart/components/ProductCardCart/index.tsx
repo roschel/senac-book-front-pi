@@ -12,7 +12,7 @@ type Props = {
 const ProductCardCart = ({ product, quantityProduct, uploadSummary }: Props) => {
   const [counter, setCounter] = useState<number>(product.sellQuantity);
   const [productPrice, setProductPrice] = useState(product.product?.price * counter);
-  const [ products, setProducts] = useState<ProductsCart[]>([]);
+  const [products, setProducts] = useState<ProductsCart[]>([]);
 
   useEffect(() => {
     
@@ -26,7 +26,7 @@ const ProductCardCart = ({ product, quantityProduct, uploadSummary }: Props) => 
 
       const booksCart = getCartData();
 
-      booksCart.products.map(book => {
+      booksCart.products.forEach(book => {
         if (book.product.id === id) {
           book["sellQuantity"] = counter2
         }
@@ -45,7 +45,7 @@ const ProductCardCart = ({ product, quantityProduct, uploadSummary }: Props) => 
 
       const booksCart = getCartData();
 
-      booksCart.products.map(book => {
+      booksCart.products.forEach(book => {
         if (book.product.id === id) {
           book["sellQuantity"] = counter2
         }
@@ -70,7 +70,7 @@ const ProductCardCart = ({ product, quantityProduct, uploadSummary }: Props) => 
       }
     });
     if (parsedCartData.products.length === 0) {
-      localStorage.clear()
+      localStorage.removeItem('cartData')
       quantityProduct(0)
     } else {
       setProducts(parsedCartData.products)
