@@ -2,7 +2,7 @@ import { data } from 'jquery'
 import React, { useEffect, useState } from 'react'
 import { Address, Client } from '../../../../core/components/types/Client'
 import { Product } from '../../../../core/components/types/Product'
-import { getCartData, ProductsCart } from '../../../../core/components/utils/cart'
+import { getCartData, ProductsCart, saveCartData } from '../../../../core/components/utils/cart'
 import { makePrivateRequest } from '../../../../services/api'
 import OrderSummary from '../OrderSummary'
 import Card from '../Checkout/components/Card'
@@ -63,12 +63,23 @@ const Checkout: React.FC = () => {
 
   }
 
+  const handleSelectAddress = (address: Address) => {
+    setSelectedAddress(address)
+    const cartData = getCartData()
+    cartData["address"] = address
+    saveCartData(cartData)
+  }
+
   return (
     <>
       <div className="resume">
         <div className="resume-customer">
           {addresses?.map(address => (
-            <button className="teste" onClick={() => setSelectedAddress(address)} key={address.id} >
+            <button 
+              className="teste" 
+              onClick={() => handleSelectAddress(address)} 
+              key={address.id} 
+            >
               <Card
                 address={address}
                 clientId={clientId}

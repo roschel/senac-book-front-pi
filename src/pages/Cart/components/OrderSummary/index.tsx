@@ -58,16 +58,16 @@ const OrderSummary = ({ books, updateSummaryCart }: Props) => {
         ) : (
           <h6 className="col-6">{quantidadeTotalDeProdutos} produto</h6>
         )}
-        <h6 className="col-6 valor">R$ {valorTotalDeLivros.toFixed(2).replace(".",",")}</h6>
+        <h6 className="col-6 valor">R$ {valorTotalDeLivros.toFixed(2).replace(".", ",")}</h6>
         <h6 className="col-6"><em>frete</em></h6>
-        <h6 className="col-6 valor">R$ {shipping.toFixed(2).replace(".",",")}</h6>
+        <h6 className="col-6 valor">R$ {shipping.toFixed(2).replace(".", ",")}</h6>
 
         <div className="linha col-12"></div>
         <h5 className="col-6"><strong>total</strong></h5>
-        <h5 className="col-6 valor"><strong>R$ {valorTotal.toFixed(2).replace(".",",")}</strong></h5>
+        <h5 className="col-6 valor"><strong>R$ {valorTotal.toFixed(2).replace(".", ",")}</strong></h5>
       </div>
 
-      <button 
+      <button
         className="btn btn-primary mb-3"
         onClick={handleSubmit}
       >
