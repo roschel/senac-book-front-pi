@@ -24,7 +24,7 @@ const Payment = ({ address }: Props) => {
   const [plots, setPlots] = useState('');
   const [value, setValue] = useState(0);
   const [totalValue, setTotalValue] = useState(0);
-  const [shipping, setShipping] = useState<number>();
+  // const [shipping, setShipping] = useState<number>();
   const [client, setClient] = useState<number>();
 
   const history = useHistory();
@@ -32,19 +32,18 @@ const Payment = ({ address }: Props) => {
   useEffect(() => {
     const data = getCartData();
     setClient(data.customerId)
-    setShipping(10)
+    // setShipping(10)
 
     let sum = 0;
 
-    data.products.map(product => {
+    data.products.forEach(product => {
       sum += product.sellQuantity * product.product.price
     })
 
     setValue(sum)
 
-    console.log('shipping', shipping)
     if (true) {
-      setTotalValue(sum + 10)
+      setTotalValue(sum + (data.shipping ?? 0))
     }
 
 
@@ -107,8 +106,11 @@ const Payment = ({ address }: Props) => {
     }
     const cartData = getCartData()
 
+    console.log(cartData);
+    
+
     cartData["value"] = value
-    cartData["shipping"] = shipping
+    // cartData["shipping"] = shipping
     cartData["totalValue"] = totalValue
     cartData["paymentMethod"] = plots
 

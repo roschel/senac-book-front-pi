@@ -36,3 +36,15 @@ export const getCartData = () => {
 export const saveCartData = (cart: CartSession) => {
   localStorage.setItem("cartData", JSON.stringify(cart));
 }
+
+export const calculateShipping = (city: string, state: string) => {  
+  if (state.toLowerCase() === 'sp') {
+    if (city.toLowerCase() === 'são paulo') {
+      return 10;
+    } else {
+      return 15;
+    }
+  } else {
+    return 30;
+  }
+}

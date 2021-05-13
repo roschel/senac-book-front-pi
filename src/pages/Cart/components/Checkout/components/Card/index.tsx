@@ -10,9 +10,10 @@ type Props = {
   onPaymentChange: (payment: boolean, addressPaymentId: number) => void;
   buttonTitle: string;
   clientId: string;
+  selectedAddress?: boolean;
 }
 
-const Card = ({ address, onDisabled, buttonTitle, clientId, onPaymentChange }: Props) => {
+const Card = ({ address, onDisabled, buttonTitle, clientId, onPaymentChange, selectedAddress }: Props) => {
   const history = useHistory();
 
   const handlePayment = () => {
@@ -34,7 +35,7 @@ const Card = ({ address, onDisabled, buttonTitle, clientId, onPaymentChange }: P
   }
 
   return (
-    <div className="card-base client-card-admin">
+    <div className={`card-base client-card-admin ${selectedAddress ? "card-selected-address" : ""}`}>
       <div className="row">
         <div className="col-7">
           <h3 className="client-card-address">

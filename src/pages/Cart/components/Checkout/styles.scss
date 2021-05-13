@@ -5,6 +5,12 @@
   grid-gap: 10px;
   padding: 10px;
 
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
   .resume-customer {
     grid-column: 1/3;
     height: 180px;
@@ -18,11 +24,17 @@
   }
 }
 
+.list-addresses {
+  max-height: 340px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
 .summary {
   border-radius: 1000px;
 }
 
-.teste {
+.card-address {
   border: none;
 }
 

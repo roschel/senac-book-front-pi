@@ -1,30 +1,32 @@
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
-import { getCartData, ProductsCart } from '../../../../core/components/utils/cart'
+import { calculateShipping, getCartData, ProductsCart } from '../../../../core/components/utils/cart'
 
 import './styles.scss'
 
 type Props = {
   books: ProductsCart[];
-  updateSummaryCart: boolean
+  updateSummaryCart: boolean;
+  shipping: number;
+  setShipping: (newPrice: number) => void;
 }
 
-const OrderSummary = ({ books, updateSummaryCart }: Props) => {
+const OrderSummary = ({ books, updateSummaryCart, shipping, setShipping }: Props) => {
   const [valorTotalDeLivros, setValorTotalDeLivros] = useState(0);
   const [quantidadeTotalDeProdutos, setQuantidadeTotalDeProdutos] = useState(0);
-  const [shipping, setShipping] = useState(0);
   const [valorTotal, setValorTotal] = useState(0);
   const history = useHistory();
 
   const somaValoresDeLivros = () => {
     let sum = 0
-    books.map(book => {
+    books.forEach(book => {
       sum += book.product?.price * book.sellQuantity
     })
     setValorTotalDeLivros(sum)
 
     let sumQuantidadeTotalDeProdutos = 0
-    books.map(book => {
+    books.forEach(book => {
       sumQuantidadeTotalDeProdutos += book.sellQuantity
     })
     setQuantidadeTotalDeProdutos(sumQuantidadeTotalDeProdutos)
@@ -32,8 +34,12 @@ const OrderSummary = ({ books, updateSummaryCart }: Props) => {
     setValorTotal(sum + shipping)
   }
 
-  const calcularFrete = () => {
-    setShipping(10)
+  const calcularFrete = (cep: string) => {
+    axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+      .then(response => {
+        const address = response.data;
+        setShipping(calculateShipping(address.localidade, address.uf));
+      })
   }
 
   useEffect(() => {
@@ -80,7 +86,7 @@ const OrderSummary = ({ books, updateSummaryCart }: Props) => {
           className='mb-2'
           type="text"
           placeholder="ex: 12345-678"
-          onBlur={calcularFrete}
+          onBlur={e => calcularFrete(e.target.value)}
         />
         <button className="btn btn-outline-primary mb-2">Calcular</button>
       </div>

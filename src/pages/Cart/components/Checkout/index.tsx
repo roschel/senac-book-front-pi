@@ -2,7 +2,7 @@ import { data } from 'jquery'
 import React, { useEffect, useState } from 'react'
 import { Address, Client } from '../../../../core/components/types/Client'
 import { Product } from '../../../../core/components/types/Product'
-import { getCartData, ProductsCart, saveCartData } from '../../../../core/components/utils/cart'
+import { getCartData, ProductsCart, saveCartData, calculateShipping } from '../../../../core/components/utils/cart'
 import { makePrivateRequest } from '../../../../services/api'
 import OrderSummary from '../OrderSummary'
 import Card from '../Checkout/components/Card'
@@ -10,6 +10,7 @@ import Payment from '../Checkout/components/Payment'
 
 import './styles.scss'
 import { useParams } from 'react-router'
+import { Link } from 'react-router-dom'
 
 type ParamsType = {
   clientId: string;
@@ -34,13 +35,13 @@ const Checkout: React.FC = () => {
     setProducts(data.products)
 
     let sum = 0
-    products?.map(book => {
+    products?.forEach(book => {
       sum += book.product?.price * book.sellQuantity
     })
     setValorTotalDeLivros(sum)
 
     let sumQuantidadeTotalDeProdutos = 0
-    products?.map(book => {
+    products?.forEach(book => {
       sumQuantidadeTotalDeProdutos += book.sellQuantity
     })
     setQuantidadeTotalDeProdutos(sumQuantidadeTotalDeProdutos)
@@ -65,31 +66,58 @@ const Checkout: React.FC = () => {
 
   const handleSelectAddress = (address: Address) => {
     setSelectedAddress(address)
+    const newPrice = calculateShipping(address.city, address.state);
+    setShipping(newPrice)
+    console.log("address ", address);
+    console.log("shipping ", shipping);
     const cartData = getCartData()
-    cartData["address"] = address
+    cartData.address = address
+    cartData.shipping = newPrice;
+    
     saveCartData(cartData)
+  }
+
+  const handleShipping = (price: number) => {
+    setSelectedAddress(undefined);
+    setShipping(price);
   }
 
   return (
     <>
       <div className="resume">
         <div className="resume-customer">
-          {addresses?.map(address => (
-            <button 
-              className="teste" 
-              onClick={() => handleSelectAddress(address)} 
-              key={address.id} 
-            >
-              <Card
-                address={address}
-                clientId={clientId}
-                onDisabled={onDisabled}
-                buttonTitle={'INATIVAR'}
+          <div className="list-addresses">
+            {addresses?.map(address => (
+              <span
+                className="card-address"
+                onClick={() => handleSelectAddress(address)}
                 key={address.id}
-                onPaymentChange={onPaymentChange}
-              />
-            </button>
-          ))}
+              >
+                <Card
+                  address={address}
+                  clientId={clientId}
+                  onDisabled={onDisabled}
+                  buttonTitle={'INATIVAR'}
+                  key={address.id}
+                  onPaymentChange={onPaymentChange}
+                  selectedAddress={selectedAddress === address}
+                />
+              </span>
+            ))}
+          </div>
+
+          <div className="buttons">
+            <Link to="/cart">
+              <button className="save btn btn-primary mt-4">
+                Voltar
+              </button>
+            </Link>
+            <Link to={`/client/${customer?.id}/addresses/create`}>
+              <button className="save btn btn-primary mt-4">
+                Novo endereço
+              </button>
+            </Link>
+          </div>
 
           {selectedAddress &&
             <div className="pag">
@@ -103,6 +131,8 @@ const Checkout: React.FC = () => {
               books={getCart.products}
               updateSummaryCart={updateSummaryCart}
               key={getCart.customerId}
+              shipping={shipping}
+              setShipping={handleShipping}
             />
           </div>
         </div>
