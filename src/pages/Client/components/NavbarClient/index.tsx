@@ -17,7 +17,7 @@ const NavBarClient = () => (
         </NavLink>
       </li>
       <li>
-        <NavLink className="admin-nav-item" to="#">
+        <NavLink className="admin-nav-item" to={`/client/${getSessionData().userId}/orders`}>
           Pedidos
         </NavLink>
       </li>

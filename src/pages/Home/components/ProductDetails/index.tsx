@@ -26,14 +26,26 @@ export const ProductDetails = () => {
   }, [productId]);
 
   const saveData = (product: Product) => {
-    const cartData = getCartData();
+    const cartData = getCartData() as CartSession;
+
     if (cartData.products) {
-      console.log('entrei', cartData)
-      let payload: ProductsCart = {
-        product,
-        sellQuantity: 1
+      let added = false;
+      cartData.products.forEach(productCart => {
+        if (productCart.product.id === product.id) {
+          added = true;
+          productCart.sellQuantity++;
+        }
+      })
+
+      if (!added) {
+        console.log('entrei', cartData)
+        let payload: ProductsCart = {
+          product,
+          sellQuantity: 1
+        }
+        cartData.products.push(payload)
       }
-      cartData.products.push(payload)
+
       saveCartData(cartData)
     } else {
       let payLoad: CartSession = {
@@ -100,11 +112,11 @@ export const ProductDetails = () => {
             </div>
 
             {product?.status === true ? (
-              <button className="btn btn-primary" onClick={() => saveData(product)}>
-                <Link to="/cart">
+              <Link to="/cart">
+                <button className="btn btn-primary" onClick={() => saveData(product)}>
                   Comprar
-								</Link>
-              </button>
+                </button>
+              </Link>
             ) : (
               <button
                 className="btn btn-primary"

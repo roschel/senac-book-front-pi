@@ -1,0 +1,49 @@
+.botao {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cartao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .dividir {
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .codVer {
+        margin-right: 10px;
+        width: 180px;
+    }
+    
+    .numCartao {
+        width: 420px;
+    }
+    
+    .parcelas {
+        width: 420px;
+    }
+    
+    .save {
+        width: 420px;
+    }
+}
+
+.boleto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .dividir {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .firstName {
+        margin-right: 7px;
+    }
+}
+

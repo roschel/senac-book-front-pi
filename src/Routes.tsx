@@ -12,6 +12,7 @@ import Register from './pages/Client/components/Form'
 import Client from './pages/Client';
 
 import Cart from './pages/Cart'
+import FinalCheckout from '../src/pages/Cart/components/Checkout/components/FinalCheckout'
 
 const Routes = () => (
 	<BrowserRouter>
@@ -43,8 +44,12 @@ const Routes = () => (
 				<Cart />
 			</Route>
 
-      <Route path="/client">
+      		<Route path="/client">
 				<Client />
+			</Route>
+
+      		<Route path="/finalCheckout">
+				<FinalCheckout />
 			</Route>
 
 		</Switch>
