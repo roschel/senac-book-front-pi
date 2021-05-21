@@ -1,3 +1,6 @@
+import { Payment } from "../utils/cart"
+import { Product } from "./Product"
+
 export type Client = {
   id: number;
   firstName: string;
@@ -30,4 +33,7 @@ export type Orders = {
   status: boolean;
   createdAt: string;
   client: Client;
+  address: Address;
+  products: Product[];
+  payment: Payment;
 }
