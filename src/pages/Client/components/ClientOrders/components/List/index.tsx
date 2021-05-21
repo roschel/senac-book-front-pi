@@ -5,33 +5,31 @@ import { makePrivateRequest } from '../../../../../../services/api';
 import Card from "../Card"
 
 type ParamsType = {
-    clientId: string;
+  clientId: string;
 }
 
 const List = () => {
 
-    const { clientId } = useParams<ParamsType>();
-    const [orders, setOrders] = useState<Orders[]>();
+  const { clientId } = useParams<ParamsType>();
+  const [orders, setOrders] = useState<Orders[]>();
 
-    useEffect(() => {
-        makePrivateRequest({ url: `/orders/client/${clientId}` })
-            .then(response => {
-                setOrders(response.data)
+  useEffect(() => {
+    makePrivateRequest({ url: `/orders/client/${clientId}` })
+      .then(response => {
+        setOrders(response.data)
+      })
+  }, [])
 
-            })
-    }, [])
+  return (
+    <>
+      { orders && orders?.map(order => (
+        <div>
+          <Card order={order} />
+        </div>
 
-    return (
-        <>
-            { orders && orders?.map(order => (
-                <div>
-                    <Card order={order}/>
-
-                </div>
-
-            ))}
-        </>
-    )
+      ))}
+    </>
+  )
 }
 
 export default List;
