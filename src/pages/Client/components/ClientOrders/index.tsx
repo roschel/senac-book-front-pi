@@ -20,9 +20,9 @@ const ClientOrders = () => {
       .then((response) => {
         const ordersResponse = response.data as Orders[];
         ordersResponse.forEach(order => {
-          order.createdAt = format(new Date(), "dd/MM/yyyy")
+          order.createdAt = format(new Date(), "dd/MM/yyyy | HH:mm")
         })
-        setOrders(ordersResponse)
+        setOrders(ordersResponse.reverse()) //§ invertendo a listagem... ordem de venda
       })
   }, [])
 

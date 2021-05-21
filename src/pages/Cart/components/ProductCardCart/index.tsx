@@ -77,7 +77,7 @@ const ProductCardCart = ({ product, quantityProduct, uploadSummary }: Props) => 
       localStorage.setItem('cartData', JSON.stringify(parsedCartData))
       quantityProduct(parsedCartData.products.length)
     }
-
+    uploadSummary(true)
   }
 
   return (
