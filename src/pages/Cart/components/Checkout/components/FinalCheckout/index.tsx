@@ -1,16 +1,16 @@
+import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router'
-import { Client } from '../../../../../../core/components/types/Client';
+import { useHistory } from 'react-router';
+import { Orders } from '../../../../../../core/components/types/Orders';
 import { CartSession, getCartData, Payment } from '../../../../../../core/components/utils/cart';
 import { makePrivateRequest } from '../../../../../../services/api';
-import Products from '../../../../../Admin/components/Products';
-import { format } from 'date-fns'
-import './styles.scss'
+import './styles.scss';
 
 const FinalCheckout = () => {
   const [cart, setCart] = useState<CartSession>();
   const [payment, setPayment] = useState<Payment | null>();
   const [paymentMethod, setPaymentMethod] = useState<string>();
+  const [order, setOrder] = useState<Orders>();
   const history = useHistory();
 
   useEffect(() => {
@@ -39,15 +39,19 @@ const FinalCheckout = () => {
     const data = getCartData()
     const prod: Object[] = []
     data.products.forEach(element => {
-      prod.push({id: element.product.id})
+      prod.push(
+        {
+          id: element.product.id,
+          quantity: element.sellQuantity
+        }
+      )
     });
 
-    const payload={
-      client:{
+    const orderPost = {
+      client: {
         id: data.customerId
       },
-      products: prod,
-      payment: data.payment ? {id: data.payment} : null,
+      payment: data.payment ? { id: data.payment } : null,
       address: {
         id: data.address?.id
       },
@@ -55,21 +59,32 @@ const FinalCheckout = () => {
       shipping: data.shipping,
       totalValue: data.totalValue,
       status: true,
-      createdAt: Date.now()
     }
-    console.log(payload)
+    console.log(order)
 
-    makePrivateRequest({url:`/orders`, data: payload, method:'POST'})
-    .then(response => {
-      alert("Compra finalizada com sucesso! Seu número de pedido é: " + response.data.id)
-      localStorage.removeItem('cartData')
-    })
-    .catch(response => {
-      alert("Ops, algo está errado... tente novamente mais tarde!")
-      console.log(response)
-    })
-    .finally(() => {
-      history.push(`/client/${data.customerId}/orders`)
+    makePrivateRequest({ url: `/orders`, data: orderPost, method: 'POST' })
+      .then(response => {
+        alert("Compra finalizada com sucesso! Seu número de pedido é: " + response.data.id)
+        setOrder(response.data)
+        localStorage.removeItem('cartData')
+      })
+      .catch(response => {
+        alert("Ops, algo está errado... tente novamente mais tarde!")
+        console.log(response)
+      })
+
+    data.products.map(product => {
+      let orderDetails = {
+        product: product.product.id,
+        quantity: product.sellQuantity,
+        order: order?.id
+      }
+      makePrivateRequest({
+        url: `orders/details`,
+        method: 'POST',
+        data: orderDetails
+      }
+      )
     })
   }
 
@@ -130,7 +145,7 @@ const FinalCheckout = () => {
 
               <div className="cartao">
                 <h6>Cartão de crédito</h6>
-                <h6><strong>Final do cartao: </strong>{payment.numberCard.slice(12,16)}</h6>
+                <h6><strong>Final do cartao: </strong>{payment.numberCard.slice(12, 16)}</h6>
                 <h6><strong>Nº de parcelas: </strong>{paymentMethod}</h6>
               </div>
             )}

@@ -1,13 +1,9 @@
 import { format } from 'date-fns';
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Orders } from '../../../../../../core/components/types/Client';
-import { User } from '../../../../../../core/components/types/User';
-import { isAllowedRole } from '../../../../../../core/components/utils/auth';
-import { makePrivateRequest } from '../../../../../../services/api';
-import plusButton from '../../../../../../core/assets/images/plusButton.svg'
-import './styles.scss';
+import React, { useState } from 'react';
+import plusButton from '../../../../../../core/assets/images/plusButton.svg';
+import { Orders } from '../../../../../../core/components/types/Orders';
 import ModalOrders from '../ModalOrders';
+import './styles.scss';
 
 type ParamsType = {
   clientId: string

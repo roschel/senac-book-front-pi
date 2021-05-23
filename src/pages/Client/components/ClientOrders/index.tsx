@@ -1,9 +1,32 @@
-import React from 'react';
-import { Switch } from 'react-router-dom';
+import { format } from 'date-fns';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import { Switch, useParams } from 'react-router-dom';
 import PrivateRoute from '../../../../core/components/Routes/PrivateRoute';
+import { Orders } from '../../../../core/components/types/Orders';
+import { makePrivateRequest } from '../../../../services/api';
 import List from './components/List';
-  
+
+import './styles.scss'
+
+type ParamsType = {
+  clientId: string
+}
+
 const ClientOrders = () => {
+  const { clientId } = useParams<ParamsType>();
+  const [orders, setOrders] = useState<Orders[]>();
+
+  useEffect(() => {
+    makePrivateRequest({ url: `/orders/client/${clientId}` })
+      .then((response) => {
+        const ordersResponse = response.data as Orders[];
+        ordersResponse.forEach(order => {
+          order.createdAt = format(new Date(), "dd/MM/yyyy | HH:mm")
+        })
+        setOrders(ordersResponse.reverse()) //§ invertendo a listagem... ordem de venda
+      })
+  }, [])
 
   return (
     <div>

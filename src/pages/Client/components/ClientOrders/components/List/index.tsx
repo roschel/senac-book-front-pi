@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { Orders } from '../../../../../../core/components/types/Client';
+import { Orders } from '../../../../../../core/components/types/Orders';
 import { makePrivateRequest } from '../../../../../../services/api';
 import Card from "../Card"
 

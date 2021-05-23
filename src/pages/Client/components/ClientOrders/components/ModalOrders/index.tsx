@@ -1,8 +1,8 @@
 import { format } from 'date-fns';
 import { useState } from 'react';
-import { Orders } from '../../../../../../core/components/types/Client';
 import { Payment } from '../../../../../../core/components/utils/cart';
 import { Modal } from 'react-bootstrap';
+import { Orders } from '../../../../../../core/components/types/Orders';
 
 type Props = {
   order: Orders
@@ -38,14 +38,12 @@ const ModalOrders = ({ order }: Props) => {
               <h6 className="col-3"><strong>Qtd. </strong></h6>
               <h6 className="col-3"><strong>Total R$</strong></h6>
             </div>
-            {order && order.products.map(product => (
+            {order && order.orderDetails.map(product => (
               <div className="col-12 infor-produto d-flex">
-                <h6 className="col-3">{product.title}</h6>
-                <h6 className="col-3"><strong>RS </strong>{product.price}</h6>
-                <h6 className="col-3">1</h6>
-                {/* <h6 className="col-3">{order.products.sellQuantity}</h6> */}
-                {/* <h6 className="col-3"><strong>R$ </strong>{(order.products.sellQuantity * order.products.value).toFixed(2).replace(".", ",")}</h6> */}
-                <h6 className="col-3"><strong>R$ </strong>{(97.87).toFixed(2).replace(".", ",")}</h6>
+                <h6 className="col-3">{product.product.title}</h6>
+                <h6 className="col-3"><strong>RS </strong>{(product.product.price).toFixed(2).replace(".", ",")}</h6>
+                <h6 className="col-3">{product.sellQuantity}</h6>
+                <h6 className="col-3"><strong>R$ </strong>{(product.sellQuantity * product.product.price).toFixed(2).replace(".", ",")}</h6>
               </div>
             ))}
             <div className="col-12 mt-5 d-flex">
