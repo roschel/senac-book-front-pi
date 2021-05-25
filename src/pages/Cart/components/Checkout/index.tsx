@@ -1,16 +1,14 @@
-import { data } from 'jquery'
 import React, { useEffect, useState } from 'react'
-import { Address, Client } from '../../../../core/components/types/Client'
-import { Product } from '../../../../core/components/types/Product'
-import { getCartData, ProductsCart, saveCartData, calculateShipping } from '../../../../core/components/utils/cart'
-import { makePrivateRequest } from '../../../../services/api'
-import OrderSummary from '../OrderSummary'
-import Card from '../Checkout/components/Card'
-import Payment from '../Checkout/components/Payment'
-
-import './styles.scss'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
+import { Address, Client } from '../../../../core/components/types/Client'
+import { calculateShipping, getCartData, ProductsCart, saveCartData } from '../../../../core/components/utils/cart'
+import { makePrivateRequest } from '../../../../services/api'
+import Card from '../Checkout/components/Card'
+import Payment from '../Checkout/components/Payment'
+import OrderSummary from '../OrderSummary'
+import './styles.scss'
+
 
 type ParamsType = {
   clientId: string;
