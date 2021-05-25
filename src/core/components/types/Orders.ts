@@ -18,5 +18,5 @@ export type Orders = {
 export type OrdersDetails={
   id: number;
   product: Product;
-  sellQuantity: number;
+  quantity: number;
 }

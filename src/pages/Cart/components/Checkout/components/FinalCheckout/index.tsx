@@ -66,9 +66,9 @@ const FinalCheckout = () => {
         // setOrder(response.data)
         data.products.map(product => {
           let orderDetails = {
-            product: product.product.id,
+            product: product.product,
             quantity: product.sellQuantity,
-            order: response.data.id
+            order: response.data
           }
           console.log(orderDetails)
           makePrivateRequest({
@@ -78,12 +78,12 @@ const FinalCheckout = () => {
           })
             .then(res => {
               console.log('order_details', res)
-              alert("Compra finalizada com sucesso! Seu número de pedido é: " + response.data.id)
             })
             .catch(error => {
               console.log("error", error)
             })
         })
+        alert("Compra finalizada com sucesso! Seu número de pedido é: " + response.data.id)
         localStorage.removeItem('cartData')
       })
       .catch(response => {

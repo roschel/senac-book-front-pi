@@ -42,8 +42,8 @@ const ModalOrders = ({ order }: Props) => {
               <div className="col-12 infor-produto d-flex">
                 <h6 className="col-3">{product.product.title}</h6>
                 <h6 className="col-3"><strong>RS </strong>{(product.product.price).toFixed(2).replace(".", ",")}</h6>
-                <h6 className="col-3">{product.sellQuantity}</h6>
-                <h6 className="col-3"><strong>R$ </strong>{(product.sellQuantity * product.product.price).toFixed(2).replace(".", ",")}</h6>
+                <h6 className="col-3">{product.quantity}</h6>
+                <h6 className="col-3"><strong>R$ </strong>{(product.quantity * product.product.price).toFixed(2).replace(".", ",")}</h6>
               </div>
             ))}
             <div className="col-12 mt-5 d-flex">

@@ -16,7 +16,8 @@ const List = () => {
   useEffect(() => {
     makePrivateRequest({ url: `/orders/client/${clientId}` })
       .then(response => {
-        setOrders(response.data)
+        console.log('sdafsdfs',response.data)
+        setOrders(response.data.content)
       })
   }, [])
 
