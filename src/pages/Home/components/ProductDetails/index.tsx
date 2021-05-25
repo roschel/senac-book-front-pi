@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ReactComponent as ArrowIcon } from '../../../../core/assets/images/arrow.svg';
 import DemoCarousel from '../../../../core/components/Carousel';
 import StarsRating from '../../../../core/components/StarsRating';
 import { Product } from '../../../../core/components/types/Product';
+import { CartSession, getCartData, ProductsCart, saveCartData } from '../../../../core/components/utils/cart';
 import { makeRequest } from '../../../../services/api';
 import './styles.scss';
 
@@ -12,6 +14,7 @@ type ParamsType = {
 }
 
 export const ProductDetails = ({ productId, setShowModal }: ParamsType) => {
+  // const { productId } = useParams<ParamsType>();
   const [product, setProduct] = useState<Product>();
   const [disabledButton, setDisabledButton] = useState(true);
 
@@ -23,8 +26,50 @@ export const ProductDetails = ({ productId, setShowModal }: ParamsType) => {
       })
   }, [productId]);
 
+  const saveData = (product: Product) => {
+    const cartData = getCartData() as CartSession;
+
+    if (cartData.products) {
+      let added = false;
+      cartData.products.forEach(productCart => {
+        if (productCart.product.id === product.id) {
+          added = true;
+          productCart.sellQuantity++;
+        }
+      })
+
+      if (!added) {
+        console.log('entrei', cartData)
+        let payload: ProductsCart = {
+          product,
+          sellQuantity: 1
+        }
+        cartData.products.push(payload)
+      }
+
+      saveCartData(cartData)
+    } else {
+      let payLoad: CartSession = {
+        products: [
+          {
+            product,
+            sellQuantity: 1
+          }
+        ],
+      }
+
+      // const products = []
+      // let payload: ProductsCart={
+      //   product,
+      //   sellQuantity:1
+      // }
+      // products.push(payload)
+      saveCartData(payLoad)
+    }
+  }
+
   return (
-    <div className={"product-modal-content"}>
+    <div className="product-modal-content">
       <span onClick={() => setShowModal(false)}>
         <ArrowIcon className="icon-goback" />
         <h1 className="text-goback">voltar</h1>
@@ -36,9 +81,8 @@ export const ProductDetails = ({ productId, setShowModal }: ParamsType) => {
             key={product?.id}
           />
         </div>
-
         <div className="product-details">
-          <h1 className="product-details-name">
+          <h1 className="product-details-name" id="titulo">
             {product?.title}
           </h1>
           <div className="product-details-rating">
@@ -46,19 +90,19 @@ export const ProductDetails = ({ productId, setShowModal }: ParamsType) => {
               rating={product?.rating}
               key={product?.id}
             />
-          </div>
-          <div className="product-details-card-description">
-            <h1 className="product-description-title">Descrição do produto</h1>
-            <p className="product-description-text">
-              {product?.description}
-            </p>
-          </div>
-          <div className="product-details-price mt-3">
-            R$ {product?.price ? product.price.toFixed(2).replace('.', ',') : product?.price}
+            <div className="product-details-card-description">
+              <h1 className="product-description-title">Descrição do produto</h1>
+              <p className="product-description-text">
+                {product?.description}
+              </p>
+            </div>
+
             {product?.status === true ? (
-              <button className="btn btn-primary">
-                COMPRAR
-              </button>
+              <Link to="/cart">
+                <button className="btn btn-primary" onClick={() => saveData(product)}>
+                  Comprar
+                </button>
+              </Link>
             ) : (
               <button
                 className="btn btn-primary"

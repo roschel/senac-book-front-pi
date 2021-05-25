@@ -1,0 +1,39 @@
+.container {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+}
+
+.title-summary {
+  text-align: center;
+}
+
+.continuar {
+  display: flex;
+  justify-content: center;
+}
+
+.valor {
+  text-align: end;
+}
+
+.linha {
+  width: auto;
+  border: 0.5px solid rgb(194, 186, 186);
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.frete {
+  margin: 10px 10px;
+}
+
+.calcular {
+  text-align: center;
+}
+
+.calc {
+  display: flex;
+  justify-content: center;
+}

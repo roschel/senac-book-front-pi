@@ -1,7 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router';
 import { isAllowedRole, saveSessionData } from '../../../../core/components/utils/auth';
-import { makeLogin } from '../../../../services/api';
+import { getCartData, saveCartData } from '../../../../core/components/utils/cart';
+import {makeLogin} from '../../../../services/api';
 import AuthCard from '../Card';
 import './styles.scss';
 
@@ -38,6 +39,14 @@ const Login = ({ setShowModal }: Props) => {
         } else {
           setShowModal(false);
           console.log('cliente')
+          const cart = getCartData()
+          if(cart.products){
+            cart.customerId = response.data.userId
+          }else{
+            cart.products=[]
+            cart.customerId = response.data.userId
+          }
+          saveCartData(cart)
           history.push('/')
         }
       })

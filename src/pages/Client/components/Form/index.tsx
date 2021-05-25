@@ -2,7 +2,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
-import { Address } from '../../../../core/components/types/Client';
 import { saveSessionData } from '../../../../core/components/utils/auth';
 import { makeLogin, makePrivateRequest, makeRequest } from '../../../../services/api';
 import BaseForm from '../../../Admin/components/BaseForm';
@@ -39,12 +38,12 @@ type ParamsType = {
 }
 
 const Register = () => {
-  const { register, handleSubmit, setValue, control } = useForm<FormState>();
+  const { register, handleSubmit, setValue } = useForm<FormState>();
   const { clientId } = useParams<ParamsType>();
   const isEditing = clientId !== 'create'
   const formTitle = 'CADASTRAR CLIENTE';
-  const [disabledCpf, setDisabledCpf] = useState(true);
-  const [disabledLogin, setDisabledLogin] = useState(true);
+  const [disabledCpf] = useState(true);
+  const [disabledLogin] = useState(true);
   const history = useHistory();
   const [logradouro, setLogradouro] = useState();
   const [cidade, setCidade] = useState();
@@ -96,7 +95,7 @@ const Register = () => {
         status:true
       }
 
-      var payLoad = {
+    var payLoad = {
         firstName: formData.firstName,
         lastName: formData.lastName,
         cpf: formData.cpf,
@@ -131,7 +130,7 @@ const Register = () => {
         status:true
       }
 
-      var payLoad = {
+      payLoad = {
         firstName: formData.firstName,
         lastName: formData.lastName,
         cpf: formData.cpf,

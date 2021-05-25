@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 import Login from '../../../pages/Auth/components/Login';
 import Modal from '../Modal';
-import Tooltip from '../Tooltip';
 import { getSessionData, isAllowedRole, isAuthenticated, isTokenValid, logout } from '../utils/auth';
 import { getLocationElement } from '../utils/functions';
+import imgCart from '../../assets/images/cesta.svg'
 import './styles.scss';
+import Tooltip from '../tooltip';
 
 const Navbar = () => {
   const [userName, setUserName] = useState('');
@@ -93,6 +94,17 @@ const Navbar = () => {
               </Link>
               // {/* </NavLink> */}
             )}
+          </li>
+
+          {/* {userName && (
+            <Link to="/auth/login" onClick={handleLogout}>
+              Logout
+            </Link>
+          )} */}
+          <li>
+            <NavLink to="/cart" exact>
+                <img className="img-cart" src={imgCart} alt=""/>
+            </NavLink>
           </li>
         </ul>
       </div>

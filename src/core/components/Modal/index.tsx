@@ -22,7 +22,6 @@ const Modal = ({ showModal, setShowModal, children }: Props) => {
       onClick={(e) => outsideClick(e.target)}
       className={`modal-background ${showModal ? "show" : ""}`}
     >
-
       {children}
     </div>
   );

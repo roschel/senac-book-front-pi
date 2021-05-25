@@ -1,0 +1,73 @@
+.geral {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    border-radius: 15px;
+    width: auto;
+}
+
+.card-body{
+  height: 180px;
+}
+
+.geral {
+    display: flex;
+    align-items: center;
+}
+
+.card-image {
+    width: 80px;
+    margin-left: -925px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.quantidade {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-left: 80px;
+}
+
+.qtd {
+    margin-top: 8px;
+}
+
+.incrementar, .qtd {
+    margin-left: 20px;
+}
+
+.preco {
+    text-align: end;
+    margin-left: 82px;
+    margin-top: 15px;
+}
+
+.titulos {
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    text-align: center;
+    margin-top: -150px;
+}
+
+.titulo-qtd {
+    margin-left: 90px;
+}
+
+.titulo-preco {
+    margin-right: 25px;
+}
+
+.infos {
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+}
+
+.remove {
+    margin-top: -40px;
+    margin-right: -170px;
+    margin-left: 150px;
+    width: auto;
+}
