@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { getSessionData } from '../../../../core/components/utils/auth';
 import './styles.scss'
 
 const NavbarLeft = () => (
