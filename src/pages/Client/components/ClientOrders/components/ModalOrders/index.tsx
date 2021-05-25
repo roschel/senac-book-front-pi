@@ -54,26 +54,32 @@ const ModalOrders = ({ order }: Props) => {
           <div className="col-12 mt-2 card">
             <h5 className="haha"><strong>Endereço de entrega</strong></h5>
             <div className="infor-address">
-              <h6 className="mr-3"><strong>Rua: </strong> {order.address.address} </h6>
-              <h6><strong>Nº: </strong> {order.address?.number} </h6>
-              <h6 className="mr-3"><strong>CEP: </strong> {order.address?.zipCode} </h6>
-              <h6><strong>Bairro: </strong> {order.address?.neighborhood} </h6>
-              <h6 className="mr-3"><strong>Cidade: </strong> {order.address?.city} </h6>
-              <h6><strong>UF: </strong> {order.address?.state} </h6>
+            <div className="justify-content-center d-flex">
+                <h6 className="mr-3"><strong>Rua: </strong> {order.address.address} </h6>
+                <h6><strong>Nº: </strong> {order.address?.number} </h6>
+              </div>
+              <div className="justify-content-center d-flex">
+                <h6 className="mr-3"><strong>CEP: </strong> {order.address?.zipCode} </h6>
+                <h6><strong>Bairro: </strong> {order.address?.neighborhood} </h6>
+              </div>
+              <div className="justify-content-center d-flex">
+                <h6 className="mr-3"><strong>Cidade: </strong> {order.address?.city} </h6>
+                <h6><strong>UF: </strong> {order.address?.state} </h6>
+              </div>
             </div>
           </div>
           <div className="col-12 mt-2 card">
             <div className="infor-payment">
               <h5 className="haha"><strong>Forma de pagamento</strong></h5>
               {!payment ? (
-                <div>
+                <div className="payment-method align-items-center d-flex flex-column">
                   <h6>Boleto bancário</h6>
                   <h6><strong>Vencimento: </strong> {format(new Date().setDate(new Date().getDate() + 2), "dd/MM/yyyy")} </h6>
                 </div>
 
               ) : (
 
-                <div>
+                <div className="payment-method align-items-center d-flex flex-column">
                   <h6>Cartão de crédito</h6>
                   <h6><strong>Final do cartao: </strong>{"xxxx-xxxx-xxxx-" + order.payment.numberCard.slice(12, 16)}</h6>
                 </div>
