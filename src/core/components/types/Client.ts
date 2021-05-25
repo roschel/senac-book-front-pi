@@ -31,3 +31,8 @@ export type Orders = {
   createdAt: string;
   client: Client;
 }
+
+export type OrdersResponse = {
+  content: Orders[];
+  totalPages: number;
+}
