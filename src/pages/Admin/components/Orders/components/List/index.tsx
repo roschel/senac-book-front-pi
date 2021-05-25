@@ -2,13 +2,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import Pagination from '../../../../../../core/components/Pagination';
 import Search, { FilterForm } from '../../../../../../core/components/Search';
-import { OrdersResponse } from '../../../../../../core/components/types/Client';
-import { isAllowedRole } from '../../../../../../core/components/utils/auth';
 import { makePrivateRequest } from '../../../../../../services/api';
 import Card from '../Card';
 
 const List: React.FC = () => {
-    const [ordersResponse, setOrdersResponse] = useState<OrdersResponse>();
+    const [ordersResponse, setOrdersResponse] = useState();
     const [activePage, setActivePage] = useState(0);
 
     const history = useHistory();
@@ -56,22 +54,9 @@ const List: React.FC = () => {
                 />
             </div>
             <div>
-                {ordersResponse?.content.map(orders => (
-                    orders.status === true ? (
-                        <Card order={orders} onDisabled={onDisabled} buttonTitle={'INATIVAR'} key={orders.id} />
-                    ) : (
-                        <Card order={orders} onDisabled={onDisabled} buttonTitle={'ATIVAR'} key={orders.id} />
-                    )
-                ))}
+                Inserir Card
             </div>
-            {ordersResponse && (
-                <Pagination
-                    totalPages={ordersResponse.totalPages}
-                    activePage={activePage}
-                    onChange={page => setActivePage(page)}
-                />
-
-            )}
+                Inserire Paginação
         </div>
     )
 }

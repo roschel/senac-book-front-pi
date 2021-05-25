@@ -18,8 +18,8 @@ const Admin = () => (
                 <PrivateRoute path="/admin/users">
                     <User />
                 </PrivateRoute>
-                <PrivateRoute path="/admin/clients/orders">
-                    <Orders />
+                <PrivateRoute path="/admin/users/clients/orders">
+                    <User />
                 </PrivateRoute>
             </Switch>
         </div>

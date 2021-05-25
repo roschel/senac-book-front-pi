@@ -1,7 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Orders } from '../../../../../../core/components/types/Client';
-import { isAllowedRole } from '../../../../../../core/components/utils/auth';
+import { Orders } from '../../../../../../core/components/types/Orders';
 import './styles.scss';
 
 type Props = {

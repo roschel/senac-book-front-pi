@@ -22,17 +22,3 @@ export type Address = {
   status: boolean
 }
 
-export type Orders = {
-  id: number;
-  value: number;
-  shipping: number;
-  totalValue: number;
-  status: boolean;
-  createdAt: string;
-  client: Client;
-}
-
-export type OrdersResponse = {
-  content: Orders[];
-  totalPages: number;
-}

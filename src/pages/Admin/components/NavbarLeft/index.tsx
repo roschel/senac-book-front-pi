@@ -4,31 +4,26 @@ import { getSessionData } from '../../../../core/components/utils/auth';
 import './styles.scss'
 
 const NavbarLeft = () => (
-    <nav className="navbarLeft">
-        <ul>
-            <li>
-                <NavLink className="admin-nav-item" to="/admin/products" exact>
-                    Produtos
-                </NavLink>
-            </li>
-            <li>
-                <NavLink className="admin-nav-item" to="/admin/users">
-                    Usuários
-                </NavLink>
-            </li>
-            <li>
-                <NavLink className="admin-nav-item" to="/admin/clients">
-                    Clientes
-                </NavLink>
-            </li>
-            <li>
-                <NavLink className="admin-nav-item" to="/admin/clients/orders">
-                    Pedidos
-                </NavLink>                
-            </li>
-        </ul>
+  <nav className="navbarLeft">
+    <ul>
+      <li>
+        <NavLink className="admin-nav-item" to="/admin/products" exact>
+          Produtos
+        </NavLink>
+      </li>
+      <li>
+        <NavLink className="admin-nav-item" to="/admin/users">
+          Usuários
+        </NavLink>
+      </li>
+      <li>
+        <NavLink className="admin-nav-item" to="/admin/clients/orders">
+          Pedidos
+        </NavLink>
+      </li>
+    </ul>
 
-    </nav>
+  </nav>
 )
 
 export default NavbarLeft;
