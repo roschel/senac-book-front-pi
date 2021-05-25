@@ -1,6 +1,5 @@
 import { format } from 'date-fns';
 import { useState } from 'react';
-import { Payment } from '../../../../../../core/components/utils/cart';
 import { Modal } from 'react-bootstrap';
 import { Orders } from '../../../../../../core/components/types/Orders';
 
@@ -11,7 +10,6 @@ type Props = {
 const ModalOrders = ({ order }: Props) => {
 
   const [show, setShow] = useState(true);
-  const [payment, setPayment] = useState<Payment | null>();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -71,7 +69,7 @@ const ModalOrders = ({ order }: Props) => {
           <div className="col-12 mt-2 card">
             <div className="infor-payment">
               <h5 className="haha"><strong>Forma de pagamento</strong></h5>
-              {!payment ? (
+              {!order.payment ? (
                 <div className="payment-method align-items-center d-flex flex-column">
                   <h6>Boleto bancário</h6>
                   <h6><strong>Vencimento: </strong> {format(new Date().setDate(new Date().getDate() + 2), "dd/MM/yyyy")} </h6>
