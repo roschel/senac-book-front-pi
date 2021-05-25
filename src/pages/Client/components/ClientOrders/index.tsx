@@ -6,6 +6,7 @@ import PrivateRoute from '../../../../core/components/Routes/PrivateRoute';
 import { Orders } from '../../../../core/components/types/Orders';
 import { makePrivateRequest } from '../../../../services/api';
 import List from './components/List';
+import ModalOrders from './components/ModalOrders';
 
 import './styles.scss'
 
@@ -17,16 +18,16 @@ const ClientOrders = () => {
   const { clientId } = useParams<ParamsType>();
   const [orders, setOrders] = useState<Orders[]>();
 
-  useEffect(() => {
-    makePrivateRequest({ url: `/orders/client/${clientId}` })
-      .then((response) => {
-        const ordersResponse = response.data as Orders[];
-        ordersResponse.forEach(order => {
-          order.createdAt = format(new Date(), "dd/MM/yyyy | HH:mm")
-        })
-        setOrders(ordersResponse.reverse()) //§ invertendo a listagem... ordem de venda
-      })
-  }, [])
+  // useEffect(() => {
+  //   makePrivateRequest({ url: `/orders/client/${clientId}` })
+  //     .then((response) => {
+  //       const ordersResponse = response.data as Orders[];
+  //       ordersResponse.forEach(order => {
+  //         order.createdAt = format(new Date(), "dd/MM/yyyy | HH:mm")
+  //       })
+  //       setOrders(ordersResponse) //§ invertendo a listagem... ordem de venda
+  //     })
+  // }, [])
 
   return (
     <div>
@@ -35,7 +36,7 @@ const ClientOrders = () => {
           <List />
         </PrivateRoute>
         <PrivateRoute allowedRoutes={['ROLE_ADMIN']} path="/admin/users/:userId">
-          {/* <Form /> */}
+          {/* <ModalOrders /> */}
         </PrivateRoute>
       </Switch>
     </div>

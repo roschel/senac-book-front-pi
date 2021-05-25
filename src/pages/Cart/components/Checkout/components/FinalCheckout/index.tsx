@@ -60,32 +60,36 @@ const FinalCheckout = () => {
       totalValue: data.totalValue,
       status: true,
     }
-    console.log(order)
 
     makePrivateRequest({ url: `/orders`, data: orderPost, method: 'POST' })
       .then(response => {
-        alert("Compra finalizada com sucesso! Seu número de pedido é: " + response.data.id)
-        setOrder(response.data)
+        // setOrder(response.data)
+        data.products.map(product => {
+          let orderDetails = {
+            product: product.product.id,
+            quantity: product.sellQuantity,
+            order: response.data.id
+          }
+          console.log(orderDetails)
+          makePrivateRequest({
+            url: `orders/details`,
+            method: 'POST',
+            data: orderDetails
+          })
+            .then(res => {
+              console.log('order_details', res)
+              alert("Compra finalizada com sucesso! Seu número de pedido é: " + response.data.id)
+            })
+            .catch(error => {
+              console.log("error", error)
+            })
+        })
         localStorage.removeItem('cartData')
       })
       .catch(response => {
         alert("Ops, algo está errado... tente novamente mais tarde!")
         console.log(response)
       })
-
-    data.products.map(product => {
-      let orderDetails = {
-        product: product.product.id,
-        quantity: product.sellQuantity,
-        order: order?.id
-      }
-      makePrivateRequest({
-        url: `orders/details`,
-        method: 'POST',
-        data: orderDetails
-      }
-      )
-    })
   }
 
   return (
