@@ -51,7 +51,7 @@ const Card = ({ order, updateOrderStatus }: Props) => {
             className="col-3"
             onSelect={(e, x) => handleChange(e, x)}
           >
-            <Dropdown.Toggle variant="primary" id="dropdown-basic">
+            <Dropdown.Toggle variant="primary" id="dropdown-basic" size="sm">
               {order?.orderStatus}
             </Dropdown.Toggle>
 
