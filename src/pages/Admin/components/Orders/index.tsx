@@ -8,11 +8,8 @@ const Orders = () => {
   return (
     <div>
       <Switch>
-        <PrivateRoute path="admin/clients/orders" exact>
+        <PrivateRoute path="/admin/clients/orders" exact>
           <List />
-        </PrivateRoute>
-        <PrivateRoute allowedRoutes={['ROLE_ESTOQUISTA']} path="/admin/users/:userId">
-          {/* <Form /> */}
         </PrivateRoute>
       </Switch>
     </div>

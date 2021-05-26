@@ -2,11 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import Pagination from '../../../../../../core/components/Pagination';
 import Search, { FilterForm } from '../../../../../../core/components/Search';
+import { OrdersResponse } from '../../../../../../core/components/types/Orders';
 import { makePrivateRequest } from '../../../../../../services/api';
 import Card from '../Card';
 
 const List: React.FC = () => {
-    const [ordersResponse, setOrdersResponse] = useState();
+    const [ordersResponse, setOrdersResponse] = useState<OrdersResponse>();
     const [activePage, setActivePage] = useState(0);
 
     const history = useHistory();
@@ -15,17 +16,17 @@ const List: React.FC = () => {
         const params = {
             page: activePage,
             linesPerPage: 10,
-            title: filter?.name
+            // title: filter?.name
         }
 
         makePrivateRequest({ url: "/orders", params })
             .then(response => {
                 setOrdersResponse(response.data)
-                console.log(response)
+                console.log('olhaaaa ogáaaaaaaaaas', response)
             })
             .catch(error => console.log('error', error))
     }, [activePage])
-
+    
     useEffect(() => {
         getOrders()
     }, [getOrders])
@@ -53,9 +54,11 @@ const List: React.FC = () => {
                     request="orders"
                 />
             </div>
-            <div>
-                Inserir Card
-            </div>
+            {ordersResponse && ordersResponse?.content.map(order => (
+                <div>
+                    <Card order={order} />
+                </div>
+            ))}
                 Inserire Paginação
         </div>
     )
