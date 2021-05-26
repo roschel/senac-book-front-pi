@@ -1,19 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 
 import { Orders } from '../../../../../../core/components/types/Orders';
 import './styles.scss';
 import { Dropdown } from 'react-bootstrap';
+import { makePrivateRequest } from '../../../../../../services/api';
 
 type Props = {
   order: Orders;
+  updateOrderStatus: (orderStatus: string) => void;
 }
 
-const Card = ({ order }: Props) => {
+const Card = ({ order, updateOrderStatus }: Props) => {
+  const [status, setStatus] = useState();
 
-  const handleChange = (e: string) => {
-    console.log(e)
+  const handleChange = (e: any, x: any) => {
+    console.log('e', e, 'x', x.target.innerHTML)
+    const { orderStatus } = order;
+
+    const payLoad = {
+      ...order,
+      orderStatus: x.target.innerHTML.toUpperCase()
+    }
+
+    makePrivateRequest({ url: `/orders/${order.id}`, method: 'PUT', data: payLoad })
+      .then(response => (
+        updateOrderStatus(response.data.orderStatus)
+      ))
   }
+
+  useEffect(() => {
+
+  }, [status])
 
   return (
     <div className="card-base">
@@ -29,9 +47,9 @@ const Card = ({ order }: Props) => {
           <h6 className="col-3">{format(new Date(order?.createdAt), "dd/MM/yyyy")} </h6>
           <h6 className="col-3">{order?.totalValue.toFixed(2).replace('.', ',')}</h6>
 
-          <Dropdown 
+          <Dropdown
             className="col-3"
-            onSelect={(e) => handleChange(e.target.value)}
+            onSelect={(e, x) => handleChange(e, x)}
           >
             <Dropdown.Toggle variant="primary" id="dropdown-basic">
               {order?.orderStatus}
