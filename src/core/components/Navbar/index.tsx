@@ -19,7 +19,7 @@ const Navbar = () => {
     event.preventDefault();
     logout();
     history.replace('/admin/products')
-}
+  }
 
   return (
     <nav className="row bg-primary main-nav">
@@ -32,7 +32,7 @@ const Navbar = () => {
         <ul className="main-menu">
           <li>
             <NavLink to="/" exact>
-                HOME
+              HOME
             </NavLink>
           </li>
           {/* <li>
@@ -50,10 +50,10 @@ const Navbar = () => {
           <li>
             {(isAuthenticated() && isTokenValid()) ? (
               isAllowedRole(["ROLE_CLIENTE"]) ? (
-                <div 
+                <div
                   onClick={() => setTooltipVisible(!tooltipVisible)}
-                  onMouseEnter={() => setTooltipVisible(true)} 
-                  onMouseLeave={() => setTooltipVisible(false)} 
+                  onMouseEnter={() => setTooltipVisible(true)}
+                  onMouseLeave={() => setTooltipVisible(false)}
                   className="perfil">
                   <span>Olá, {userName}</span>
                   <Tooltip visible={tooltipVisible}>
@@ -67,9 +67,20 @@ const Navbar = () => {
                   </Tooltip>
                 </div>
               ) : (
-                <NavLink to="/admin/products">
-                  Login
-                </NavLink>
+                <div
+                  onClick={() => setTooltipVisible(!tooltipVisible)}
+                  onMouseEnter={() => setTooltipVisible(true)}
+                  onMouseLeave={() => setTooltipVisible(false)}
+                  className="perfil">
+                  <NavLink to="/admin/products">
+                    Login
+                  </NavLink>
+                  <Tooltip visible={tooltipVisible}>
+                    <Link to="/auth/login" onClick={handleLogout}>
+                      Logout
+                    </Link>
+                  </Tooltip>
+                </div>
               )
             ) : (
               <NavLink to="/auth/login">
@@ -85,7 +96,7 @@ const Navbar = () => {
           )} */}
           <li>
             <NavLink to="/cart" exact>
-                <img className="img-cart" src={imgCart} alt=""/>
+              <img className="img-cart" src={imgCart} alt="" />
             </NavLink>
           </li>
         </ul>
