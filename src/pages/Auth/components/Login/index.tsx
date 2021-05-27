@@ -1,8 +1,9 @@
+import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router';
 import { isAllowedRole, saveSessionData } from '../../../../core/components/utils/auth';
 import { getCartData, saveCartData } from '../../../../core/components/utils/cart';
-import {makeLogin} from '../../../../services/api';
+import { makeLogin } from '../../../../services/api';
 import AuthCard from '../Card';
 import './styles.scss';
 
@@ -12,10 +13,11 @@ type FormState = {
 }
 
 type Props = {
+  showModal: boolean;
   setShowModal: (state: boolean) => void;
 }
 
-const Login = ({ setShowModal }: Props) => {
+const Login = ({ showModal, setShowModal }: Props) => {
   const { register, handleSubmit } = useForm<FormState>();
   const history = useHistory();
 
@@ -40,10 +42,10 @@ const Login = ({ setShowModal }: Props) => {
           setShowModal(false);
           console.log('cliente')
           const cart = getCartData()
-          if(cart.products){
+          if (cart.products) {
             cart.customerId = response.data.userId
-          }else{
-            cart.products=[]
+          } else {
+            cart.products = []
             cart.customerId = response.data.userId
           }
           saveCartData(cart)
@@ -65,59 +67,75 @@ const Login = ({ setShowModal }: Props) => {
     history.push('/client/register')
   }
 
+  const handleClose = () => setShowModal(false);
+
   return (
-      <AuthCard title="login">
-        <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
-          <div className="margin-bottom-30">
-            <input
-              type="email"
-              name="username"
-              ref={register({
-                required: "Campo obrigatório",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Email inválido"
-                }
-              })}
-              placeholder="Email"
-              className="form-control input-base"
-            />
-          </div>
-          <div className="margin-bottom-30">
-            <input
-              type="password"
-              name="password"
-              ref={register({ required: "Campo obrigatório" })}
-              placeholder="Senha"
-              className="form-control input-base"
-            />
-          </div>
+    <div>
+      <Modal show={showModal} onHide={handleClose} contentClassName="teste">
+        {/* <Modal.Header closeButton className="login">
+          <Modal.Title>LOGIN</Modal.Title>
+        </Modal.Header> */}
+        <div className="login-title">
+          LOGIN
+        </div>
+        <Modal.Body>
+          {/* <AuthCard title="login"> */}
+            <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+              <div className="margin-bottom-30">
+                <input
+                  type="email"
+                  name="username"
+                  ref={register({
+                    required: "Campo obrigatório",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "Email inválido"
+                    }
+                  })}
+                  placeholder="Email"
+                  className="form-control input-base"
+                />
+              </div>
+              <div className="margin-bottom-30">
+                <input
+                  type="password"
+                  name="password"
+                  ref={register({ required: "Campo obrigatório" })}
+                  placeholder="Senha"
+                  className="form-control input-base"
+                />
+              </div>
 
-          <div className="text-center">
-            <button className="btn btn-danger border-radius-10" onClick={handleCancel}>
-              Cancelar
-            </button>
+              <div className="text-center">
+                <button className="btn btn-danger border-radius-10" onClick={handleCancel}>
+                  Cancelar
+              </button>
 
-            <button className="btn btn-primary border-radius-10 ml-2">
-              Entrar
-            </button>
-          </div>
+                <button className="btn btn-primary border-radius-10 ml-2">
+                  Entrar
+              </button>
+              </div>
 
-          <div className="cadastrar">
-            <div className="divisao">
-              <div className="linha" />
-              <h4>ou</h4>
-              <div className="linha" />
-            </div>
+              <div className="cadastrar">
+                <div className="divisao">
+                  <div className="linha" />
+                  <h4>ou</h4>
+                  <div className="linha" />
+                </div>
 
-            <h4><strong>Crie uma conta</strong></h4>
+                <h4><strong>Crie uma conta</strong></h4>
 
-            <button className="btn btn-primary border-radius-10 ml-2 mt-3" onClick={handleRegister}>
-              Cadastre-se
-            </button>
-          </div>
-        </form>
-      </AuthCard>
+                <button className="btn btn-primary border-radius-10 ml-2 mt-3" onClick={handleRegister}>
+                  Cadastre-se
+              </button>
+              </div>
+            </form>
+          {/* </AuthCard> */}
+        </Modal.Body>
+        {/* <Modal.Footer>
+        </Modal.Footer> */}
+      </Modal>
+    </div>
   )
 }
 

@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import Modal from '../../core/components/Modal';
 import Pagination from '../../core/components/Pagination';
 import Search, { FilterForm } from '../../core/components/Search';
 import { ProductsResponse } from '../../core/components/types/Product';
@@ -12,7 +11,7 @@ const Home: React.FC = () => {
   const [productsResponse, setProductResponse] = useState<ProductsResponse>();
   const [activePage, setActivePage] = useState(0);
   const [productId, setProductId] = useState('');
-  const [showModalProductDetails, setShowModalProductDetails] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const getProducts = useCallback((filter?: FilterForm) => {
     const params = {
@@ -31,7 +30,7 @@ const Home: React.FC = () => {
 
   function showProductDetails(productId: number) {
     setProductId(productId.toString());
-    setShowModalProductDetails(true);
+    setShowModal(true);
   }
 
   return (
@@ -63,17 +62,7 @@ const Home: React.FC = () => {
           )}
         </div>
       </div>
-
-      <Modal
-        showModal={showModalProductDetails}
-        setShowModal={setShowModalProductDetails}
-      >
-        <ProductDetails
-          productId={productId}
-          setShowModal={setShowModalProductDetails}
-        />
-      </Modal>
-
+      <ProductDetails productId={productId} showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 }

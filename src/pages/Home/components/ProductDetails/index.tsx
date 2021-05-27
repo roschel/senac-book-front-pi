@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { ReactComponent as ArrowIcon } from '../../../../core/assets/images/arrow.svg';
 import DemoCarousel from '../../../../core/components/Carousel';
@@ -10,10 +11,11 @@ import './styles.scss';
 
 type ParamsType = {
   productId: string;
+  showModal: boolean;
   setShowModal: (show: boolean) => void;
 }
 
-export const ProductDetails = ({ productId, setShowModal }: ParamsType) => {
+export const ProductDetails = ({ productId, showModal, setShowModal }: ParamsType) => {
   // const { productId } = useParams<ParamsType>();
   const [product, setProduct] = useState<Product>();
   const [disabledButton, setDisabledButton] = useState(true);
@@ -68,7 +70,15 @@ export const ProductDetails = ({ productId, setShowModal }: ParamsType) => {
     }
   }
 
+  const handleClose = () => setShowModal(false)
+
   return (
+    <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
     <div className="product-modal-content">
       <span onClick={() => setShowModal(false)}>
         <ArrowIcon className="icon-goback" />
@@ -117,6 +127,10 @@ export const ProductDetails = ({ productId, setShowModal }: ParamsType) => {
         </div>
       </div>
     </div>
+    </Modal.Body>
+        <Modal.Footer>
+        </Modal.Footer>
+      </Modal>
   );
 };
 

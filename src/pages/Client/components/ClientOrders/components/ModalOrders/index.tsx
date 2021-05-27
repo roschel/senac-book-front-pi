@@ -4,21 +4,23 @@ import { Modal } from 'react-bootstrap';
 import { Orders } from '../../../../../../core/components/types/Orders';
 
 type Props = {
-  order: Orders
+  order: Orders;
+  showModal: boolean;
+  setShowModal: (state: boolean) => void
 }
 
-const ModalOrders = ({ order }: Props) => {
+const ModalOrders = ({ order, showModal, setShowModal }: Props) => {
 
-  const [show, setShow] = useState(true);
+  // const [show, setShow] = useState(true);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
 
   return (
     <div>
 
       <Modal
-        show={show}
+        show={showModal}
         onHide={handleClose}
         size={"xl"}
       >
