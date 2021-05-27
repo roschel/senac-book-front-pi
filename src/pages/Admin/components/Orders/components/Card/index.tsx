@@ -8,7 +8,7 @@ import { makePrivateRequest } from '../../../../../../services/api';
 
 type Props = {
   order: Orders;
-  updateOrderStatus: (orderStatus: string) => void;
+  updateOrderStatus: (orderStatus: string, orderId: number) => void;
 }
 
 const Card = ({ order, updateOrderStatus }: Props) => {
@@ -16,7 +16,6 @@ const Card = ({ order, updateOrderStatus }: Props) => {
 
   const handleChange = (e: any, x: any) => {
     console.log('e', e, 'x', x.target.innerHTML)
-    const { orderStatus } = order;
 
     const payLoad = {
       ...order,
@@ -25,7 +24,7 @@ const Card = ({ order, updateOrderStatus }: Props) => {
 
     makePrivateRequest({ url: `/orders/${order.id}`, method: 'PUT', data: payLoad })
       .then(response => (
-        updateOrderStatus(response.data.orderStatus)
+        updateOrderStatus(response.data.orderStatus, order.id)
       ))
   }
 
@@ -51,7 +50,11 @@ const Card = ({ order, updateOrderStatus }: Props) => {
             className="col-3"
             onSelect={(e, x) => handleChange(e, x)}
           >
-            <Dropdown.Toggle variant="primary" id="dropdown-basic" size="sm">
+            <Dropdown.Toggle 
+              variant="primary" 
+              id="dropdown-basic" 
+              size="sm"
+            >
               {order?.orderStatus}
             </Dropdown.Toggle>
 

@@ -59,6 +59,7 @@ const FinalCheckout = () => {
       shipping: data.shipping,
       totalValue: data.totalValue,
       status: true,
+      orderStatus: "AGUARDANDO PAGAMENTO"
     }
 
     makePrivateRequest({ url: `/orders`, data: orderPost, method: 'POST' })

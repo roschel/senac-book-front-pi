@@ -9,6 +9,7 @@ const List: React.FC = () => {
   const [ordersResponse, setOrdersResponse] = useState<OrdersResponse>();
   const [orderStatus, setOrderStatus] = useState('');
   const [activePage, setActivePage] = useState(0);
+  const [id, setId] = useState(0);
 
   const history = useHistory();
 
@@ -29,10 +30,11 @@ const List: React.FC = () => {
 
   useEffect(() => {
     getOrders()
-  }, [getOrders, orderStatus])
+  }, [getOrders, orderStatus, id])
 
-  const handleChange = (orderStatusChanged: string) => {
+  const handleChange = (orderStatusChanged: string, orderIdChange: number) => {
     setOrderStatus(orderStatusChanged)
+    setId(orderIdChange)
   }
 
   const onDisabled = (orderId: number) => {
@@ -60,7 +62,7 @@ const List: React.FC = () => {
       </div>
       {ordersResponse && ordersResponse?.content.map(order => (
         <div>
-          <Card order={order} updateOrderStatus={handleChange} />
+          <Card order={order} updateOrderStatus={handleChange} key={order.id} />
         </div>
       ))}
                 Inserire Paginação
