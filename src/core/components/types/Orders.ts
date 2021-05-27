@@ -8,6 +8,7 @@ export type Orders = {
   shipping: number;
   totalValue: number;
   status: boolean;
+  orderStatus: string;
   client: Client;
   address: Address;
   payment: Payment;
@@ -19,4 +20,9 @@ export type OrdersDetails={
   id: number;
   product: Product;
   quantity: number;
+}
+
+export type OrdersResponse = {
+  content: Orders[];
+  totalPages: number;
 }

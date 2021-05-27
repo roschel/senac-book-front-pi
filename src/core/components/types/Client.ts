@@ -1,6 +1,3 @@
-import { Payment } from "../utils/cart"
-import { Product } from "./Product"
-
 export type Client = {
   id: number;
   firstName: string;

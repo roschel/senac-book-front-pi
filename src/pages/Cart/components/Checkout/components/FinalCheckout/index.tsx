@@ -59,6 +59,7 @@ const FinalCheckout = () => {
       shipping: data.shipping,
       totalValue: data.totalValue,
       status: true,
+      orderStatus: "AGUARDANDO PAGAMENTO"
     }
 
     makePrivateRequest({ url: `/orders`, data: orderPost, method: 'POST' })
@@ -85,6 +86,7 @@ const FinalCheckout = () => {
         })
         alert("Compra finalizada com sucesso! Seu número de pedido é: " + response.data.id)
         localStorage.removeItem('cartData')
+        history.push(`/client/${data.customerId}/orders`)
       })
       .catch(response => {
         alert("Ops, algo está errado... tente novamente mais tarde!")
