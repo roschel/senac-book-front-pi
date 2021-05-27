@@ -39,7 +39,7 @@ const Card = ({ order }: Props) => {
             <h6 className="col-3">{order.id}</h6>
             <h6 className="col-3">{format(new Date(order.createdAt), "dd/MM/yyyy")} </h6>
             <h6 className="col-3">{order.totalValue.toFixed(2).replace('.', ',')}</h6>
-            <h6 className="col-3">{order.status ? 'Aguardando pagamento' : 'Pedido Finalizado'}</h6>
+            <h6 className="col-3">{order.orderStatus}</h6>
             
             <button
               className="btn btn-primary plus-button"

@@ -6,6 +6,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { useParams } from 'react-router'
 import Select from 'react-select';
 import { Category, Image } from '../../../../../core/components/types/Product'
+import { isAllowedRole } from '../../../../../core/components/utils/auth'
 
 import Upload from '../Upload'
 
@@ -38,6 +39,7 @@ const Form = () => {
 	const formTitle = isEditing ? 'EDITAR PRODUTO' : 'CADASTRAR PRODUTO';
 	const [disabled, setDisabled] = useState(true);
 	const [urlImage, setUrlImage] = useState<Image[]>();
+	const roleEstoque = !isAllowedRole(['ROLE_ADMIN']) && isEditing
 
 	// const dataImg = new FormData();
 	// if (selectedFile) {
@@ -46,7 +48,7 @@ const Form = () => {
 
 	useEffect(() => {
 		if (isEditing) {
-			makePrivateRequest({url: `/products/${productId}`, method:'GET'})
+			makePrivateRequest({ url: `/products/${productId}`, method: 'GET' })
 				.then(response => {
 					setValue('title', response.data.title);
 					setValue('description', response.data.description);
@@ -69,7 +71,7 @@ const Form = () => {
 	}, [productId, isEditing, setValue])
 
 	useEffect(() => {
-		makePrivateRequest({url:'/categories', method:'GET'})
+		makePrivateRequest({ url: '/categories', method: 'GET' })
 			.then(response => setCategories(response.data.content))
 			.catch(() => {
 				alert("Ocorreu um problema ao carregar as categories")
@@ -84,11 +86,11 @@ const Form = () => {
 			images: imgObjects //[{id:1, imgUrl: http, principal:true}]
 		}
 
-		console.log('payLoad',payLoad)
+		console.log('payLoad', payLoad)
 		console.log(setUrlImage)
-    
+
 		if (isEditing) {
-			makePrivateRequest({url: `/products/${productId}`, data: payLoad, method: 'PUT'})
+			makePrivateRequest({ url: `/products/${productId}`, data: payLoad, method: 'PUT' })
 				.then(() => {
 					alert('Produto editado com sucesso')
 				})
@@ -96,7 +98,7 @@ const Form = () => {
 					alert('Produto não editado')
 				})
 		} else {
-			makePrivateRequest({url: `/products`, data: payLoad, method: 'POST'})
+			makePrivateRequest({ url: `/products`, data: payLoad, method: 'POST' })
 				.then((response) => {
 					console.log(response)
 					alert('Produto adicionado com sucesso')
@@ -110,7 +112,7 @@ const Form = () => {
 	const onUploadSuccess = (imgUrl: Image[]) => {
 		console.log('imgUrl', imgUrl)
 		setUrlImage(imgUrl);
-}
+	}
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
@@ -124,6 +126,7 @@ const Form = () => {
 							name="title"
 							placeholder="Nome do livro"
 							disabled={!disabled}
+							readOnly={roleEstoque}
 						/>
 
 						<Controller
@@ -138,7 +141,7 @@ const Form = () => {
 							classNamePrefix="category-select"
 							placeholder="Categoria"
 							isMulti
-							isDisabled={!disabled}
+							isDisabled={!disabled || roleEstoque}
 						/>
 
 						<input
@@ -160,6 +163,7 @@ const Form = () => {
 							min="0"
 							step=".01"
 							disabled={!disabled}
+							readOnly={roleEstoque}
 						/>
 
 						<input
@@ -171,6 +175,7 @@ const Form = () => {
 							min="0"
 							step=".01"
 							disabled={!disabled}
+							readOnly={roleEstoque}
 						/>
 
 						<input
@@ -180,6 +185,7 @@ const Form = () => {
 							name="author"
 							placeholder="Autor"
 							disabled={!disabled}
+							readOnly={roleEstoque}
 						/>
 
 						<input
@@ -189,6 +195,7 @@ const Form = () => {
 							name="publisher"
 							placeholder="Editora"
 							disabled={!disabled}
+							readOnly={roleEstoque}
 						/>
 						<input
 							ref={register()}
@@ -197,6 +204,7 @@ const Form = () => {
 							name="edition"
 							placeholder="Edição"
 							disabled={!disabled}
+							readOnly={roleEstoque}
 						/>
 
 						<input
@@ -207,6 +215,7 @@ const Form = () => {
 							placeholder="Ano"
 							min="0"
 							disabled={!disabled}
+							readOnly={roleEstoque}
 						/>
 
 						<input
@@ -217,6 +226,7 @@ const Form = () => {
 							placeholder="Páginas"
 							min="0"
 							disabled={!disabled}
+							readOnly={roleEstoque}
 						/>
 
 						<input
@@ -226,6 +236,7 @@ const Form = () => {
 							name="size"
 							placeholder="Tamanho (20 x 20 x 20 cm)"
 							disabled={!disabled}
+							readOnly={roleEstoque}
 						/>
 
 						<input
@@ -234,6 +245,7 @@ const Form = () => {
 							className="form-check-input"
 							name="status"
 							disabled={!disabled}
+							readOnly={roleEstoque}
 						/>
 						<label className="form-check-label">Status</label>
 					</div>
@@ -247,14 +259,18 @@ const Form = () => {
 							rows={10}
 							placeholder="Descrição"
 							disabled={!disabled}
+							readOnly={roleEstoque}
 						></textarea>
 
-						<div>
-							<Upload
-								 onUploadSuccess={onUploadSuccess} 
-								 productImageUrl={urlImage}
-							/>
-						</div>
+						{!roleEstoque &&
+							<div>
+								<Upload
+									onUploadSuccess={onUploadSuccess}
+									productImageUrl={urlImage}
+								/>
+							</div>
+						}
+
 
 						{/* <input
 							type="file"
