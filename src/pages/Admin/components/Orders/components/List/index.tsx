@@ -53,19 +53,19 @@ const List: React.FC = () => {
 
   return (
     <div className="admin-user-list">
-      <div className="d-flex mb-2">
+      {/* <div className="d-flex mb-2">
         <Search
           onSearch={filter => getOrders(filter)}
           placeholder="Pedido"
           request="orders"
         />
-      </div>
+      </div> */}
       {ordersResponse && ordersResponse?.content.map(order => (
         <div>
           <Card order={order} updateOrderStatus={handleChange} key={order.id} />
         </div>
       ))}
-                Inserire Paginação
+                {/* Inserire Paginação */}
     </div>
   )
 }
