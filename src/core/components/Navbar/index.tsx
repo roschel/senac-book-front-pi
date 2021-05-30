@@ -22,11 +22,12 @@ const Navbar = () => {
   const handleLogout = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     event.preventDefault();
     logout();
-    // history.replace('/admin/products')
-    history.replace('/')
+    history.replace('/admin/products')
   }
 
-  const handleShowModal = () => setShowModal(true);
+  const handleShowModal = () => {
+    setShowModal(true)
+  }
 
   return (
     <nav className="main-nav">
@@ -40,7 +41,7 @@ const Navbar = () => {
         <ul className="main-menu">
           <li>
             <NavLink to="/" exact>
-              Home
+              HOME
             </NavLink>
           </li>
 
@@ -78,29 +79,46 @@ const Navbar = () => {
                   </Tooltip>
                 </div>
               ) : (
-                // <NavLink to="/admin/products">
-                // <Link to="/" onClick={() => setShowModal(true)}>
-                //   LOGIN
-                // </Link>
-                // </NavLink>
-                <Link to="/" onClick={handleLogout}>
-                  Logout
-                </Link>
+                <div
+                  id="profile"
+                  onClick={() => setTooltipVisible(!tooltipVisible)}
+                  onMouseEnter={() => setTooltipVisible(true)}
+                  onMouseLeave={() => setTooltipVisible(false)}
+                  className="perfil">
+                  <NavLink to="/admin/products">
+                    Login
+                  </NavLink>
+                  <Tooltip
+                    visible={tooltipVisible}
+                    location={{
+                      left: left ?? 0,
+                      top: top ?? 0,
+                      height: height,
+                      width: width
+                    }}
+                    position="bottom"
+                  >
+                    <Link to="/auth/login" onClick={handleLogout}>
+                      Logout
+                    </Link>
+                  </Tooltip>
+                </div>
               )
             ) : (
-              // <NavLink to="/auth/login">
-              <Link to="/" onClick={handleShowModal}>
-                Login
-              </Link>
-              // {/* </NavLink> */}
+              <NavLink to="/auth/login">
+                <Link to="/" onClick={handleShowModal}>
+                  Login
+                </Link>
+              </NavLink>
+
             )}
           </li>
 
-          {/* {userName && (
+          {userName && (
             <Link to="/auth/login" onClick={handleLogout}>
               Logout
             </Link>
-          )} */}
+          )}
           <li>
             <NavLink to="/cart" exact>
               <img className="img-cart" src={imgCart} alt="" />
