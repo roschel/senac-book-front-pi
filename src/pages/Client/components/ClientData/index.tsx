@@ -41,23 +41,22 @@ const ClientData = () => {
       })
   }, [clientId, isEditing, setValue])
 
-const onSubmit = (formData: FormState) => {
-  const payload = {
-    ...formData
+  const onSubmit = (formData: FormState) => {
+    const payload = {
+      ...formData
+    }
+
+    makePrivateRequest({ url: `/clients/${clientId}`, data: payload, method: "PUT" })
+      .then(() => {
+        history.push(`/client/${clientId}`)
+        alert('Dados atualizados')
+      })
+      .catch(() => {
+        alert('Cliente não editado.')
+      })
   }
 
-  makePrivateRequest({ url: `/clients/${clientId}`, data: payload, method:"PUT"})
-    .then(() => {
-      history.push(`/client/${clientId}`)
-      alert('Dados atualizados')
-    })
-    .catch(() => {
-      alert('Cliente não editado.')
-    })
-}
-
-return (
-  <div className="container mt-3">
+  return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-client">
       <BaseForm title={formTitle} buttonTitle={button}>
         <div className="row">
@@ -108,20 +107,20 @@ return (
               readOnly={disabledLogin}
             />
             <input
-                ref={register()}
-                className="form-control mb-2"
-                type="password"
-                name="password"
-                placeholder="Senha"
-                readOnly
-                
-              />
+              ref={register()}
+              className="form-control mb-2"
+              type="password"
+              name="password"
+              placeholder="Senha"
+              readOnly
+
+            />
           </div>
         </div>
       </BaseForm>
     </form>
-  </div>
-)
+    // </div>
+  )
 }
 
 export default ClientData;

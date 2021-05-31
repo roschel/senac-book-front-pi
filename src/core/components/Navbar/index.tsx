@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 import Login from '../../../pages/Auth/components/Login';
+import imgCart from '../../assets/images/cesta.svg';
+import Tooltip from '../tooltip';
 import { getSessionData, isAllowedRole, isAuthenticated, isTokenValid, logout } from '../utils/auth';
 import { getLocationElement } from '../utils/functions';
-import imgCart from '../../assets/images/cesta.svg'
 import './styles.scss';
-import Tooltip from '../tooltip';
 
 const Navbar = () => {
   const [userName, setUserName] = useState('');
   const location = useLocation();
-  const history = useHistory();
-  const [tooltipVisible, setTooltipVisible] = useState(false);
   const [top, left, height, width] = getLocationElement(document.getElementById("profile"));
+  const [showTooltip, setShowTooltip] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -22,7 +21,6 @@ const Navbar = () => {
   const handleLogout = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     event.preventDefault();
     logout();
-    history.replace('/admin/products')
   }
 
   const handleShowModal = () => {
@@ -44,84 +42,57 @@ const Navbar = () => {
               HOME
             </NavLink>
           </li>
-
           <li>
             {(isAuthenticated() && isTokenValid()) ? (
-              isAllowedRole(["ROLE_CLIENTE"]) ? (
-                <div
-                  onClick={() => setTooltipVisible(!tooltipVisible)}
-                  onMouseEnter={() => setTooltipVisible(true)}
-                  onMouseLeave={() => setTooltipVisible(false)}
-                >
-                  <span
-                    id="profile"
-                    className={`perfil ${tooltipVisible ? "perfil-active" : ""}`}
-                  >
-                    Olá, {userName}
-                  </span>
-                  <Tooltip
-                    visible={tooltipVisible}
-                    location={{
-                      left: left ?? 0,
-                      top: top ?? 0,
-                      height: height,
-                      width: width
-                    }}
-                    position="bottom"
-                  >
-                    <Link to={`/client/${getSessionData().userId}`}>
-                      Perfil
-                    </Link>
-                    <br />
-                    <Link to="/auth/login" onClick={handleLogout}>
-                      Logout
-                    </Link>
-                  </Tooltip>
-                </div>
-              ) : (
-                <div
+              <div
+                onClick={() => setShowTooltip(!showTooltip)}
+                onMouseEnter={() => setShowTooltip(true)}
+                onMouseLeave={() => setShowTooltip(false)}
+              >
+                <span
                   id="profile"
-                  onClick={() => setTooltipVisible(!tooltipVisible)}
-                  onMouseEnter={() => setTooltipVisible(true)}
-                  onMouseLeave={() => setTooltipVisible(false)}
-                  className="perfil">
-                  <NavLink to="/admin/products">
-                    Login
-                  </NavLink>
-                  <Tooltip
-                    visible={tooltipVisible}
-                    location={{
-                      left: left ?? 0,
-                      top: top ?? 0,
-                      height: height,
-                      width: width
-                    }}
-                    position="bottom"
-                  >
-                    <Link to="/auth/login" onClick={handleLogout}>
+                  className={`profile ${showTooltip ? "profile-active" : ""}`}
+                >
+                  Olá, {userName}
+                </span>
+                <Tooltip
+                  showTooltip={showTooltip}
+                  position="bottom"
+                  location={{
+                    left: left ?? 0,
+                    top: top ?? 0,
+                    height: height,
+                    width: width
+                  }}
+                >
+                  {isAllowedRole(["ROLE_CLIENTE"]) ? (
+                    <div>
+                      <Link to={`/client/${getSessionData().userId}`}>
+                        Perfil
+                      </Link>
+                      <br />
+                      <Link to="/" onClick={handleLogout}>
+                        Logout
+                      </Link>
+                    </div>
+                  ) : (
+                    <Link to="/" onClick={handleLogout}>
                       Logout
                     </Link>
-                  </Tooltip>
-                </div>
-              )
+                  )}
+                </Tooltip>
+              </div>
             ) : (
               <NavLink to="/auth/login">
                 <Link to="/" onClick={handleShowModal}>
                   Login
                 </Link>
               </NavLink>
-
             )}
           </li>
-
-          {userName && (
-            <Link to="/auth/login" onClick={handleLogout}>
-              Logout
-            </Link>
-          )}
           <li>
-            <NavLink to="/cart" exact>
-              <img className="img-cart" src={imgCart} alt="" />
+            <NavLink to="/cart" exact className="cart">
+              <img className="img-cart" src={imgCart} alt="Carrinho" />
             </NavLink>
           </li>
         </ul>

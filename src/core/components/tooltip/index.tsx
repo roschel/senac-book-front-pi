@@ -2,7 +2,7 @@ import './styles.scss';
 
 type Props = {
   children: React.ReactNode;
-  visible: boolean;
+  showTooltip: boolean;
   location: {
     top: number;
     left: number;
@@ -12,10 +12,8 @@ type Props = {
   position: 'bottom' | 'right';
 }
 
-export default function Tooltip({ children, visible, location, position }: Props) {
+export default function Tooltip({ children, showTooltip, location, position }: Props) {
   let top = 0;
-  let right = 0;
-  let bottom = 0;
   let left = 0;
 
   if (position === 'bottom') {
@@ -30,7 +28,7 @@ export default function Tooltip({ children, visible, location, position }: Props
         left: left,
         width: location.width
       }}
-      className={`tooltip-container ${visible ? 'is-visible' : ''}`}
+      className={`tooltip-container ${showTooltip ? 'is-visible' : ''}`}
     >
       {children}
     </div>

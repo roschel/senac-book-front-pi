@@ -74,32 +74,28 @@ export const ProductDetails = ({ productId, showModal, setShowModal }: ParamsTyp
 
   return (
     <Modal show={showModal} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-    <div className="product-modal-content">
-      <span onClick={() => setShowModal(false)}>
-        <ArrowIcon className="icon-goback" />
-        <h1 className="text-goback">voltar</h1>
-      </span>
-      <div className="product-details-container">
-        <div className="product-details-card-image text-center">
-          <DemoCarousel
-            images={product?.images}
-            key={product?.id}
-          />
-        </div>
-        <div className="product-details">
-          <h1 className="product-details-name" id="titulo">
-            {product?.title}
-          </h1>
-          <div className="product-details-rating">
-            <StarsRating
-              rating={product?.rating}
+      <Modal.Body className="product-modal-content">
+        <span onClick={() => setShowModal(false)}>
+          <ArrowIcon className="icon-goback" />
+          <h1 className="text-goback">voltar</h1>
+        </span>
+        <div className="product-details-container">
+          <div className="product-details-card-image text-center">
+            <DemoCarousel
+              images={product?.images}
               key={product?.id}
             />
+          </div>
+          <div className="product-details">
+            <h1 className="product-details-name" id="titulo">
+              {product?.title}
+            </h1>
+            <div className="product-details-rating">
+              <StarsRating
+                rating={product?.rating}
+                key={product?.id}
+              />
+            </div>
             <div className="product-details-card-description">
               <h1 className="product-description-title">Descrição do produto</h1>
               <p className="product-description-text">
@@ -107,30 +103,28 @@ export const ProductDetails = ({ productId, showModal, setShowModal }: ParamsTyp
               </p>
             </div>
 
-            {product?.status === true ? (
-              <Link to="/cart">
-                <button className="btn btn-primary" onClick={() => saveData(product)}>
-                  Comprar
+            <div className="footer">
+              <div className="product-quantity">
+                Qtd. disponível: {product?.quantity}
+              </div>
+              {product?.status === true ? (
+                <Link to="/cart">
+                  <button className="btn btn-primary" onClick={() => saveData(product)}>
+                    Comprar
+                  </button>
+                </Link>
+              ) : (
+                <button
+                  className="btn btn-primary"
+                  disabled={!disabledButton}>
+                  INDISPONÍVEL
                 </button>
-              </Link>
-            ) : (
-              <button
-                className="btn btn-primary"
-                disabled={!disabledButton}>
-                INDISPONÍVEL
-              </button>
-            )}
-          </div>
-          <div className="product-quantity">
-            Qtd. disponível: {product?.quantity}
+              )}
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    </Modal.Body>
-        <Modal.Footer>
-        </Modal.Footer>
-      </Modal>
+      </Modal.Body>
+    </Modal>
   );
 };
 
