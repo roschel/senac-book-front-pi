@@ -12,6 +12,9 @@ const User = () => {
         <PrivateRoute path="/admin/users" exact>
           <List />
         </PrivateRoute>
+        <PrivateRoute allowedRoutes={['ROLE_ADMIN']} path="/admin/users/:userId">
+          <Form />
+        </PrivateRoute>
       </Switch>
     </div>
   )
