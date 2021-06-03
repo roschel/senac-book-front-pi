@@ -117,7 +117,7 @@ const Form = () => {
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<BaseForm title={formTitle} buttonTitle={formTitle}>
-				<div className="row">
+				<div className="row form-container">
 					<div className="col-6">
 						<input
 							ref={register()}
@@ -142,6 +142,7 @@ const Form = () => {
 							placeholder="Categoria"
 							isMulti
 							isDisabled={!disabled || roleEstoque}
+              // className="select"
 						/>
 
 						<input

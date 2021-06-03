@@ -71,16 +71,12 @@ const Login = ({ showModal, setShowModal }: Props) => {
 
   return (
     <div>
-      <Modal show={showModal} onHide={handleClose} contentClassName="teste">
-        {/* <Modal.Header closeButton className="login">
-          <Modal.Title>LOGIN</Modal.Title>
-        </Modal.Header> */}
+      <Modal show={showModal} onHide={handleClose}>
         <div className="login-title">
           LOGIN
         </div>
-        <Modal.Body>
-          {/* <AuthCard title="login"> */}
-            <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+        <Modal.Body className="login-container">
+            <form  className="login-form" onSubmit={handleSubmit(onSubmit)}>
               <div className="margin-bottom-30">
                 <input
                   type="email"
@@ -109,11 +105,11 @@ const Login = ({ showModal, setShowModal }: Props) => {
               <div className="text-center">
                 <button className="btn btn-danger border-radius-10" onClick={handleCancel}>
                   Cancelar
-              </button>
+                </button>
 
                 <button className="btn btn-primary border-radius-10 ml-2">
                   Entrar
-              </button>
+                </button>
               </div>
 
               <div className="cadastrar">
@@ -130,10 +126,7 @@ const Login = ({ showModal, setShowModal }: Props) => {
               </button>
               </div>
             </form>
-          {/* </AuthCard> */}
         </Modal.Body>
-        {/* <Modal.Footer>
-        </Modal.Footer> */}
       </Modal>
     </div>
   )

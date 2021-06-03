@@ -33,11 +33,6 @@ const ProductCard = ({ product }: Props) => (
           : <span className="product-unavailable"><strong><em>Indisponível</em></strong></span>
         }
       </div>
-
-      {/* <div className="product-quantity mb-4">
-        Quantidade disponível: {product.quantity}
-      </div> */}
-
     </div>
   </div>
 )

@@ -1,8 +1,10 @@
 .container {
-  background-color: white;
+  width: 1000px;
+  background-color: var(--white);
   display: flex;
   flex-direction: column;
   border-radius: 15px;
+  margin-top: 10px;
 }
 
 .title-summary {
@@ -20,13 +22,31 @@
 
 .linha {
   width: auto;
-  border: 0.5px solid rgb(194, 186, 186);
+  border: 0.5px solid var(--gray-400);
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
 .frete {
-  margin: 10px 10px;
+  background: var(--white);
+  margin: 15px 0;
+  padding: 10px;
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
+
+  input {
+    background: var(--white);
+    color: var(--black);
+
+    &::placeholder {
+      color: var(--gray-200);
+    }
+
+    &:focus {
+      color: var(--black);
+      background: var(--white);
+    }
+  }
 }
 
 .calcular {

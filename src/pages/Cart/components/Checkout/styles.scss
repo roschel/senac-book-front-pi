@@ -35,12 +35,13 @@
 }
 
 .card-address {
-  border: none;
+  border: 30px;
+
 }
 
 .pag {
   border-radius: 15px;
-  background: white;
+  background: var(--white);
   padding: 10px 10px;
   width: 1010px;
 }

@@ -3,7 +3,7 @@
   width: 40px;
   border-radius: 50%;
   background-color: var(--gray-200);
-  color: white;
+  color: var(--black);
   font-size: var(--h3);
   line-height: 25px;
   letter-spacing: -0.015em;
@@ -13,12 +13,17 @@
   cursor: pointer;
   margin-right: 10px;
 
+  transition: color .3s;
+
   &.active {
-    background-color: var(--blue);
+    background-color: var(--blue-equals);
+    color: var(--white);
+    font-weight: bold;
   }
 
   &:hover {
-    color: white;
+    // color: var(--white);
+    font-weight: bold;
   }
 }
 
@@ -35,7 +40,7 @@
 
 .page-active {
   cursor: pointer;
-  color: var(--blue);
+  color: var(--blue-equals);
 }
 
 .page-inactive {

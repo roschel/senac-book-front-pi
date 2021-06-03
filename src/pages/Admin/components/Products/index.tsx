@@ -14,9 +14,6 @@ const Products = () => {
                 <Route path="/admin/products/:productId">
                     <Form />
                 </Route>
-                {/* <Route path="/admin/products/:productId">
-                    <h1>Editar produto</h1>
-                </Route> */}
             </Switch>
         </div>
     );

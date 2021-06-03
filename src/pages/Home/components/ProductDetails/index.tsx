@@ -16,7 +16,6 @@ type ParamsType = {
 }
 
 export const ProductDetails = ({ productId, showModal, setShowModal }: ParamsType) => {
-  // const { productId } = useParams<ParamsType>();
   const [product, setProduct] = useState<Product>();
   const [disabledButton, setDisabledButton] = useState(true);
 
@@ -59,13 +58,6 @@ export const ProductDetails = ({ productId, showModal, setShowModal }: ParamsTyp
           }
         ],
       }
-
-      // const products = []
-      // let payload: ProductsCart={
-      //   product,
-      //   sellQuantity:1
-      // }
-      // products.push(payload)
       saveCartData(payLoad)
     }
   }

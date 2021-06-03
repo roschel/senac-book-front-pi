@@ -1,28 +1,45 @@
-.teste {
-  padding: 30px;
+.login-container {
+  background: var(--white);
 }
 
 .login-title {
+  background: var(--white);
   text-align: center;
   font-size: var(--h1);
   padding-top: 30px;
 }
 
 .login-form {
-  margin: 25px 0;
+  background: var(--white);
+  padding: 25px 0;
 
-  .cadastrar {
-    text-align: center;
+  input {
+    background: var(--white);
+    color: var(--black);
+    border-color: var(--gray-200);
 
-    .divisao {
-      display: flex;
-      margin-top: 30px;
-
-      .linha {
-        border-top: 1.5px dashed gray;
-        width: 180px;
-        margin: auto;
-      }
+    &::placeholder {
+      color: var(--gray-400);
     }
+
+    &:focus {
+      color: var(--black);
+      background: var(--white);
+    }
+  }
+}
+
+.cadastrar {
+  text-align: center;
+}
+
+.divisao {
+  display: flex;
+  margin-top: 15px;
+
+  .linha {
+    border-top: 1.5px dashed var(--gray-400);
+    width: 180px;
+    margin: auto;
   }
 }

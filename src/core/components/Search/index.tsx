@@ -29,7 +29,7 @@ const Search = ({onSearch, placeholder, request}: Props) => {
   return(
     <div className="card-base product-filters-container">
       <div className="input-search">
-        <input 
+        <input
           type="text"
           className="form-control mr-2"
           placeholder={`Pesquisar ${placeholder}`}

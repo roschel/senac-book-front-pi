@@ -1,13 +1,9 @@
-import { Route, Redirect } from 'react-router';
-import Login from './components/Login';
+import { Redirect, Route } from 'react-router';
 import './styles.scss';
 
 const Auth = () => {
   return (
     <div>
-      <Route path="/auth/login" >
-        {/* <Login /> */}
-      </Route>
       <Redirect from="/auth" to="/auth/login" />
     </div>
   )

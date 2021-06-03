@@ -1,3 +1,23 @@
+.form-container {
+  input, textarea {
+    background: var(--white);
+    color: var(--black);
+
+    &::placeholder {
+      color: var(--gray-200);
+    }
+
+    &:focus {
+      color: var(--black);
+      background: var(--white);
+    }
+  }
+}
+
+// .select {
+//   background: black;
+// }
+
 .category-select__control {
   height: 50px;
   border-radius: 5px !important;

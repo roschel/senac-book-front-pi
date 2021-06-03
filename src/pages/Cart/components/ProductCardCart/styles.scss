@@ -1,73 +1,57 @@
 .geral {
-    display: flex;
-    flex-direction: row;
-    background-color: white;
-    border-radius: 15px;
-    width: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: var(--white);
+  border-radius: 15px;
+  width: auto;
+  gap: 50px;
+  padding: 20px;
 }
 
-.card-body{
+.card-body {
   height: 180px;
 }
 
-.geral {
-    display: flex;
-    align-items: center;
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 75px;
+  justify-content: space-between;
 }
 
-.card-image {
-    width: 80px;
-    margin-left: -925px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+.column-quantity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 75px;
+  justify-content: space-between;
 }
 
-.quantidade {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    margin-left: 80px;
+.product-description {
+  width: 500px;
+  text-align: justify;
 }
 
-.qtd {
-    margin-top: 8px;
+.quantity-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 150px;
+
+  button {
+    background: var(--blue-equals);
+    font-family: monospace;
+    font-weight: 600;
+    color: var(--black-equals);
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+  }
 }
 
-.incrementar, .qtd {
-    margin-left: 20px;
-}
-
-.preco {
-    text-align: end;
-    margin-left: 82px;
-    margin-top: 15px;
-}
-
-.titulos {
-    display: flex;
-    justify-content: center;
-    justify-content: space-between;
-    text-align: center;
-    margin-top: -150px;
-}
-
-.titulo-qtd {
-    margin-left: 90px;
-}
-
-.titulo-preco {
-    margin-right: 25px;
-}
-
-.infos {
-    display: flex;
-    justify-content: center;
-    justify-content: space-between;
-}
-
-.remove {
-    margin-top: -40px;
-    margin-right: -170px;
-    margin-left: 150px;
-    width: auto;
+.price {
+  width: 100px;
 }
