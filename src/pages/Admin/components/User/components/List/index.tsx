@@ -52,7 +52,7 @@ const List: React.FC = () => {
 
   return (
     <div className="admin-user-list">
-      <div className="d-flex mb-2">
+      <div className="d-flex mb-2 justify-content-between">
         <Search
           onSearch={filter => getUsers(filter)}
           placeholder="usuário"

@@ -1,17 +1,21 @@
-.titulos-produto{
-    display: flex;
-    flex-direction: row;
+.background-color {
+  background: var(--white);
+  color: var(--black);
+  border-color: var(--gray-200);
+}
+
+.card-color {
+  background: var(--white);
+  color: var(--black);
+  border: 1px solid var(--gray-200);
+  border-radius: 5px;
+}
+
+.titulos-produto {
+  display: flex;
+  flex-direction: row;
 }
 
 .geral-client {
-    width: fit-content;
-  }
-  
-  .plus-button {
-    margin-bottom: auto;
-    margin-top: -8px;
-  }
-  
-  .card-base {
-    border-radius: 10px;
-  }
+  width: fit-content;
+}

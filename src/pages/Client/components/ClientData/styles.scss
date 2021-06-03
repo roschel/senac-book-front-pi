@@ -1,0 +1,20 @@
+.container-form {
+  input {
+    background: var(--white);
+    color: var(--black);
+
+    &::placeholder {
+      color: var(--gray-200);
+    }
+
+    &:focus {
+      color: var(--black);
+      background: var(--white);
+    }
+
+    &:read-only {
+      background: var(--gray-200);
+      color: var(--black);
+    }
+  }
+}

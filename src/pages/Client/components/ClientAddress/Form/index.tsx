@@ -106,7 +106,7 @@ const Form = () => {
   }
 
   return (
-    <div className="container mt-3">
+    <div className="mt-3 container-form">
       <form onSubmit={handleSubmit(onSubmit)} className="form-client">
         <BaseForm title={formTitle} buttonTitle={formTitle}>
           <div className="row">

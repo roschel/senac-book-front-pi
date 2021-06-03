@@ -96,7 +96,7 @@ const Form = () => {
 
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="form-container">
       <BaseForm title={formTitle} buttonTitle={formTitle}>
         <div className="row">
           <div className="col-6">

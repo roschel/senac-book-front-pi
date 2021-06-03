@@ -57,7 +57,7 @@ const ClientData = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="form-client">
+    <form onSubmit={handleSubmit(onSubmit)} className="form-client container-form">
       <BaseForm title={formTitle} buttonTitle={button}>
         <div className="row">
 

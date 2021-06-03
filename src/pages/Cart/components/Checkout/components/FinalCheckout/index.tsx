@@ -164,13 +164,13 @@ const FinalCheckout = () => {
           onClick={handleBack}
         >
           Voltar
-                </button>
+        </button>
         <button
           className="btn btn-primary col-2 mt-3"
           onClick={handleSubmit}
         >
           Finalizar pedido
-                </button>
+        </button>
       </div>
 
     </div>

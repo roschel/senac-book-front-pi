@@ -26,9 +26,33 @@ const Card = ({ order }: Props) => {
   }
 
   return (
-    <div className="card-base">
-      <div className="geral-client row mb-2">
-        <div className="cabecalho col-12">
+    <>
+      <div className="card-form d-flex justify-content-between align-items-center">
+        <div className="d-flex flex-md-column">
+          <h6><strong>ID</strong></h6>
+          <h6>{order.id}</h6>
+        </div>
+        <div className="d-flex flex-md-column">
+          <h6><strong>Data</strong></h6>
+          <h6>{format(new Date(order.createdAt), "dd/MM/yyyy")} </h6>
+        </div>
+        <div className="d-flex flex-md-column">
+          <h6><strong>Valor Total</strong></h6>
+          <h6>{order.totalValue.toFixed(2).replace('.', ',')}</h6>
+        </div>
+        <div className="d-flex flex-md-column">
+          <h6><strong>Status</strong></h6>
+          <h6>{order.totalValue.toFixed(2).replace('.', ',')}</h6>
+        </div>
+        <button
+          className="btn btn-primary"
+          onClick={handleModal}
+        >
+          <img src={plusButton} alt="" />
+            &nbsp;&nbsp;&nbsp;informações
+          </button>
+
+        {/* <div className="cabecalho col-12">
           <h6 className="col-3"><strong>ID</strong></h6>
           <h6 className="col-3"><strong>Data</strong></h6>
           <h6 className="col-3"><strong>Valor Total</strong></h6>
@@ -46,10 +70,10 @@ const Card = ({ order }: Props) => {
           >
             <img src={plusButton} alt="" />
           </button>
-        </div>
+        </div> */}
       </div>
       <ModalOrders order={order} showModal={showModal} setShowModal={setShowModal} />
-    </div>
+    </>
   )
 }
 
