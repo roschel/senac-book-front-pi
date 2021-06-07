@@ -35,52 +35,52 @@ const Card = ({ address, onDisabled, buttonTitle, clientId, onPaymentChange, sel
   }
 
   return (
-    <div className={`card-base client-card-admin ${selectedAddress ? "card-selected-address" : ""}`}>
-      <div className="row">
-        <div className="col-7">
-          <h3 className="client-card-address">
-            <strong>
-              {address.address}
-            </strong>
-          </h3>
-          <div className="client-card-number">
-            <label className="client-card-number-label">Número:</label>
+    <div className={"card-base client-card-admin"}>
+      <h3 className="client-card-address">
+        <strong>
+          {address.address}
+        </strong>
+      </h3>
+      <div className="d-flex flex-row justify-content-between">
+        <div className="d-flex flex-column">
+          <div>
+            <label>
+              <strong>
+                Número:&nbsp;
+              </strong>
+            </label>
             <label>{address.number}</label>
           </div>
-
           <div>
-            <label className="client-card-neighborhood-label">
+            <label>
               <strong>
-                Bairro:
+                Bairro:&nbsp;
               </strong>
             </label>
             <label>{address.neighborhood}</label>
           </div>
-
+        </div>
+        <div className="d-flex flex-column">
           <div>
-            <label className="client-card-city-label">
+            <label>
               <strong>
-                Cidade:
+                Cidade:&nbsp;
               </strong>
             </label>
             <label>{address.city}</label>
           </div>
-
           <div>
-            <label className="client-card-state-label">
+            <label>
               <strong>
-                Estado:
+                Estado:&nbsp;
               </strong>
             </label>
             <label>{address.state}</label>
           </div>
-
         </div>
       </div>
     </div>
-
   )
-
 }
 
 export default Card;

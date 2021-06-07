@@ -31,11 +31,11 @@ const Items = () => {
         <div className="cesta-vazia">
           <h5>SUA CESTA ESTÁ VAZIA</h5>
           <br />
-          <button className="btn btn-primary">
-            <Link to="/">
+          <Link to="/">
+            <button className="btn btn-primary">
               Começar a comprar
-            </Link>
-          </button>
+            </button>
+          </Link>
         </div>
       ) : (
         <div className="grid">

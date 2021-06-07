@@ -4,7 +4,8 @@ import './styles.scss';
 const Auth = () => {
   return (
     <div>
-      <Redirect from="/auth" to="/auth/login" />
+      {/* <Redirect from="/auth" to="/auth/login" /> */}
+      <Redirect from="/auth" to="/" />
     </div>
   )
 }

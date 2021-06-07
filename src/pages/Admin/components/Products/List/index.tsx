@@ -7,6 +7,7 @@ import Card from '../Card';
 import Pagination from '../../../../../core/components/Pagination';
 import { FilterForm } from '../../../../../core/components/Search';
 import Search from '../../../../../core/components/Search';
+import { Flip, toast, ToastContainer } from 'react-toastify';
 
 
 const List: React.FC = () => {
@@ -14,6 +15,32 @@ const List: React.FC = () => {
   const [activePage, setActivePage] = useState(0);
 
   const history = useHistory();
+
+  const notifySuccess = (message: string) => {
+    toast.success(message, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      closeButton: false,
+    })
+  };
+
+  const notifyError = (message: string) => {
+    toast.error(message, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      closeButton: false,
+    })
+  };
 
   const handleCreate = () => {
     history.push('/admin/products/create')
@@ -39,11 +66,11 @@ const List: React.FC = () => {
     if (confirma) {
       makeRequest({ url: `/products/${productId}`, method: "delete" })
         .then(response => {
-          alert(`${response.data}`)
+          notifySuccess(`${response.data}`)
           getProducts()
         })
         .catch(() => {
-          alert(`Erro ao inativar o produto`)
+          notifyError(`Erro ao inativar o produto`)
         })
     }
   }
@@ -77,6 +104,19 @@ const List: React.FC = () => {
           onChange={page => setActivePage(page)}
         />
       )}
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        transition={Flip}
+        style={{ width: "auto", color: "var(--white-equals)" }}
+      />
     </div>
   )
 }

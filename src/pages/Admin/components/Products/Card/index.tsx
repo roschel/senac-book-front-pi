@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { Product } from '../../../../../core/components/types/Product';
+import { Link } from 'react-router-dom';
 import StarsRating from '../../../../../core/components/StarsRating';
-import './styles.scss';
+import { Product } from '../../../../../core/components/types/Product';
 import ProductDetails from '../../../../Home/components/ProductDetails';
+import './styles.scss';
 
 type Props = {
   product: Product;
@@ -13,10 +13,6 @@ type Props = {
 
 const Card = ({ product, onDisabled, buttonTitle }: Props) => {
 
-  const history = useHistory();
-  const handleOnClick = (productId: number) => {
-    history.push(`/products/${productId}`)
-  }
   const [showModal, setShowModal] = useState(false);
 
   return (

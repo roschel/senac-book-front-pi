@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import { getSessionData } from '../../../../core/components/utils/auth'
 import { calculateShipping, getCartData, ProductsCart, saveCartData } from '../../../../core/components/utils/cart'
-
+import { ToastContainer, toast, Flip } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './styles.scss'
 
 type Props = {
@@ -18,6 +19,20 @@ const OrderSummary = ({ books, updateSummaryCart, shipping, setShipping }: Props
   const [quantidadeTotalDeProdutos, setQuantidadeTotalDeProdutos] = useState(0);
   const [valorTotal, setValorTotal] = useState(0);
   const history = useHistory();
+  const userId = getSessionData().userId
+
+  const notify = () => {
+    toast.error('É preciso logar no sistema para realizar o checkout!', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      closeButton: false
+    })
+  };
 
   const somaValoresDeLivros = () => {
     let sum = 0
@@ -57,8 +72,8 @@ const OrderSummary = ({ books, updateSummaryCart, shipping, setShipping }: Props
     }
 
     if (!cartSession.customerId) {
-      alert('É preciso logar no sistema para realizar o checkout')
-      history.push('/')
+    // if (!sessionData.userId) {
+      notify()
     }
     history.push('/cart/checkout')
   }
@@ -83,7 +98,7 @@ const OrderSummary = ({ books, updateSummaryCart, shipping, setShipping }: Props
       <div className="continuar">
         <button
           className="btn btn-primary mb-3"
-          onClick={handleSubmit}
+          onClick={userId ? handleSubmit : notify}
         >
           Continuar
         </button>
@@ -101,6 +116,21 @@ const OrderSummary = ({ books, updateSummaryCart, shipping, setShipping }: Props
           <button className="btn btn-outline-primary mb-2">Calcular</button>
         </div>
       </div>
+
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        transition={Flip}
+        style={{ width: "auto", color: "var(--white-equals)" }}
+        // onClick={}
+      />
     </div>
   )
 }

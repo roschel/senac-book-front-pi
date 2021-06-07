@@ -14,7 +14,6 @@ const ModalOrders = ({ order, showModal, setShowModal }: Props) => {
   // const [show, setShow] = useState(true);
 
   const handleClose = () => setShowModal(false);
-  const handleShow = () => setShowModal(true);
 
   return (
     <div>
@@ -28,30 +27,30 @@ const ModalOrders = ({ order, showModal, setShowModal }: Props) => {
           <Modal.Title>Detalhes do pedido</Modal.Title>
         </Modal.Header>
         <Modal.Body className="teste background-color">
-          <div className="card-color p-2 background-color">
-            <div className="d-flex mb-2 background-color">
+          <div className="card-color p-2">
+            <div className="d-flex mb-2">
               <h5><strong>Produtos</strong></h5>
             </div>
-            <div className="col-12 titulos-produto d-flex background-color">
+            <div className="col-12 titulos-produto d-flex">
               <h6 className="col-3"><strong>Nome: </strong></h6>
               <h6 className="col-3"><strong>Valor R$</strong></h6>
               <h6 className="col-3"><strong>Qtd. </strong></h6>
               <h6 className="col-3"><strong>Total R$</strong></h6>
             </div>
             {order && order.orderDetails.map(product => (
-              <div className="col-12 infor-produto d-flex background-color">
+              <div className="col-12 infor-produto d-flex">
                 <h6 className="col-3">{product.product.title}</h6>
                 <h6 className="col-3"><strong>RS </strong>{(product.product.price).toFixed(2).replace(".", ",")}</h6>
                 <h6 className="col-3">{product.quantity}</h6>
                 <h6 className="col-3"><strong>R$ </strong>{(product.quantity * product.product.price).toFixed(2).replace(".", ",")}</h6>
               </div>
             ))}
-            <div className="col-12 mt-5 d-flex background-color">
+            <div className="col-12 mt-5 d-flex">
               <h6 className="col-6"><strong>frete: R$ </strong>{order.shipping && (order.shipping.toFixed(2).replace(".", ","))}</h6>
               <h6 className="col-6"><strong>Total geral: R$ </strong>{order.totalValue && (order.totalValue.toFixed(2).replace(".", ","))}</h6>
             </div>
           </div>
-          <div className="col-12 mt-2 card-color background-color">
+          <div className="col-12 mt-2 card-color">
             <h5 className="haha"><strong>Endereço de entrega</strong></h5>
             <div className="infor-address">
             <div className="justify-content-center d-flex">
@@ -68,7 +67,7 @@ const ModalOrders = ({ order, showModal, setShowModal }: Props) => {
               </div>
             </div>
           </div>
-          <div className="col-12 mt-2 card-color background-color">
+          <div className="col-12 mt-2 card-color">
             <div className="infor-payment">
               <h5 className="haha"><strong>Forma de pagamento</strong></h5>
               {!order.payment ? (

@@ -73,7 +73,7 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
   }
 
   const handleSelectPrincipal = (image: Image) => {
-    imageObject?.map(object => {
+    imageObject?.forEach(object => {
       object["principal"] = false
       if (object.id === image.id) {
         object["principal"] = true
@@ -91,8 +91,8 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
 
         if (imageObject[i].id === id) {
 
-          if(imageObject[i].principal){
-            return(alert('antes de deletar a capa do produto, selecione outra foto para ser capa.'))
+          if (imageObject[i].principal) {
+            return (alert('antes de deletar a capa do produto, selecione outra foto para ser capa.'))
           }
 
 
@@ -147,12 +147,11 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
                       </div>
 
                       <div className="align-items-center">
-                        <a
-                          href="#"
+                        <span
                           className="btn btn-danger ml-3"
                           onClick={() => handleDeleteImage(image.id)}>
                           Excluir
-                      </a>
+                        </span>
                       </div>
 
                     </div>

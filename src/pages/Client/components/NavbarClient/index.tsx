@@ -4,7 +4,7 @@ import { getSessionData } from '../../../../core/components/utils/auth';
 import './styles.scss'
 
 const NavBarClient = () => (
-  <nav className="navbarLeft">
+  <nav className="navbar-left-client">
     <ul>
       <li>
         <NavLink className="admin-nav-item" to={`/client/${getSessionData().userId}`} exact>

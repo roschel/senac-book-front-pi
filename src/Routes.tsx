@@ -27,14 +27,6 @@ const Routes = () => {
             <Home />
           </Route>
 
-          <Route path="/products/:productId">
-            {/* <ProductDetails /> */}
-          </Route>
-
-          <Route path="/auth">
-            {/* <Auth /> */}
-          </Route>
-
           <Redirect from="/admin" to="/admin/products" exact />
 
           <Route path="/admin">

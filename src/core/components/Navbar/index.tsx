@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 import Login from '../../../pages/Auth/components/Login';
 import imgCart from '../../assets/images/cart-light.svg';
 import imgMoon from '../../assets/images/moon-light.svg';
@@ -20,6 +20,7 @@ const Navbar = ({ toggleTheme }: Props) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [iconTheme, setIconTheme] = useState(imgSun)
+  const history = useHistory();
 
   useEffect(() => {
     setUserName(getSessionData().userFirstName)
@@ -28,6 +29,7 @@ const Navbar = ({ toggleTheme }: Props) => {
   const handleLogout = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     event.preventDefault();
     logout();
+    history.replace("/")
   }
 
   const handleShowModal = () => {
@@ -84,7 +86,7 @@ const Navbar = ({ toggleTheme }: Props) => {
                         Perfil
                       </Link>
                       <br />
-                      <Link to="/" onClick={handleLogout}>
+                      <Link to="/admin/products" onClick={handleLogout}>
                         Logout
                       </Link>
                     </div>
@@ -113,18 +115,16 @@ const Navbar = ({ toggleTheme }: Props) => {
                     }}
                   >
                     <div>
-                      <Link to="/" onClick={handleLogout}>
+                      <Link to="/admin/products" onClick={handleLogout}>
                         Logout
                       </Link>
                     </div>
                   </Tooltip>
                 </div>
               )) : (
-              <NavLink to="/auth/login">
-                <Link to="/" onClick={handleShowModal}>
-                  Login
-                </Link>
-              </NavLink>
+              <Link to="#" onClick={handleShowModal}>
+                Login
+              </Link>
             )}
           </li>
           <li>

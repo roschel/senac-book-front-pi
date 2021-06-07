@@ -1,33 +1,29 @@
-.resume{
-  display: grid;
-  grid-template-columns: 900px 100px;
-  grid-template-rows: auto;
-  grid-gap: 10px;
-  padding: 10px;
+.resume {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 20px 0 0;
+}
 
-  .buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
+.buttons-checkout {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 30px;
+  margin-right: 40px;
+}
 
-  .resume-customer {
-    grid-column: 1/3;
-    height: 180px;
-  }
-
-  .resume-products {
-    grid-column: 3;
-    grid-row-start: 1;
-    grid-row-end: last;
-    border-radius: 10px;
-  }
+.resume-products {
+  width: 500px;
 }
 
 .list-addresses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
   max-height: 340px;
   overflow: hidden;
   overflow-y: auto;
+  padding: 10px 40px 20px 20px;
 }
 
 .summary {
@@ -36,7 +32,6 @@
 
 .card-address {
   border: 30px;
-
 }
 
 .pag {

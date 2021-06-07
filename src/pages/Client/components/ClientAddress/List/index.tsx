@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
-// import './styles.scss'
-import { useHistory, useParams } from 'react-router-dom'
-import { makePrivateRequest, makeRequest } from '../../../../../services/api';
-
+import React, { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import { Address } from '../../../../../core/components/types/Client';
+import { makePrivateRequest, makeRequest } from '../../../../../services/api';
 import Card from '../Card';
+import './styles.scss'
+
 
 type ParamsType = {
   clientId: string;
@@ -15,7 +15,7 @@ const List: React.FC = () => {
   const { clientId } = useParams<ParamsType>();
   const [paymentChange, setPaymentChange] = useState(false);
   const [addressId, setAddressId] = useState(0);
-  const [addressDeleted, setAddressDeleted]=useState<boolean>();
+  const [addressDeleted, setAddressDeleted] = useState<boolean>();
   const history = useHistory();
 
   useEffect(() => {
@@ -39,9 +39,9 @@ const List: React.FC = () => {
       makePrivateRequest({ url: `/addresses/${addressId}`, method: "delete" })
         .then(response => {
           alert(`${response.data}`)
-          if (response.data.includes("reativado")){
+          if (response.data.includes("reativado")) {
             setAddressDeleted(true)
-          }else{
+          } else {
             setAddressDeleted(false)
           }
         })
@@ -51,7 +51,7 @@ const List: React.FC = () => {
     }
   }
 
-  const onPaymentChange = (addressPayment:boolean, addressIdPayment: number) => {
+  const onPaymentChange = (addressPayment: boolean, addressIdPayment: number) => {
     setPaymentChange(addressPayment)
     setAddressId(addressIdPayment)
   }
@@ -64,7 +64,7 @@ const List: React.FC = () => {
         </button>
       </div>
 
-      <div>
+      <div className="address-container">
         {addresses?.map(address => (
           address.status === true ? (
             <Card

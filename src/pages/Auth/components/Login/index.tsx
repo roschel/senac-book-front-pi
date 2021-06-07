@@ -32,7 +32,7 @@ const Login = ({ showModal, setShowModal }: Props) => {
           console.log('admin')
           console.log('response', response)
           if (!response.data.userStatus) {
-            history.push('/auth/login')
+            // history.push('/')
             alert(`Usuário ${response.data.login} se encontra desativado`)
             return
           }
@@ -65,6 +65,7 @@ const Login = ({ showModal, setShowModal }: Props) => {
 
   const handleRegister = () => {
     history.push('/client/register')
+    setShowModal(false)
   }
 
   const handleClose = () => setShowModal(false);

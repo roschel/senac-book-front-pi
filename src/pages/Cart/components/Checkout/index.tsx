@@ -25,8 +25,8 @@ const Checkout: React.FC = () => {
   const getCart = getCartData();
   const [addresses, setAddresses] = useState<Address[]>();
   const { clientId } = useParams<ParamsType>();
-  // const [confirmAdd, setConfirmAdd] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<Address>();
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     const data = getCartData()
@@ -71,8 +71,10 @@ const Checkout: React.FC = () => {
     const cartData = getCartData()
     cartData.address = address
     cartData.shipping = newPrice;
-    
+
     saveCartData(cartData)
+
+    setShowModal(true)
   }
 
   const handleShipping = (price: number) => {
@@ -104,7 +106,7 @@ const Checkout: React.FC = () => {
             ))}
           </div>
 
-          <div className="buttons">
+          <div className="buttons-checkout">
             <Link to="/cart">
               <button className="save btn btn-primary mt-4">
                 Voltar
@@ -118,9 +120,11 @@ const Checkout: React.FC = () => {
           </div>
 
           {selectedAddress &&
-            <div className="pag">
-              <Payment address={selectedAddress} />
-            </div>
+            <Payment
+              showModal={showModal}
+              setShowModal={setShowModal}
+              address={selectedAddress}
+            />
           }
         </div>
         <div className="resume-products">

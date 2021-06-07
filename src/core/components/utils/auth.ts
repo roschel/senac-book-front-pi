@@ -1,4 +1,5 @@
 import jwtDecode from 'jwt-decode';
+import { getCartData, saveCartData } from './cart';
 import history from './history'
 
 type LoginResponse = {
@@ -70,4 +71,7 @@ export const isAllowedRole = (routesRoles: Role[]=[]) => {
 
 export const logout = () => {
   localStorage.removeItem('sessionData');
+  const cart = getCartData()
+  cart.customerId = undefined
+  saveCartData(cart)
 }

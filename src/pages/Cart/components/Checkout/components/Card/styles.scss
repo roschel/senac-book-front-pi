@@ -1,48 +1,8 @@
 .client-card-admin {
-  margin-bottom: 20px;
-  border-radius: 10px;
-  padding-top: 15px;
-  display: grid;
-  grid-template-columns: 900px 100px;
-  grid-template-rows: auto;
-  grid-gap: 10px;
-}
-
-.client-card-address {
-  font-size: 18px;
-  line-height: 25px;
-  letter-spacing: -0.015em;
-  margin-left: 10px;
-}
-
-.card-selected-address {
-  transition: all 0.2s;
-  border: 4px solid var(--blue);
-}
-
-.client-card-number {
-  margin-top: 10px;
-  margin-left: 10px;
-}
-
-.client-card-number-label {
-  font-weight: 600;
-  margin-right: 10px;
-}
-
-.client-card-neighborhood-label {
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.client-card-city-label {
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.client-card-state-label {
-  margin-left: 10px;
-  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  padding: 20px;
 }
 
 .payment-button {

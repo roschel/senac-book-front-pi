@@ -34,25 +34,27 @@ const Card = ({ order, updateOrderStatus }: Props) => {
 
   return (
     <div className="card-base">
-      <div className="geral-client row mb-2">
-        <div className="cabecalho col-12">
-          <h6 className="col-3"><strong>ID</strong></h6>
-          <h6 className="col-3"><strong>Data</strong></h6>
-          <h6 className="col-3"><strong>Valor Total</strong></h6>
-          <h6 className="col-3"><strong>Status</strong></h6>
+      <div className="p-3 mb-4 d-flex justify-content-between align-items-center">
+        <div>
+          <h6><strong>ID</strong></h6>
+          <h6>{order?.id}</h6>
         </div>
-        <div className="infos col-12">
-          <h6 className="col-3">{order?.id}</h6>
-          <h6 className="col-3">{format(new Date(order?.createdAt), "dd/MM/yyyy")} </h6>
-          <h6 className="col-3">{order?.totalValue.toFixed(2).replace('.', ',')}</h6>
-
+        <div>
+          <h6><strong>Data</strong></h6>
+          <h6>{format(new Date(order?.createdAt), "dd/MM/yyyy")} </h6>
+        </div>
+        <div>
+          <h6><strong>Valor Total</strong></h6>
+          <h6>{order?.totalValue.toFixed(2).replace('.', ',')}</h6>
+        </div>
+        <div>
+          <h6><strong>Status</strong></h6>
           <Dropdown
-            className="col-3"
             onSelect={(e, x) => handleChange(e, x)}
           >
-            <Dropdown.Toggle 
-              variant="primary" 
-              id="dropdown-basic" 
+            <Dropdown.Toggle
+              variant="primary"
+              id="dropdown-basic"
               size="sm"
             >
               {order?.orderStatus}
@@ -67,7 +69,6 @@ const Card = ({ order, updateOrderStatus }: Props) => {
               <Dropdown.Item href="#/action-6">Entregue</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-
         </div>
       </div>
     </div>
