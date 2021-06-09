@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router'
-import { Client } from '../../../../../../core/components/types/Client';
+import { format } from 'date-fns';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
+import 'react-toastify/dist/ReactToastify.css';
+import { notify } from '../../../../../../core/components/Navbar';
 import { CartSession, getCartData, Payment } from '../../../../../../core/components/utils/cart';
 import { makePrivateRequest } from '../../../../../../services/api';
-import Products from '../../../../../Admin/components/Products';
-import { format } from 'date-fns'
-import './styles.scss'
+import './styles.scss';
 
 const FinalCheckout = () => {
   const [cart, setCart] = useState<CartSession>();
@@ -39,15 +39,19 @@ const FinalCheckout = () => {
     const data = getCartData()
     const prod: Object[] = []
     data.products.forEach(element => {
-      prod.push({id: element.product.id})
+      prod.push(
+        {
+          id: element.product.id,
+          quantity: element.sellQuantity
+        }
+      )
     });
 
-    const payload={
-      client:{
+    const orderPost = {
+      client: {
         id: data.customerId
       },
-      products: prod,
-      payment: data.payment ? {id: data.payment} : null,
+      payment: data.payment ? { id: data.payment } : null,
       address: {
         id: data.address?.id
       },
@@ -55,31 +59,47 @@ const FinalCheckout = () => {
       shipping: data.shipping,
       totalValue: data.totalValue,
       status: true,
-      createdAt: Date.now()
+      orderStatus: "AGUARDANDO PAGAMENTO"
     }
-    console.log(payload)
 
-    makePrivateRequest({url:`/orders`, data: payload, method:'POST'})
-    .then(response => {
-      alert("Compra finalizada com sucesso! Seu número de pedido é: " + response.data.id)
-      localStorage.removeItem('cartData')
-    })
-    .catch(response => {
-      alert("Ops, algo está errado... tente novamente mais tarde!")
-      console.log(response)
-    })
-    .finally(() => {
-      history.push(`/client/${data.customerId}/orders`)
-    })
+    makePrivateRequest({ url: `/orders`, data: orderPost, method: 'POST' })
+      .then(response => {
+        data.products.forEach(product => {
+          let orderDetails = {
+            product: product.product,
+            quantity: product.sellQuantity,
+            order: response.data
+          }
+          console.log(orderDetails)
+          makePrivateRequest({
+            url: `orders/details`,
+            method: 'POST',
+            data: orderDetails
+          })
+            .then(res => {
+              console.log('order_details', res)
+            })
+            .catch(error => {
+              console.log("error", error)
+            })
+        })
+        notify("success", `Compra finalizada com sucesso! Seu número de pedido é: ${response.data.id}`)
+        localStorage.removeItem('cartData')
+        history.push(`/client/${data.customerId}/orders`)
+      })
+      .catch(response => {
+        notify("error", "Ops, algo está errado... tente novamente mais tarde!")
+        console.log(response)
+      })
   }
 
   return (
-    <div className="geral">
+    <div className="geral-final-checkout">
       <div>
         <h4>Finalizar pedido</h4>
       </div>
-      <div className="row">
-        <div className="card productCard">
+      <div className="info-final-checkout">
+        <div className="card card-color-final-checkout productCard">
           <h5 className="cardTitle"><strong>Produtos</strong></h5>
           <div className="title-products col-12">
             <h6 className="col-3"><strong>Nome: </strong></h6>
@@ -100,41 +120,37 @@ const FinalCheckout = () => {
             <h6 className="valorTotal col-6"><strong>Total do pedido: R$ </strong>{cart?.totalValue && (cart?.totalValue.toFixed(2).replace(".", ","))}</h6>
           </div>
         </div>
-        <div className="col-12 mt-2">
-          <div className="card address">
-            <h5 className="cardTitle"><strong>Endereço de entrega</strong></h5>
-            <div className="pular">
-              <h6 className="mr-3"><strong>Rua: </strong> {cart?.address?.address} </h6>
-              <h6><strong>Nº: </strong> {cart?.address?.number} </h6>
-            </div>
-            <div className="pular">
-              <h6 className="mr-3"><strong>CEP: </strong> {cart?.address?.zipCode} </h6>
-              <h6><strong>Bairro: </strong> {cart?.address?.neighborhood} </h6>
-            </div>
-            <div className="pular">
-              <h6 className="mr-3"><strong>Cidade: </strong> {cart?.address?.city} </h6>
-              <h6><strong>UF: </strong> {cart?.address?.state} </h6>
-            </div>
+        <div className="card card-color-final-checkout address">
+          <h5 className="cardTitle"><strong>Endereço de entrega</strong></h5>
+          <div className="pular">
+            <h6 className="mr-3"><strong>Rua: </strong> {cart?.address?.address} </h6>
+            <h6><strong>Nº: </strong> {cart?.address?.number} </h6>
+          </div>
+          <div className="pular">
+            <h6 className="mr-3"><strong>CEP: </strong> {cart?.address?.zipCode} </h6>
+            <h6><strong>Bairro: </strong> {cart?.address?.neighborhood} </h6>
+          </div>
+          <div className="pular">
+            <h6 className="mr-3"><strong>Cidade: </strong> {cart?.address?.city} </h6>
+            <h6><strong>UF: </strong> {cart?.address?.state} </h6>
           </div>
         </div>
-        <div className="col-12 mt-2">
-          <div className="card payment">
-            <h5 className="cardTitle"><strong>Forma de pagamento</strong></h5>
-            {!payment ? (
-              <div className="boleto">
-                <h6>Boleto bancário</h6>
-                <h6><strong>Vencimento: </strong> {format(new Date().setDate(new Date().getDate() + 2), "dd/MM/yyyy")} </h6>
-              </div>
+        <div className="card card-color-final-checkout payment">
+          <h5 className="cardTitle"><strong>Forma de pagamento</strong></h5>
+          {!payment ? (
+            <div className="boleto">
+              <h6>Boleto bancário</h6>
+              <h6><strong>Vencimento: </strong> {format(new Date().setDate(new Date().getDate() + 2), "dd/MM/yyyy")} </h6>
+            </div>
 
-            ) : (
+          ) : (
 
-              <div className="cartao">
-                <h6>Cartão de crédito</h6>
-                <h6><strong>Final do cartao: </strong>{payment.numberCard.slice(12,16)}</h6>
-                <h6><strong>Nº de parcelas: </strong>{paymentMethod}</h6>
-              </div>
-            )}
-          </div>
+            <div className="cartao">
+              <h6>Cartão de crédito</h6>
+              <h6><strong>Final do cartao: </strong>{payment.numberCard.slice(12, 16)}</h6>
+              <h6><strong>Nº de parcelas: </strong>{paymentMethod}</h6>
+            </div>
+          )}
         </div>
       </div>
       <div className="botoes col-12">
@@ -143,15 +159,14 @@ const FinalCheckout = () => {
           onClick={handleBack}
         >
           Voltar
-                </button>
+        </button>
         <button
           className="btn btn-primary col-2 mt-3"
           onClick={handleSubmit}
         >
           Finalizar pedido
-                </button>
+        </button>
       </div>
-
     </div>
   )
 }

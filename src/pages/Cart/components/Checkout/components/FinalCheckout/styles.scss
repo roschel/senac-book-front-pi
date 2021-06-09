@@ -1,63 +1,75 @@
-.geral {
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
+.geral-final-checkout {
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1250px;
+  margin: 20px auto;
+  padding: 10px;
+}
+
+.final-checkout-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-color-final-checkout {
+  background: var(--white);
+  color: var(--black);
 }
 
 .cardTitle {
-    margin-right: auto;
+  margin-right: auto;
 }
 
 .productCard {
-    display: flex;
-    width: 1200px;
-    text-align: center;
-    padding: 5px 5px;
-    margin-left: 95px;
+  display: flex;
+  width: 1200px;
+  text-align: center;
+  padding: 5px 5px;
 
-    .title-products {
-        display: flex;
-        flex-direction: row;
-    }
-    
-    .info-products {
-        display: flex;
-        flex-direction: row;
-    }
-    
-    .frete {
-        display: flex;
-        flex-direction: row;
-    }
+  .title-products {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .info-products {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .frete {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 .address {
-    text-align: center;
-    align-items: center;
-    width: 1200px;
-    padding: 5px 5px;
-    margin-left: 80px;
+  text-align: center;
+  align-items: center;
+  width: 1200px;
+  padding: 5px 5px;
 }
 
 .pular {
-    display: flex;
-    flex-direction: row;
-    border: none;
+  display: flex;
+  flex-direction: row;
+  border: none;
 }
 
 .payment {
-    width: 1200px;
-    padding: 5px 5px;
-    margin-left: 80px;
+  width: 1200px;
+  padding: 5px 5px;
 }
 
 .botoes {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
 .btn {
-    width: fit-content;
+  width: fit-content;
 }

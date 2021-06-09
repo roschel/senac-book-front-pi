@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { notify } from '../../../../../core/components/Navbar';
 import { Address } from '../../../../../core/components/types/Client';
 import { makePrivateRequest } from '../../../../../services/api';
 import './styles.scss';
@@ -25,58 +26,67 @@ const Card = ({ address, onDisabled, buttonTitle, clientId, onPaymentChange }: P
     console.log('asasdasdasd', payLoad)
     makePrivateRequest({ url: `/addresses/client/${clientId}`, data: payLoad, method: "PUT" })
       .then(() => {
+        notify("success", "Endereço editado com sucesso!")
         history.push(`/client/${clientId}/addresses`)
         onPaymentChange(payLoad.payment, address.id)
       })
       .catch(() => {
-        alert('Endereço não editado')
+        notify("error", 'Endereço não editado')
       })
   }
 
   return (
-    <div className="card-base client-card-admin">
-      <div className="row">
-        <div className="col-7">
-          <h3 className="client-card-address">
-            <strong>
-              {address.address}
-            </strong>
-          </h3>
-          <div className="client-card-number">
-            <label className="client-card-number-label">Número:</label>
-            <label>{address.number}</label>
-          </div>
+    <div className="client-card-container card-style">
+      <div className="column">
+        <h3 className="client-address">
+          <strong>
+            {address.address}
+          </strong>
+        </h3>
+        <div className="info">
+          <div className="column-info">
+            <div>
+              <label>
+                <strong>
+                  Número:&nbsp;
+                </strong>
+              </label>
+              <label>{address.number}</label>
+            </div>
 
-          <div>
-            <label className="client-card-neighborhood-label">
-              <strong>
-                Bairro:
-              </strong>
-            </label>
-            <label>{address.neighborhood}</label>
+            <div>
+              <label>
+                <strong>
+                  Bairro:&nbsp;
+                </strong>
+              </label>
+              <label>{address.neighborhood}</label>
+            </div>
           </div>
+          <div className="column-info">
+            <div>
+              <label>
+                <strong>
+                  Cidade:&nbsp;
+                </strong>
+              </label>
+              <label>{address.city}</label>
+            </div>
 
-          <div>
-            <label className="client-card-city-label">
-              <strong>
-                Cidade:
-              </strong>
-            </label>
-            <label>{address.city}</label>
+            <div>
+              <label>
+                <strong>
+                  Estado:&nbsp;
+                </strong>
+              </label>
+              <label>{address.state}</label>
+            </div>
           </div>
-
-          <div>
-            <label className="client-card-state-label">
-              <strong>
-                Estado:
-              </strong>
-            </label>
-            <label>{address.state}</label>
-          </div>
-
         </div>
+      </div>
 
-        <div className="col-3 offset-2 mt-2">
+      <div className="buttons-client-address">
+        <div className="two-buttons">
           <Link
             to={`/client/${clientId}/addresses/${address.id}`}
             type="button"
@@ -92,26 +102,26 @@ const Card = ({ address, onDisabled, buttonTitle, clientId, onPaymentChange }: P
           >
             {buttonTitle}
           </button>
-
-          <div className="payment-button">
-            {address.payment ? (
-              <button
-                className="btn btn btn-success"
-                disabled
-              >
-                Endereço de faturamento
-              </button>
-            ) : (
-              <button
-                className="btn btn-outline-success"
-                onClick={() => handlePayment()}
-              >
-                Tornar este endereço de faturamento
-              </button>
-            )}
-          </div>
-
         </div>
+
+        <div className="payment-button">
+          {address.payment ? (
+            <button
+              className="btn btn btn-success"
+              disabled
+            >
+              Endereço de faturamento
+            </button>
+          ) : (
+            <button
+              className="btn btn-outline-success"
+              onClick={() => handlePayment()}
+            >
+              Tornar este endereço de faturamento
+            </button>
+          )}
+        </div>
+
       </div>
     </div>
 

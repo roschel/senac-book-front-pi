@@ -1,64 +1,57 @@
-.pagination-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 35px;
-    align-items: center;
-
-    a:focus{
-        outline: none;
-    }
-}
-
 .pagination-item {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    background-color: #E1e1e1;
-    color: #fff;
-    font-size: 18px;
-    line-height: 25px;
-    letter-spacing: -0.015em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    margin-right: 10px;
-    &.active {
-        background-color: #407BFF;
-    }
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: var(--gray-200);
+  color: var(--black);
+  font-size: var(--h3);
+  line-height: 25px;
+  letter-spacing: -0.015em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-right: 10px;
 
-    &:hover{
-        color: #fff;
-    }
+  transition: color .3s;
+
+  &.active {
+    background-color: var(--blue-equals);
+    color: var(--white);
+    font-weight: bold;
+  }
+
+  &:hover {
+    // color: var(--white);
+    font-weight: bold;
+  }
 }
 
 .pagination-previous {
-    transform: rotate(-180deg);
-    margin-right: 25px;
-    color: #e1e1e1;
-    cursor: pointer;
+  transform: rotate(-180deg);
+  margin-right: 25px;
+  cursor: pointer;
 }
 
 .pagination-next {
-    margin-left: 15px;
-    color: #407BFF;
-    cursor: pointer;
+  margin-left: 15px;
+  cursor: pointer;
 }
 
 .page-active {
-    cursor: pointer;
-    color: #407BFF;
+  cursor: pointer;
+  color: var(--blue-equals);
 }
 
 .page-inactive {
-    color: #e1e1e1;
-    pointer-events: none;
+  color: var(--gray-200);
+  pointer-events: none;
 }
 
 .pagination-initial {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
-.pagination{
-    align-items: center;
+.pagination {
+  align-items: center;
 }

@@ -1,16 +1,14 @@
-import { data } from 'jquery'
 import React, { useEffect, useState } from 'react'
-import { Address, Client } from '../../../../core/components/types/Client'
-import { Product } from '../../../../core/components/types/Product'
-import { getCartData, ProductsCart, saveCartData, calculateShipping } from '../../../../core/components/utils/cart'
-import { makePrivateRequest } from '../../../../services/api'
-import OrderSummary from '../OrderSummary'
-import Card from '../Checkout/components/Card'
-import Payment from '../Checkout/components/Payment'
-
-import './styles.scss'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
+import { Address, Client } from '../../../../core/components/types/Client'
+import { calculateShipping, getCartData, ProductsCart, saveCartData } from '../../../../core/components/utils/cart'
+import { makePrivateRequest } from '../../../../services/api'
+import Card from '../Checkout/components/Card'
+import Payment from '../Checkout/components/Payment'
+import OrderSummary from '../OrderSummary'
+import './styles.scss'
+
 
 type ParamsType = {
   clientId: string;
@@ -27,8 +25,8 @@ const Checkout: React.FC = () => {
   const getCart = getCartData();
   const [addresses, setAddresses] = useState<Address[]>();
   const { clientId } = useParams<ParamsType>();
-  // const [confirmAdd, setConfirmAdd] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<Address>();
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     const data = getCartData()
@@ -73,8 +71,10 @@ const Checkout: React.FC = () => {
     const cartData = getCartData()
     cartData.address = address
     cartData.shipping = newPrice;
-    
+
     saveCartData(cartData)
+
+    setShowModal(true)
   }
 
   const handleShipping = (price: number) => {
@@ -106,7 +106,7 @@ const Checkout: React.FC = () => {
             ))}
           </div>
 
-          <div className="buttons">
+          <div className="buttons-checkout">
             <Link to="/cart">
               <button className="save btn btn-primary mt-4">
                 Voltar
@@ -120,21 +120,21 @@ const Checkout: React.FC = () => {
           </div>
 
           {selectedAddress &&
-            <div className="pag">
-              <Payment address={selectedAddress} />
-            </div>
+            <Payment
+              showModal={showModal}
+              setShowModal={setShowModal}
+              address={selectedAddress}
+            />
           }
         </div>
-        <div className="resume-products">
-          <div className="summary">
-            <OrderSummary
-              books={getCart.products}
-              updateSummaryCart={updateSummaryCart}
-              key={getCart.customerId}
-              shipping={shipping}
-              setShipping={handleShipping}
-            />
-          </div>
+        <div className="summary-container">
+          <OrderSummary
+            books={getCart.products}
+            updateSummaryCart={updateSummaryCart}
+            key={getCart.customerId}
+            shipping={shipping}
+            setShipping={handleShipping}
+          />
         </div>
       </div>
     </>

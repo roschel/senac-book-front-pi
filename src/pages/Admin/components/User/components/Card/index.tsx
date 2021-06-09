@@ -53,7 +53,7 @@ const Card = ({ user, onDisabled, buttonTitle }: Props) => {
               className="btn btn-outline-secondary"
             >
               EDITAR
-          </Link>
+            </Link>
 
             <button
               type="button"

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
+import { notify } from '../../../../../core/components/Navbar';
 import { makePrivateRequest } from '../../../../../services/api';
 import BaseForm from '../../../../Admin/components/BaseForm';
 
@@ -69,10 +70,11 @@ const Form = () => {
 
       makePrivateRequest({ url: `/addresses/${addressId}`, data: payLoad, method: "PUT" })
         .then(() => {
+          notify("success", "Endereço editado com sucesso!")
           history.push(`/client/${clientId}/addresses`)
         })
         .catch(() => {
-          alert('Endereço não editado')
+          notify("error", 'Endereço não editado')
         })
     } else {
       const payLoad = {
@@ -85,10 +87,11 @@ const Form = () => {
 
       makePrivateRequest({ url: `/addresses/client/${clientId}`, data: payLoad, method: "POST" })
         .then(() => {
+          notify("success", "Endereço editado com sucesso!")
           history.push(`/client/${clientId}/addresses`)
         })
         .catch(() => {
-          alert('Endereço não editado')
+          notify("error", 'Endereço não editado')
         })
     }
   }
@@ -106,7 +109,7 @@ const Form = () => {
   }
 
   return (
-    <div className="container mt-3">
+    <div className="mt-3 container-form">
       <form onSubmit={handleSubmit(onSubmit)} className="form-client">
         <BaseForm title={formTitle} buttonTitle={formTitle}>
           <div className="row">

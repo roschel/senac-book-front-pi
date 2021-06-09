@@ -1,9 +1,10 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { getSessionData } from '../../../../core/components/utils/auth'
 import { calculateShipping, getCartData, ProductsCart, saveCartData } from '../../../../core/components/utils/cart'
-
 import './styles.scss'
 
 type Props = {
@@ -18,6 +19,20 @@ const OrderSummary = ({ books, updateSummaryCart, shipping, setShipping }: Props
   const [quantidadeTotalDeProdutos, setQuantidadeTotalDeProdutos] = useState(0);
   const [valorTotal, setValorTotal] = useState(0);
   const history = useHistory();
+  const userId = getSessionData().userId
+
+  const notify = () => {
+    toast.error('É preciso logar no sistema para realizar o checkout!', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      closeButton: false
+    })
+  };
 
   const somaValoresDeLivros = () => {
     let sum = 0
@@ -57,15 +72,15 @@ const OrderSummary = ({ books, updateSummaryCart, shipping, setShipping }: Props
     }
 
     if (!cartSession.customerId) {
-      alert('É preciso logar no sistema para realizar o checkout')
-      history.push('/')
+      // if (!sessionData.userId) {
+      notify()
     }
     history.push('/cart/checkout')
   }
 
   return (
-    <div className="container">
-      <h5 className="title-summary"><strong>resumo do pedido</strong></h5>
+    <div className="container-summary">
+      <h5 className="title-summary"><strong>Resumo do pedido</strong></h5>
       <div className="card-body row">
         {quantidadeTotalDeProdutos > 1 ? (
           <h6 className="col-6">{quantidadeTotalDeProdutos} produtos</h6>
@@ -76,23 +91,23 @@ const OrderSummary = ({ books, updateSummaryCart, shipping, setShipping }: Props
         <h6 className="col-6"><em>frete</em></h6>
         <h6 className="col-6 valor">R$ {shipping.toFixed(2).replace(".", ",")}</h6>
 
-        <div className="linha col-12"></div>
+        <div className="linha col-12" />
         <h5 className="col-6"><strong>total</strong></h5>
         <h5 className="col-6 valor"><strong>R$ {valorTotal.toFixed(2).replace(".", ",")}</strong></h5>
       </div>
       <div className="continuar">
         <button
           className="btn btn-primary mb-3"
-          onClick={handleSubmit}
+          onClick={userId ? handleSubmit : notify}
         >
           Continuar
         </button>
       </div>
 
-      <div className="frete card col 12 mb-2">
+      <div className="frete">
         <h6 className="calcular"><strong>Calcular frete</strong></h6>
         <input
-          className='mb-2'
+          className='mb-2 form-control'
           type="text"
           placeholder="ex: 12345-678"
           onBlur={e => calcularFrete(e.target.value)}

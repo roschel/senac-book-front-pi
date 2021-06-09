@@ -7,3 +7,19 @@
 .titulo-payment{
   margin-right: 10px;
 }
+
+.container-form {
+  input {
+    background: var(--white);
+    color: var(--black);
+
+    &::placeholder {
+      color: var(--gray-400);
+    }
+
+    &:focus {
+      color: var(--black);
+      background: var(--white);
+    }
+  }
+}

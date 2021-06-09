@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
+import { notify } from '../../../../core/components/Navbar';
 import { saveSessionData } from '../../../../core/components/utils/auth';
 import { makeLogin, makePrivateRequest, makeRequest } from '../../../../services/api';
 import BaseForm from '../../../Admin/components/BaseForm';
@@ -148,10 +149,11 @@ const Register = () => {
     if (!isEditing) {
       makePrivateRequest({ url: `/clients/${clientId}`, data: payLoad, method: "PUT" })
         .then(() => {
+          notify("success", "Usuário editado com sucesso!")
           history.push(`/`)
         })
         .catch(() => {
-          alert('Usuário não editado')
+          notify("error", 'Usuário não editado')
         })
     } else {
       makeRequest({ url: `/clients`, data: payLoad, method: "POST" })
@@ -167,7 +169,7 @@ const Register = () => {
           history.push('/')
         })
         .catch(() => {
-          alert('Usuário não adicionado')
+          notify("error", 'Usuário não adicionado')
         })
     }
   }

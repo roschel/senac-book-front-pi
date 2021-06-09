@@ -31,30 +31,30 @@ const Items = () => {
         <div className="cesta-vazia">
           <h5>SUA CESTA ESTÁ VAZIA</h5>
           <br />
-          <button className="btn btn-primary">
-            <Link to="/">
+          <Link to="/">
+            <button className="btn btn-primary">
               Começar a comprar
-            </Link>
-          </button>
+            </button>
+          </Link>
         </div>
       ) : (
         <div className="grid">
-          {getCart.products.map(book => (
-            <div className="books-list mb-4">
-              <ProductCardCart 
-                product={book} 
-                quantityProduct={removeProduct} 
-                uploadSummary={uploadSummary} 
+          <div className="books-list">
+            {getCart.products.map(book => (
+              <ProductCardCart
+                product={book}
+                quantityProduct={removeProduct}
+                uploadSummary={uploadSummary}
                 key={book.product.id}
               />
-            </div>
-          ))}
-          <div className="summary">
-            <OrderSummary 
+            ))}
+          </div>
+          <div className="summary-container">
+            <OrderSummary
               shipping={shipping}
               setShipping={setShipping}
-              books={getCart.products} 
-              updateSummaryCart={updateSummaryCart} 
+              books={getCart.products}
+              updateSummaryCart={updateSummaryCart}
               key={getCart.customerId}
             />
           </div>

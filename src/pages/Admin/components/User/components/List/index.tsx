@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import { notify } from '../../../../../../core/components/Navbar';
 import Pagination from '../../../../../../core/components/Pagination';
 import Search, { FilterForm } from '../../../../../../core/components/Search';
 import { UsersResponse } from '../../../../../../core/components/types/User';
@@ -41,18 +42,19 @@ const List: React.FC = () => {
     if (confirmacao) {
       makePrivateRequest({ url: `/users/${userId}`, method: "DELETE" })
         .then(response => {
-          alert(`${response.data}`)
+          notify("warn", "Usuário inativado!")
+          console.log(`${response.data}`)
           getUsers()
         })
         .catch(() => {
-          alert(`Erro ao inativar o usuário`)
+          notify("error", "Erro ao inativar o usuário!")
         })
     }
   }
 
   return (
     <div className="admin-user-list">
-      <div className="d-flex mb-2">
+      <div className="d-flex mb-2 justify-content-between">
         <Search
           onSearch={filter => getUsers(filter)}
           placeholder="usuário"
@@ -74,11 +76,13 @@ const List: React.FC = () => {
         ))}
       </div>
       {userResponse && (
-        <Pagination
-          totalPages={userResponse.totalPages}
-          activePage={activePage}
-          onChange={page => setActivePage(page)}
-        />
+        <div className="books-pagination">
+          <Pagination
+            totalPages={userResponse.totalPages}
+            activePage={activePage}
+            onChange={page => setActivePage(page)}
+          />
+        </div>
 
       )}
     </div>

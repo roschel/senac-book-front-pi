@@ -15,7 +15,7 @@ const ProductCardCart = ({ product, quantityProduct, uploadSummary }: Props) => 
   const [products, setProducts] = useState<ProductsCart[]>([]);
 
   useEffect(() => {
-    
+
   }, [counter])
 
   const onAdd = (id: number) => {
@@ -77,58 +77,51 @@ const ProductCardCart = ({ product, quantityProduct, uploadSummary }: Props) => 
       localStorage.setItem('cartData', JSON.stringify(parsedCartData))
       quantityProduct(parsedCartData.products.length)
     }
-
+    uploadSummary(true)
   }
 
   return (
-        <div className="geral row">
-          <div className="card-image">
-            {product.product?.images.map(image => (
-              image.principal && (
-                <img src={image.imgUrl} alt={image.imgUrl} />
-              )
-            ))}
-          </div>
+    <div className="geral row">
+      <div className="card-image">
+        {product.product?.images.map(image => (
+          image.principal && (
+            <img src={image.imgUrl} alt={image.imgUrl} />
+          )
+        ))}
+      </div>
 
-          <div className="col-8 teste">
-            <div className="titulos">
-              <h6 className="titulo-produto"><strong>produto</strong></h6>
-              <h6 className="titulo-qtd"><strong>qtd.</strong></h6>
-              <h6 className="titulo-preco"><strong>preço</strong></h6>
-            </div>
+      <div className="column">
+        <h6><strong>produto</strong></h6>
+        <label className="product-description">
+          {product.product?.title}
+        </label>
+      </div>
 
-            <div className="row infos mt-3">
-              <label className="nomeLivro col-4">
-                {product.product?.title}
-              </label>
-
-              <div className="quantidade col-1">
-                <button
-                  className="decrementar btn btn-primary"
-                  onClick={() => onDecrement(product.product?.id)}
-                >
-                  -
-                </button>
-                <h5 className="qtd">{counter}</h5>
-                <button
-                  className="incrementar btn btn-primary"
-                  onClick={() => onAdd(product.product?.id)}
-                >
-                  +
-                </button>
-              </div>
-
-              <div className="preco col-4">
-                <label><strong>R$ {productPrice?.toFixed(2).replace(".", ",")}</strong></label>
-                <button
-                  className="remove btn btn-danger"
-                  onClick={() => removeProduct(product.product?.id)}>
-                  <img src={lixeira} alt="remover" />
-                </button>
-              </div>
-            </div>
-          </div>
+      <div className="column-quantity">
+        <h6><strong>qtd.</strong></h6>
+        <div className="quantity-buttons">
+          <button
+            className="btn"
+            onClick={() => onDecrement(product.product?.id)}
+          > — </button>
+          <h5 className="qtd">{counter}</h5>
+          <button
+            className="btn"
+            onClick={() => onAdd(product.product?.id)}
+          > + </button>
         </div>
+      </div>
+
+      <div className="column">
+        <h6><strong>preço</strong></h6>
+        <label className="price"><strong>R$ {productPrice?.toFixed(2).replace(".", ",")}</strong></label>
+      </div>
+      <button
+        className="btn btn-danger"
+        onClick={() => removeProduct(product.product?.id)}>
+        <img src={lixeira} alt="remover" />
+      </button>
+    </div>
   )
 }
 

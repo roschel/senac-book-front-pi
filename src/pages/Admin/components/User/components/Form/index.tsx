@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useHistory, useParams } from 'react-router'
 import Select from 'react-select'
-
+import { notify } from '../../../../../../core/components/Navbar'
 import { Roles } from '../../../../../../core/components/types/User'
 import { makePrivateRequest } from '../../../../../../services/api'
 import BaseForm from '../../../BaseForm'
 import './styles.scss'
+
 
 
 type FormState = {
@@ -61,7 +62,7 @@ const Form = () => {
     makePrivateRequest({ url: '/roles' })
       .then(response => setRoles(response.data))
       .catch(() => {
-        alert("Ocorreu um problema ao carregar as permissões")
+        notify("error", "Ocorreu um problema ao carregar as permissões")
       })
   }, []);
 
@@ -76,171 +77,171 @@ const Form = () => {
     if (isEditing) {
       makePrivateRequest({ url: `/users/${userId}`, data: payLoad, method: "PUT" })
         .then(() => {
-          // alert('Usuário editado com sucesso')
-          history.push(`/admin/users`)
+          notify("success", 'Usuário editado com sucesso')
+          // history.push(`/admin/users`)
         })
         .catch(() => {
-          alert('Usuário não editado')
+          notify("error", 'Usuário não editado')
         })
     } else {
       makePrivateRequest({ url: `/users`, data: payLoad, method: "POST" })
         .then(() => {
-          // alert('Usuário adicionado com sucesso')
+          notify("success", 'Usuário adicionado com sucesso')
           history.push('/admin/users')
         })
         .catch(() => {
-          alert('Usuário não adicionado')
+          notify("error", 'Usuário não adicionado')
         })
     }
   }
 
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <BaseForm title={formTitle} buttonTitle={formTitle}>
-        <div className="row">
-          <div className="col-6">
-            <input
-              ref={register()}
-              type="text"
-              className="form-control mb-5"
-              name="name"
-              placeholder="Nome do Usuário"
-              disabled={!disabled}
-            />
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} className="form-container">
+        <BaseForm title={formTitle} buttonTitle={formTitle}>
+          <div className="row">
+            <div className="col-6">
+              <input
+                ref={register()}
+                type="text"
+                className="form-control mb-5"
+                name="name"
+                placeholder="Nome do Usuário"
+                disabled={!disabled}
+              />
 
-            <input
-              ref={register()}
-              type="text"
-              className="form-control mb-3"
-              name="zipCode"
-              placeholder="CEP"
-              disabled={!disabled}
-            />
+              <input
+                ref={register()}
+                type="text"
+                className="form-control mb-3"
+                name="zipCode"
+                placeholder="CEP"
+                disabled={!disabled}
+              />
 
-            <input
-              ref={register()}
-              type="number"
-              className="form-control mb-3"
-              name="number"
-              placeholder="Número"
-              disabled={!disabled}
-            />
-          </div>
-          <div className="col-6">
-            <input
-              ref={register()}
-              type="text"
-              className="form-control mb-5"
-              name="cpf"
-              placeholder="Digite o seu CPF"
-              disabled={!disabled}
-            />
+              <input
+                ref={register()}
+                type="number"
+                className="form-control mb-3"
+                name="number"
+                placeholder="Número"
+                disabled={!disabled}
+              />
+            </div>
+            <div className="col-6">
+              <input
+                ref={register()}
+                type="text"
+                className="form-control mb-5"
+                name="cpf"
+                placeholder="Digite o seu CPF"
+                disabled={!disabled}
+              />
 
-            <input
-              ref={register()}
-              type="text"
-              className="form-control mb-3"
-              name="address"
-              placeholder="Logradouro"
-              disabled={!disabled}
-            />
+              <input
+                ref={register()}
+                type="text"
+                className="form-control mb-3"
+                name="address"
+                placeholder="Logradouro"
+                disabled={!disabled}
+              />
 
-            <input
-              ref={register()}
-              type="text"
-              className="form-control mb-3"
-              name="addressComplement"
-              placeholder="Complemento"
-              disabled={!disabled}
-            />
+              <input
+                ref={register()}
+                type="text"
+                className="form-control mb-3"
+                name="addressComplement"
+                placeholder="Complemento"
+                disabled={!disabled}
+              />
+            </div>
           </div>
-        </div>
 
-        <div className="row">
-          <div className="col-4">
-            <input
-              ref={register()}
-              type="text"
-              className="form-control mb-5"
-              name="city"
-              placeholder="Cidade"
-              disabled={!disabled}
-            />
+          <div className="row">
+            <div className="col-4">
+              <input
+                ref={register()}
+                type="text"
+                className="form-control mb-5"
+                name="city"
+                placeholder="Cidade"
+                disabled={!disabled}
+              />
+            </div>
+            <div className="col-4">
+              <input
+                ref={register()}
+                type="text"
+                className="form-control mb-5"
+                name="state"
+                placeholder="Estado"
+                disabled={!disabled}
+              />
+            </div>
+            <div className="col-4">
+              <input
+                ref={register()}
+                type="text"
+                className="form-control mb-5"
+                name="country"
+                placeholder="País"
+                disabled={!disabled}
+              />
+            </div>
           </div>
-          <div className="col-4">
-            <input
-              ref={register()}
-              type="text"
-              className="form-control mb-5"
-              name="state"
-              placeholder="Estado"
-              disabled={!disabled}
-            />
-          </div>
-          <div className="col-4">
-            <input
-              ref={register()}
-              type="text"
-              className="form-control mb-5"
-              name="country"
-              placeholder="País"
-              disabled={!disabled}
-            />
-          </div>
-        </div>
 
-        <div className="row">
-          <div className="col-6">
-            <input
-              ref={register()}
-              type="text"
-              className="form-control mb-3"
-              name="login"
-              placeholder="Login: exemplo@email.com"
-              readOnly={!disabled || !disabledLogin}
-            />
+          <div className="row">
+            <div className="col-6">
+              <input
+                ref={register()}
+                type="text"
+                className="form-control mb-3"
+                name="login"
+                placeholder="Login: exemplo@email.com"
+                readOnly={!disabled || !disabledLogin}
+              />
+            </div>
+            <div className="col-6">
+              <input
+                ref={register()}
+                type="password"
+                className="form-control mb-3"
+                name="password"
+                placeholder="Senha"
+                disabled={!disabled}
+              />
+            </div>
           </div>
-          <div className="col-6">
+          <div className="row">
+            <div className="col-6">
+              <Controller
+                as={Select}
+                defaultValue=""
+                name="roles"
+                rules={{ required: true }}
+                control={control}
+                options={roles}
+                getOptionLabel={(option: Roles) => option.authority}
+                getOptionValue={(option: Roles) => String(option.id)}
+                classNamePrefix="roles-select"
+                placeholder="Permissões"
+                isMulti
+                isDisabled={!disabled}
+              />
+            </div>
             <input
               ref={register()}
-              type="password"
-              className="form-control mb-3"
-              name="password"
-              placeholder="Senha"
+              type="checkbox"
+              className="form-check-input"
+              name="status"
               disabled={!disabled}
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-6">
-            <Controller
-              as={Select}
-              defaultValue=""
-              name="roles"
-              rules={{ required: true }}
-              control={control}
-              options={roles}
-              getOptionLabel={(option: Roles) => option.authority}
-              getOptionValue={(option: Roles) => String(option.id)}
-              classNamePrefix="roles-select"
-              placeholder="Permissões"
-              isMulti
-              isDisabled={!disabled}
-            />
-          </div>
-          <input
-							ref={register()}
-							type="checkbox"
-							className="form-check-input"
-							name="status"
-							disabled={!disabled}
               hidden
-						/>
-        </div>
-      </BaseForm>
-    </form>
-
+            />
+          </div>
+        </BaseForm>
+      </form>
+    </>
   )
 }
 

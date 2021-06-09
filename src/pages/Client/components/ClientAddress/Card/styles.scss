@@ -1,42 +1,42 @@
-.client-card-admin {
-  margin-bottom: 20px;
-  border-radius: 10px;
-  padding-top: 15px;
-}
-
-.client-card-address {
-  font-size: 18px;
-  line-height: 25px;
-  letter-spacing: -0.015em;
-  margin-left: 10px;
-}
-
-.client-card-number {
-  margin-top: 10px;
-  margin-left: 10px;
-}
-
-.client-card-number-label {
-  font-weight: 600;
-  margin-right: 10px;
-}
-
-.client-card-neighborhood-label {
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.client-card-city-label {
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.client-card-state-label{
-  margin-left: 10px;
-  margin-right: 10px;
+.client-card-container {
+  display: flex;
+  justify-content: space-between;
+  background: var(--white);
+  padding: 10px;
+  width: 750px;
 }
 
 .payment-button{
   margin-top: 15px;
   width: 190px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 400px;
+}
+
+.column-info {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.buttons-client-address {
+  display: flex;
+  flex-direction: column;
+}
+
+.two-buttons {
+  display: flex;
+  flex-direction: row;
 }

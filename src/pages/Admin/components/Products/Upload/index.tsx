@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './styles.scss'
 import { makePrivateRequest } from '../../../../../services/api'
 import { Image } from '../../../../../core/components/types/Product'
+import { notify } from '../../../../../core/components/Navbar'
 
 type Props = {
   onUploadSuccess: (imgUrl: Image[]) => void;
@@ -41,13 +42,11 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
       onUploadProgress
     })
       .then(response => {
-        // setUrlImage(response.data.uri);
         console.log('response', response)
         objectImage.push(response.data)
-        // onUploadSuccess(response.data);
       })
       .catch(error => {
-        alert('ERRROOOOOOOOOOO')
+        console.log('ERRROOOOOOOOOOO ->', error)
       })
       .finally(() => setUploadProgress(0));
   }
@@ -73,7 +72,7 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
   }
 
   const handleSelectPrincipal = (image: Image) => {
-    imageObject?.map(object => {
+    imageObject?.forEach(object => {
       object["principal"] = false
       if (object.id === image.id) {
         object["principal"] = true
@@ -91,8 +90,8 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
 
         if (imageObject[i].id === id) {
 
-          if(imageObject[i].principal){
-            return(alert('antes de deletar a capa do produto, selecione outra foto para ser capa.'))
+          if (imageObject[i].principal) {
+            return (notify("warn", 'antes de deletar a capa do produto, selecione outra foto para ser capa.'))
           }
 
 
@@ -147,12 +146,11 @@ const ImageUpload = ({ onUploadSuccess, productImageUrl }: Props) => {
                       </div>
 
                       <div className="align-items-center">
-                        <a
-                          href="#"
+                        <span
                           className="btn btn-danger ml-3"
                           onClick={() => handleDeleteImage(image.id)}>
                           Excluir
-                      </a>
+                        </span>
                       </div>
 
                     </div>
