@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import './styles.scss'
-import { useHistory } from 'react-router-dom'
-import { makeRequest } from '../../../../../services/api';
-import { ProductsResponse } from '../../../../../core/components/types/Product';
-import Card from '../Card';
+import { useHistory } from 'react-router-dom';
+import { notify } from '../../../../../core/components/Navbar';
 import Pagination from '../../../../../core/components/Pagination';
-import { FilterForm } from '../../../../../core/components/Search';
-import Search from '../../../../../core/components/Search';
-import { Flip, toast, ToastContainer } from 'react-toastify';
+import Search, { FilterForm } from '../../../../../core/components/Search';
+import { ProductsResponse } from '../../../../../core/components/types/Product';
+import { makeRequest } from '../../../../../services/api';
+import Card from '../Card';
+import './styles.scss';
 
 
 const List: React.FC = () => {
@@ -15,32 +14,6 @@ const List: React.FC = () => {
   const [activePage, setActivePage] = useState(0);
 
   const history = useHistory();
-
-  const notifySuccess = (message: string) => {
-    toast.success(message, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      closeButton: false,
-    })
-  };
-
-  const notifyError = (message: string) => {
-    toast.error(message, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      closeButton: false,
-    })
-  };
 
   const handleCreate = () => {
     history.push('/admin/products/create')
@@ -66,17 +39,17 @@ const List: React.FC = () => {
     if (confirma) {
       makeRequest({ url: `/products/${productId}`, method: "delete" })
         .then(response => {
-          notifySuccess(`${response.data}`)
+          notify("success", `${response.data}`)
           getProducts()
         })
         .catch(() => {
-          notifyError(`Erro ao inativar o produto`)
+          notify("error", `Erro ao inativar o produto`)
         })
     }
   }
 
   return (
-    <div className="admin-products-list">
+    <div className="admin-products-list container-list">
       <div className="d-flex mb-2 justify-content-between">
         <Search
           onSearch={filter => getProducts(filter)}
@@ -98,25 +71,14 @@ const List: React.FC = () => {
         ))}
       </div>
       {productResponse && (
-        <Pagination
-          totalPages={productResponse.totalPages}
-          activePage={activePage}
-          onChange={page => setActivePage(page)}
-        />
+        <div className="books-pagination">
+          <Pagination
+            totalPages={productResponse.totalPages}
+            activePage={activePage}
+            onChange={page => setActivePage(page)}
+          />
+        </div>
       )}
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        transition={Flip}
-        style={{ width: "auto", color: "var(--white-equals)" }}
-      />
     </div>
   )
 }

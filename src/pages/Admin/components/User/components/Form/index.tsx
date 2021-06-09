@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useHistory, useParams } from 'react-router'
 import Select from 'react-select'
-import { Flip, toast, ToastContainer } from 'react-toastify'
-
+import { notify } from '../../../../../../core/components/Navbar'
 import { Roles } from '../../../../../../core/components/types/User'
 import { makePrivateRequest } from '../../../../../../services/api'
 import BaseForm from '../../../BaseForm'
 import './styles.scss'
+
 
 
 type FormState = {
@@ -33,32 +33,6 @@ const Form = () => {
   const [disabledLogin, setDisabledLogin] = useState(true);
   const [roles, setRoles] = useState<Roles[]>([])
   const history = useHistory();
-
-  const notifySuccess = (message: string) => {
-    toast.success(message, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      closeButton: false,
-    })
-  };
-
-  const notifyError = (message: string) => {
-    toast.error(message, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      closeButton: false,
-    })
-  };
 
   useEffect(() => {
     if (isEditing) {
@@ -88,7 +62,7 @@ const Form = () => {
     makePrivateRequest({ url: '/roles' })
       .then(response => setRoles(response.data))
       .catch(() => {
-        alert("Ocorreu um problema ao carregar as permissões")
+        notify("error", "Ocorreu um problema ao carregar as permissões")
       })
   }, []);
 
@@ -103,24 +77,23 @@ const Form = () => {
     if (isEditing) {
       makePrivateRequest({ url: `/users/${userId}`, data: payLoad, method: "PUT" })
         .then(() => {
-          notifySuccess('Usuário editado com sucesso')
+          notify("success", 'Usuário editado com sucesso')
           // history.push(`/admin/users`)
         })
         .catch(() => {
-          notifyError('Usuário não editado')
+          notify("error", 'Usuário não editado')
         })
     } else {
       makePrivateRequest({ url: `/users`, data: payLoad, method: "POST" })
         .then(() => {
-          // alert('Usuário adicionado com sucesso')
+          notify("success", 'Usuário adicionado com sucesso')
           history.push('/admin/users')
         })
         .catch(() => {
-          alert('Usuário não adicionado')
+          notify("error", 'Usuário não adicionado')
         })
     }
   }
-
 
   return (
     <>
@@ -268,19 +241,6 @@ const Form = () => {
           </div>
         </BaseForm>
       </form>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        transition={Flip}
-        style={{ width: "auto", color: "var(--white-equals)" }}
-      />
     </>
   )
 }

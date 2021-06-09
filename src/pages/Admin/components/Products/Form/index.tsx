@@ -1,15 +1,14 @@
-import { makePrivateRequest } from '../../../../../services/api'
 import React, { useEffect, useState } from 'react'
-import BaseForm from '../../BaseForm'
-import './styles.scss'
-import { useForm, Controller } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { useParams } from 'react-router'
-import Select from 'react-select';
+import Select from 'react-select'
+import { notify } from '../../../../../core/components/Navbar'
 import { Category, Image } from '../../../../../core/components/types/Product'
 import { isAllowedRole } from '../../../../../core/components/utils/auth'
-
+import { makePrivateRequest } from '../../../../../services/api'
+import BaseForm from '../../BaseForm'
 import Upload from '../Upload'
-import { Flip, toast, ToastContainer } from 'react-toastify'
+import './styles.scss'
 
 type FormState = {
   title: string;
@@ -42,32 +41,6 @@ const Form = () => {
   const [urlImage, setUrlImage] = useState<Image[]>();
   const roleEstoque = !isAllowedRole(['ROLE_ADMIN']) && isEditing
 
-  const notifySuccess = (message: string) => {
-    toast.success(message, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      closeButton: false,
-    })
-  };
-
-  const notifyError = (message: string) => {
-    toast.error(message, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      closeButton: false,
-    })
-  };
-
   useEffect(() => {
     if (isEditing) {
       makePrivateRequest({ url: `/products/${productId}`, method: 'GET' })
@@ -96,7 +69,7 @@ const Form = () => {
     makePrivateRequest({ url: '/categories', method: 'GET' })
       .then(response => setCategories(response.data.content))
       .catch(() => {
-        notifyError("Ocorreu um problema ao carregar as categories")
+        notify("error", "Ocorreu um problema ao carregar as categories")
       })
   }, []);
 
@@ -114,25 +87,25 @@ const Form = () => {
     if (isEditing) {
       makePrivateRequest({ url: `/products/${productId}`, data: payLoad, method: 'PUT' })
         .then(() => {
-          notifySuccess('Produto editado com sucesso')
+          notify("success", 'Produto editado com sucesso')
         })
         .catch(() => {
-          notifyError('Produto não editado')
+          notify("error", "Produto não editado")
         })
     } else {
-      makePrivateRequest({ url: `/products`, data: payLoad, method: 'POST' })
+      makePrivateRequest({ url: `/products`, data: payLoad, method: "POST" })
         .then((response) => {
           console.log(response)
-          notifySuccess('Produto adicionado com sucesso')
+          notify("success", "Produto adicionado com sucesso")
         })
         .catch(() => {
-          notifyError('Produto não adicionado')
+          notify("error", "Produto não adicionado")
         })
     }
   }
 
   const onUploadSuccess = (imgUrl: Image[]) => {
-    console.log('imgUrl', imgUrl)
+    console.log("imgUrl", imgUrl)
     setUrlImage(imgUrl);
   }
 
@@ -297,19 +270,6 @@ const Form = () => {
           </div>
         </BaseForm>
       </form>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        transition={Flip}
-        style={{ width: "auto", color: "var(--white-equals)" }}
-      />
     </>
   )
 }

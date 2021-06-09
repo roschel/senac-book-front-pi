@@ -3,6 +3,13 @@
   flex-direction: column;
   width: 400px;
   padding: 20px;
+
+  transition: all 0.5s;
+
+  &:hover {
+    transform: translate(10px, 10px);
+    box-shadow: var(--box-shadow-focus);
+  }
 }
 
 .payment-button {

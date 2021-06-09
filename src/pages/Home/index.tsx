@@ -51,7 +51,7 @@ const Home: React.FC = () => {
               </span>
             ))}
           </div>
-          {productsResponse && (
+          {productsResponse && productsResponse.totalPages > 0 && (
             <div className="books-pagination">
               <Pagination
                 totalPages={productsResponse.totalPages}

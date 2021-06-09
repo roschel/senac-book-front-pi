@@ -1,12 +1,7 @@
-.container {
-  width: 1000px;
-  background-color: var(--white);
+.container-summary {
   display: flex;
   flex-direction: column;
-  border-radius: 15px;
-  margin-top: 10px;
   padding: 10px;
-  box-shadow: var(--box-shadow);
 }
 
 .title-summary {
@@ -34,7 +29,6 @@
   margin: 15px 0;
   padding: 10px;
   border: 1px solid var(--gray-200);
-  border-radius: 10px;
 
   input {
     background: var(--white);

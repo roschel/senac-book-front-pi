@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { notify } from '../../../../../core/components/Navbar';
 import { Address } from '../../../../../core/components/types/Client';
 import { makePrivateRequest, makeRequest } from '../../../../../services/api';
 import Card from '../Card';
@@ -38,7 +39,8 @@ const List: React.FC = () => {
     if (confirma) {
       makePrivateRequest({ url: `/addresses/${addressId}`, method: "delete" })
         .then(response => {
-          alert(`${response.data}`)
+          notify("warn", "Endereço inativado!")
+          console.log(`${response.data}`)
           if (response.data.includes("reativado")) {
             setAddressDeleted(true)
           } else {
@@ -46,7 +48,7 @@ const List: React.FC = () => {
           }
         })
         .catch(() => {
-          alert(`Erro ao inativar o endereço`)
+          notify("error", 'Erro ao inativar o endereço')
         })
     }
   }

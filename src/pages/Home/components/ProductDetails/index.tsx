@@ -3,6 +3,7 @@ import { Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { ReactComponent as ArrowIcon } from '../../../../core/assets/images/arrow.svg';
 import DemoCarousel from '../../../../core/components/Carousel';
+import { notify } from '../../../../core/components/Navbar';
 import StarsRating from '../../../../core/components/StarsRating';
 import { Product } from '../../../../core/components/types/Product';
 import { CartSession, getCartData, ProductsCart, saveCartData } from '../../../../core/components/utils/cart';
@@ -29,7 +30,6 @@ export const ProductDetails = ({ productId, showModal, setShowModal }: ParamsTyp
 
   const saveData = (product: Product) => {
     const cartData = getCartData() as CartSession;
-
     if (cartData.products) {
       let added = false;
       cartData.products.forEach(productCart => {

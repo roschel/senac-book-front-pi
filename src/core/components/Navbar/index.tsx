@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
+import { Flip, toast, ToastContainer } from 'react-toastify';
 import Login from '../../../pages/Auth/components/Login';
 import imgCart from '../../assets/images/cart-light.svg';
 import imgMoon from '../../assets/images/moon-light.svg';
@@ -42,106 +43,135 @@ const Navbar = ({ toggleTheme }: Props) => {
   }
 
   return (
-    <nav className="main-nav">
-      <div>
-        <Link to="/" className='nav-logo-text'>
-          <h4>Senac Books</h4>
-        </Link>
-      </div>
+    <>
 
-      <div>
-        <ul className="main-menu">
-          <li>
-            <NavLink to="/" exact>
-              HOME
+      <nav className="main-nav">
+        <div>
+          <Link to="/" className='nav-logo-text'>
+            <h4>Senac Books</h4>
+          </Link>
+        </div>
+
+        <div>
+          <ul className="main-menu">
+            <li>
+              <NavLink to="/" exact>
+                HOME
             </NavLink>
-          </li>
-          <li>
-            {(isAuthenticated() && isTokenValid()) ? (
-              isAllowedRole(["ROLE_CLIENTE"]) ? (
+            </li>
+            <li>
+              {(isAuthenticated() && isTokenValid()) ? (
+                isAllowedRole(["ROLE_CLIENTE"]) ? (
 
-                <div
-                  onClick={() => setShowTooltip(!showTooltip)}
-                  onMouseEnter={() => setShowTooltip(true)}
-                  onMouseLeave={() => setShowTooltip(false)}
-                >
-                  <span
-                    id="profile"
-                    className={`profile ${showTooltip ? "profile-active" : ""}`}
+                  <div
+                    onClick={() => setShowTooltip(!showTooltip)}
+                    onMouseEnter={() => setShowTooltip(true)}
+                    onMouseLeave={() => setShowTooltip(false)}
                   >
-                    Olá, {userName}
-                  </span>
-                  <Tooltip
-                    showTooltip={showTooltip}
-                    position="bottom"
-                    location={{
-                      left: left ?? 0,
-                      top: top ?? 0,
-                      height: height,
-                      width: width
-                    }}
-                  >
-                    <div>
-                      <Link to={`/client/${getSessionData().userId}`}>
-                        Perfil
+                    <span
+                      id="profile"
+                      className={`profile ${showTooltip ? "profile-active" : ""}`}
+                    >
+                      Olá, {userName}
+                    </span>
+                    <Tooltip
+                      showTooltip={showTooltip}
+                      position="bottom"
+                      location={{
+                        left: left ?? 0,
+                        top: top ?? 0,
+                        height: height,
+                        width: width
+                      }}
+                    >
+                      <div>
+                        <Link to={`/client/${getSessionData().userId}`}>
+                          Perfil
                       </Link>
-                      <br />
-                      <Link to="/admin/products" onClick={handleLogout}>
-                        Logout
+                        <br />
+                        <Link to="/admin/products" onClick={handleLogout}>
+                          Logout
                       </Link>
-                    </div>
-                  </Tooltip>
-                </div>
-              ) : (
-                <div
-                  onClick={() => setShowTooltip(!showTooltip)}
-                  onMouseEnter={() => setShowTooltip(true)}
-                  onMouseLeave={() => setShowTooltip(false)}
-                >
-                  <Link to="/admin/products"
-                    id="profile"
-                    className={`profile ${showTooltip ? "profile-active" : ""}`}
+                      </div>
+                    </Tooltip>
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => setShowTooltip(!showTooltip)}
+                    onMouseEnter={() => setShowTooltip(true)}
+                    onMouseLeave={() => setShowTooltip(false)}
                   >
-                    Login
+                    <Link to="/admin/products"
+                      id="profile"
+                      className={`profile ${showTooltip ? "profile-active" : ""}`}
+                    >
+                      Login Menu
                   </Link>
-                  <Tooltip
-                    showTooltip={showTooltip}
-                    position="bottom"
-                    location={{
-                      left: left ?? 0,
-                      top: top ?? 0,
-                      height: height,
-                      width: width
-                    }}
-                  >
-                    <div>
-                      <Link to="/admin/products" onClick={handleLogout}>
-                        Logout
+                    <Tooltip
+                      showTooltip={showTooltip}
+                      position="bottom"
+                      location={{
+                        left: left ?? 0,
+                        top: top ?? 0,
+                        height: height,
+                        width: width
+                      }}
+                    >
+                      <div>
+                        <Link to="/admin/products" onClick={handleLogout}>
+                          Logout
                       </Link>
-                    </div>
-                  </Tooltip>
-                </div>
-              )) : (
-              <Link to="#" onClick={handleShowModal}>
-                Login
-              </Link>
-            )}
-          </li>
-          <li>
-            <NavLink to="/cart" exact className="cart">
-              <img className="img-cart" src={imgCart} alt="Carrinho" />
-            </NavLink>
-          </li>
-          <li>
-            <div className="cart" onClick={toggleIconTheme}>
-              <img src={iconTheme} alt="" width={30} />
-            </div>
-          </li>
-        </ul>
-        <Login showModal={showModal} setShowModal={setShowModal} />
-      </div>
-    </nav>
+                      </div>
+                    </Tooltip>
+                  </div>
+                )) : (
+                <Link to="#" onClick={handleShowModal}>
+                  Login
+                </Link>
+              )}
+            </li>
+            <li>
+              <NavLink to="/cart" exact className="cart">
+                <img className="img-cart" src={imgCart} alt="Carrinho" />
+              </NavLink>
+            </li>
+            <li>
+              <div className="cart" onClick={toggleIconTheme}>
+                <img src={iconTheme} alt="" width={30} />
+              </div>
+            </li>
+          </ul>
+          <Login showModal={showModal} setShowModal={setShowModal} />
+        </div>
+      </nav>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        transition={Flip}
+        style={{ width: "auto", color: "var(--white-equals)" }}
+      />
+    </>
   )
 }
 
 export default Navbar;
+
+export const notify = (type: "error" | "success" | "warn", message: string) => {
+  toast[type](message, {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    closeButton: false,
+  })
+};

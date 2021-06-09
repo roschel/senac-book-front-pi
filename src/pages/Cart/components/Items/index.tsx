@@ -49,7 +49,7 @@ const Items = () => {
               />
             ))}
           </div>
-          <div className="summary">
+          <div className="summary-container">
             <OrderSummary
               shipping={shipping}
               setShipping={setShipping}

@@ -127,16 +127,14 @@ const Checkout: React.FC = () => {
             />
           }
         </div>
-        <div className="resume-products">
-          <div className="summary">
-            <OrderSummary
-              books={getCart.products}
-              updateSummaryCart={updateSummaryCart}
-              key={getCart.customerId}
-              shipping={shipping}
-              setShipping={handleShipping}
-            />
-          </div>
+        <div className="summary-container">
+          <OrderSummary
+            books={getCart.products}
+            updateSummaryCart={updateSummaryCart}
+            key={getCart.customerId}
+            shipping={shipping}
+            setShipping={handleShipping}
+          />
         </div>
       </div>
     </>

@@ -5,14 +5,20 @@
   justify-content: center;
   margin-top: 300px;
 }
-
 .grid {
   display: flex;
-  justify-content: space-around;
-  gap: 25;
+  justify-content: flex-end;
   height: calc(100vh - 70px);
+  overflow: hidden;
+
+  .summary-container {
+    width: 1000px;
+    height: calc(100vh - 70px);
+    background-color: var(--white);
+  }
 
   .books-list {
+    width: 100%;
     overflow: auto;
     padding: 10px 40px;
   }

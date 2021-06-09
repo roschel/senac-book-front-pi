@@ -1,10 +1,10 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { getSessionData } from '../../../../core/components/utils/auth'
 import { calculateShipping, getCartData, ProductsCart, saveCartData } from '../../../../core/components/utils/cart'
-import { ToastContainer, toast, Flip } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import './styles.scss'
 
 type Props = {
@@ -72,14 +72,14 @@ const OrderSummary = ({ books, updateSummaryCart, shipping, setShipping }: Props
     }
 
     if (!cartSession.customerId) {
-    // if (!sessionData.userId) {
+      // if (!sessionData.userId) {
       notify()
     }
     history.push('/cart/checkout')
   }
 
   return (
-    <div className="container">
+    <div className="container-summary">
       <h5 className="title-summary"><strong>Resumo do pedido</strong></h5>
       <div className="card-body row">
         {quantidadeTotalDeProdutos > 1 ? (
@@ -116,21 +116,6 @@ const OrderSummary = ({ books, updateSummaryCart, shipping, setShipping }: Props
           <button className="btn btn-outline-primary mb-2">Calcular</button>
         </div>
       </div>
-
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        transition={Flip}
-        style={{ width: "auto", color: "var(--white-equals)" }}
-        // onClick={}
-      />
     </div>
   )
 }

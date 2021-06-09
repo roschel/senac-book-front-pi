@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
-import { Flip, toast, ToastContainer } from 'react-toastify';
+import { notify } from '../../../../core/components/Navbar';
 import { makePrivateRequest } from '../../../../services/api';
 import BaseForm from '../../../Admin/components/BaseForm';
 import './styles.scss';
@@ -30,32 +30,6 @@ const ClientData = () => {
   const [disabledLogin] = useState(true);
   const history = useHistory();
 
-  const notifySuccess = (message: string) => {
-    toast.success(message, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      closeButton: false,
-    })
-  };
-
-  const notifyError = (message: string) => {
-    toast.error(message, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      closeButton: false,
-    })
-  };
-
   useEffect(() => {
     makePrivateRequest({ url: `/clients/${clientId}` })
       .then(response => {
@@ -75,10 +49,10 @@ const ClientData = () => {
     makePrivateRequest({ url: `/clients/${clientId}`, data: payload, method: "PUT" })
       .then(() => {
         history.push(`/client/${clientId}`)
-        notifySuccess('Dados atualizados')
+        notify("success", 'Dados atualizados com sucesso!')
       })
       .catch(() => {
-        notifyError('Cliente não editado.')
+        notify("error", 'Cliente não editado.')
       })
   }
 
@@ -146,19 +120,6 @@ const ClientData = () => {
           </div>
         </BaseForm>
       </form>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        transition={Flip}
-        style={{ width: "auto", color: "var(--white-equals)" }}
-      />
     </>
   )
 }

@@ -42,7 +42,7 @@ const Card = ({ order }: Props) => {
         </div>
         <div className="d-flex flex-md-column">
           <h6><strong>Status</strong></h6>
-          <h6>{order.totalValue.toFixed(2).replace('.', ',')}</h6>
+          <h6>{order.orderStatus}</h6>
         </div>
         <button
           className="btn btn-primary"

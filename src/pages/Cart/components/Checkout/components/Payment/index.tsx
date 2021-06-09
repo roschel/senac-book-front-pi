@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useHistory } from 'react-router';
-import { Flip, toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import codeBar from '../../../../../../core/assets/images/codeBar.svg';
 import creditCard from '../../../../../../core/assets/images/creditCard.svg';
 import { Address, Client } from '../../../../../../core/components/types/Client';
@@ -254,19 +254,6 @@ const Payment = ({ address, showModal, setShowModal }: Props) => {
           </div>
         </Modal.Body>
       </Modal>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        transition={Flip}
-        style={{ width: "auto", color: "var(--white-equals)" }}
-      />
     </>
   )
 }

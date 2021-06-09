@@ -1,6 +1,7 @@
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router';
+import { notify } from '../../../../core/components/Navbar';
 import { isAllowedRole, saveSessionData } from '../../../../core/components/utils/auth';
 import { getCartData, saveCartData } from '../../../../core/components/utils/cart';
 import { makeLogin } from '../../../../services/api';
@@ -33,7 +34,7 @@ const Login = ({ showModal, setShowModal }: Props) => {
           console.log('response', response)
           if (!response.data.userStatus) {
             // history.push('/')
-            alert(`Usuário ${response.data.login} se encontra desativado`)
+            notify("warn", `Usuário ${response.data.login} se encontra desativado`)
             return
           }
           setShowModal(false);
@@ -54,7 +55,7 @@ const Login = ({ showModal, setShowModal }: Props) => {
       })
       .catch(e => {
         console.log('erro', e)
-        alert('usuário ou senha incorretos')
+        notify("error", 'usuário ou senha incorretos')
       })
   }
 

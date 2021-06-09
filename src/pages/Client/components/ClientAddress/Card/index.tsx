@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { notify } from '../../../../../core/components/Navbar';
 import { Address } from '../../../../../core/components/types/Client';
 import { makePrivateRequest } from '../../../../../services/api';
 import './styles.scss';
@@ -25,11 +26,12 @@ const Card = ({ address, onDisabled, buttonTitle, clientId, onPaymentChange }: P
     console.log('asasdasdasd', payLoad)
     makePrivateRequest({ url: `/addresses/client/${clientId}`, data: payLoad, method: "PUT" })
       .then(() => {
+        notify("success", "Endereço editado com sucesso!")
         history.push(`/client/${clientId}/addresses`)
         onPaymentChange(payLoad.payment, address.id)
       })
       .catch(() => {
-        alert('Endereço não editado')
+        notify("error", 'Endereço não editado')
       })
   }
 

@@ -1,8 +1,8 @@
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import { Flip, toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { notify } from '../../../../../../core/components/Navbar';
 import { CartSession, getCartData, Payment } from '../../../../../../core/components/utils/cart';
 import { makePrivateRequest } from '../../../../../../services/api';
 import './styles.scss';
@@ -11,36 +11,7 @@ const FinalCheckout = () => {
   const [cart, setCart] = useState<CartSession>();
   const [payment, setPayment] = useState<Payment | null>();
   const [paymentMethod, setPaymentMethod] = useState<string>();
-  const [orderId, setOrderId] = useState(0)
   const history = useHistory();
-
-  const notifySuccess = (orderId: number, userId: number) => {
-    toast.success(`Compra finalizada com sucesso! Seu número de pedido é: ${orderId}`, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      closeButton: false,
-      onClose: () => finish(userId),
-    })
-  };
-
-  const notifyError = () => {
-    toast.error('Ops, algo está errado... tente novamente mais tarde!', {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      closeButton: false,
-    })
-  };
-
 
   useEffect(() => {
     const data = getCartData()
@@ -112,19 +83,14 @@ const FinalCheckout = () => {
               console.log("error", error)
             })
         })
-        // history.push(`/client/${data.customerId}/orders`)
-        // setOrderId(data.customerId ?? 0)
-        notifySuccess(response.data.id, data.customerId ?? 0)
+        notify("success", `Compra finalizada com sucesso! Seu número de pedido é: ${response.data.id}`)
         localStorage.removeItem('cartData')
+        history.push(`/client/${data.customerId}/orders`)
       })
       .catch(response => {
-        notifyError()
+        notify("error", "Ops, algo está errado... tente novamente mais tarde!")
         console.log(response)
       })
-  }
-
-  const finish = (orderId: number) => {
-    history.push(`/client/${orderId}/orders`)
   }
 
   return (
@@ -201,19 +167,6 @@ const FinalCheckout = () => {
           Finalizar pedido
         </button>
       </div>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        transition={Flip}
-        style={{ width: "auto", color: "var(--white-equals)" }}
-      />
     </div>
   )
 }
