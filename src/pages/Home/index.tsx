@@ -1,3 +1,4 @@
+import { CircularProgress, LinearProgress } from '@material-ui/core';
 import React, { useCallback, useEffect, useState } from 'react';
 import Pagination from '../../core/components/Pagination';
 import Search, { FilterForm } from '../../core/components/Search';
@@ -21,10 +22,14 @@ const Home: React.FC = () => {
 
     makeRequest({ url: "/products", params })
       .then(response => setProductResponse(response.data))
+      .catch(error => {
+        setTimeout(() => {
+          getProducts()
+        }, 5 * 1000);
+      })
   }, [activePage])
 
   useEffect(() => {
-
     getProducts()
   }, [getProducts])
 
@@ -45,11 +50,18 @@ const Home: React.FC = () => {
         </div>
         <div className="books-container">
           <div className="books-catalog">
-            {productsResponse?.content.map(book => (
+            {productsResponse ? productsResponse.content.map(book => (
               <span onClick={() => showProductDetails(book.id)}>
                 <ProductCard product={book} key={book.id} />
               </span>
-            ))}
+            )) : (
+              <div className="loading">
+                <h2>
+                  <em>Carregando Produtos...</em>
+                </h2>
+                <CircularProgress />
+              </div>
+            )}
           </div>
           {productsResponse && productsResponse.totalPages > 0 && (
             <div className="books-pagination">
